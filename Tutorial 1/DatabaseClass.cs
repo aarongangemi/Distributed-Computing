@@ -32,7 +32,7 @@ namespace Tutorial_1
             }
             else
             {
-                value = (uint) dataStruct.Count() + 1;
+                value = 0;
             }
             return value;    
         }
@@ -46,7 +46,7 @@ namespace Tutorial_1
             }
             else
             {
-                value = (uint)dataStruct.Count() + 1;
+                value = 0;
             }
             return value;
         }
