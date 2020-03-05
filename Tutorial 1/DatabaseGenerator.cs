@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Tutorial_1
 {
-    internal class Database
+    internal class DatabaseGenerator
     {
         private string GetFirstname()
         {
@@ -48,19 +48,25 @@ namespace Tutorial_1
 
         private uint GetAcctNo()
         {
-            return 123;
+            Random random = new Random();
+            return (uint)random.Next(10000000, 99999999);
         }
 
         private int GetBalance()
         {
-
+            Random random = new Random();
+            return random.Next(1, 999999999);
         }
 
         public void GetNextAccount(out uint pin, out uint acctNo,
                                    out string firstName, out string lastName,
                                    out int balance)
         {
-
+            pin = GetPin();
+            acctNo = GetAcctNo();
+            firstName = GetFirstname();
+            lastName = GetLastname();
+            balance = GetBalance();
         }
     }
 }
