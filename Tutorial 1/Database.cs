@@ -48,7 +48,7 @@ namespace Tutorial_1
 
         private uint GetAcctNo()
         {
-
+            return 123;
         }
 
         private int GetBalance()
