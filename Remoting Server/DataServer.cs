@@ -18,6 +18,7 @@ namespace Remoting_Server
         }
         public int GetNumEntries()
         {
+            database = new DatabaseClass();
             return database.GetNumRecords();
         }
         public void GetValuesForEntry(int index, out uint acctNo, out uint pin,
