@@ -16,6 +16,8 @@
         <Button Name ="GoBtn" Content="Go!" HorizontalAlignment="Left" Margin="488,259,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
         <Label Content="Total No. Of Items" HorizontalAlignment="Left" Margin="148,300,0,0" VerticalAlignment="Top"/>
         <TextBox Name ="totalTxt" HorizontalAlignment="Left" Height="23" Margin="265,303,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Image HorizontalAlignment="Left" Height="100" Margin="133,99,0,0" VerticalAlignment="Top" Width="100"/>
+        <Image Margin="29,29,539.6,166" Source="download.png" Stretch="Fill"/>
 
     </Grid>
 </Window>

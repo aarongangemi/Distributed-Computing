@@ -44,13 +44,26 @@ namespace WPFApp
             int bal = 0;
             uint acct = 0;
             uint pin = 0;
-            index = Int32.Parse(IndexVal.Text);
-            foob.GetValuesForEntry(index, out acct, out pin, out bal, out fname, out lname);
-            Fname.Text = fname;
-            LName.Text = lname;
-            Balance.Text = bal.ToString("C");
-            AcntNo.Text = acct.ToString();
-            PIN.Text = pin.ToString("D4");
+            try
+            {
+                index = Int32.Parse(IndexVal.Text);
+                foob.GetValuesForEntry(index, out acct, out pin, out bal, out fname, out lname);
+                Fname.Text = fname;
+                LName.Text = lname;
+                Balance.Text = bal.ToString("C");
+                AcntNo.Text = acct.ToString();
+                PIN.Text = pin.ToString("D4");
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Invalid Data was found, please try again");
+                Fname.Clear();
+                LName.Clear();
+                Balance.Clear();
+                AcntNo.Clear();
+                PIN.Clear();
+            }
+            
           
         }
     }
