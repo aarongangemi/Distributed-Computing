@@ -16,6 +16,11 @@ namespace Tutorial_1
             {
                 DataStruct ds = new DataStruct();
                 DatabaseGenerator dataGen = new DatabaseGenerator();
+                ds.pin = 0;
+                ds.acctNo = 0;
+                ds.firstName = "A";
+                ds.lastName = "D";
+                ds.balance = 1;
                 dataGen.GetNextAccount(out ds.pin, out ds.acctNo,
                                        out ds.firstName, out ds.lastName,
                                        out ds.balance);
@@ -95,7 +100,7 @@ namespace Tutorial_1
 
         public int GetNumRecords()
         {
-            return dataStruct.Count();
+            return dataStruct.Capacity;
         }
     }
 }

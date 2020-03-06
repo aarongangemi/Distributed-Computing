@@ -29,7 +29,7 @@ namespace WPFApp
             InitializeComponent();
             ChannelFactory<DataServerInterface> foobFactory;
             NetTcpBinding tcp = new NetTcpBinding();
-            string URL = "net.tcp://localhost:8011/DataService";
+            string URL = "net.tcp://localhost:8100/DataService";
             foobFactory = new ChannelFactory<DataServerInterface>(tcp, URL);
             foob = foobFactory.CreateChannel();
             totalTxt.Text = foob.GetNumEntries().ToString();
