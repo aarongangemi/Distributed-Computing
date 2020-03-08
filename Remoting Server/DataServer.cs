@@ -8,7 +8,10 @@ using Tutorial_1;
 
 namespace Remoting_Server
 {
+    //Concurrency Mode indicates that server will be multi-threaded
+    //UseSynchronisationContext indicates that we will handle synchronisation
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = false)]
+    //Must be internal because it must be accessed through the interface
     internal class DataServer : DataServerInterface
     {
         private DatabaseClass database;

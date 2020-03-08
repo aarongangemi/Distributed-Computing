@@ -12,14 +12,14 @@ namespace Remoting_Server
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to Aaron's Server");
-            ServiceHost host;
-            NetTcpBinding tcp = new NetTcpBinding();
+            ServiceHost host; //Service host in OS
+            NetTcpBinding tcp = new NetTcpBinding();  //Create .NET TCP port
             host = new ServiceHost(typeof(DataServer));
             host.AddServiceEndpoint(typeof(DataServerInterface), tcp, "net.tcp://0.0.0.0:8100/DataService");
             host.Open();
             Console.WriteLine("System online");
             Console.ReadLine();
-            host.Close();
+     host.Close();
         }
     }
 }
