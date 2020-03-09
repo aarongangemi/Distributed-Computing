@@ -8,11 +8,16 @@ namespace Tutorial_1
 {
     internal class DatabaseGenerator
     {
+        private Random random;
+
+        public DatabaseGenerator(Random rand)
+        {
+            random = rand;
+        }
         private string GetFirstname()
         {
             int length = 7;
             StringBuilder str = new StringBuilder();
-            Random random = new Random();
             char letter;
             for (int i = 0; i < length; i++)
             {
@@ -28,7 +33,6 @@ namespace Tutorial_1
         {
             int length = 7;
             StringBuilder str = new StringBuilder();
-            Random random = new Random();
             char letter;
             for (int i = 0; i < length; i++)
             {
@@ -42,19 +46,16 @@ namespace Tutorial_1
 
         private uint GetPin()
         {
-            Random random = new Random();
             return (uint)random.Next(1000, 9999);
         }
 
         private uint GetAcctNo()
         {
-            Random random = new Random();
             return (uint)random.Next(10000000, 99999999);
         }
 
         private int GetBalance()
         {
-            Random random = new Random();
             return random.Next(1, 999999999);
         }
 

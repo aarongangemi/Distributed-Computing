@@ -12,10 +12,11 @@ namespace Tutorial_1
         public DatabaseClass()
         {
             dataStruct = new List<DataStruct>();
-            for(int i = 0; i < 500; i++)
+            Random rand = new Random();
+            for (int i = 0; i < 500; i++)
             {
                 DataStruct ds = new DataStruct();
-                DatabaseGenerator dataGen = new DatabaseGenerator();
+                DatabaseGenerator dataGen = new DatabaseGenerator(rand);
                 ds.pin = 0;
                 ds.acctNo = 0;
                 ds.firstName = "A";
