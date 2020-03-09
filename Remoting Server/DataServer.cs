@@ -4,6 +4,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 using Tutorial_1;
 
 namespace Remoting_Server

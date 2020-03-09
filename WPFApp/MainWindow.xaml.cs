@@ -1,10 +1,13 @@
-﻿using Remoting_Server;
+﻿using Microsoft.Win32;
+using Remoting_Server;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -23,6 +26,7 @@ namespace WPFApp
     public partial class MainWindow : Window
     {
         private DataServerInterface foob;
+        private int index = 0;
 
         public MainWindow()
         {
@@ -38,7 +42,7 @@ namespace WPFApp
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            int index = 0;
+            
             string fname = "";
             string lname = "";
             int bal = 0;
@@ -65,6 +69,19 @@ namespace WPFApp
             }
             
           
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog open = new OpenFileDialog();
+            open.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp;)|*.jpg; *.jpeg; *.gif; *.bmp;";
+            bool? result = open.ShowDialog();
+            if (result == true)
+            {
+                String filePath = open.FileName;
+                BitmapImage image = new BitmapImage(new Uri(filePath));
+                img.Source = image;
+            }
         }
     }
 }

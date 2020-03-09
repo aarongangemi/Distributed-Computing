@@ -19,7 +19,7 @@ namespace Remoting_Server
             host.Open();
             Console.WriteLine("System online");
             Console.ReadLine();
-     host.Close();
+            host.Close();
         }
     }
 }
