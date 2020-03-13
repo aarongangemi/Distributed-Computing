@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Tutorial_2;
 
 namespace WPFApp
 {
@@ -25,16 +26,17 @@ namespace WPFApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        private DataServerInterface foob;
+        private BusinessServerInterface foob;
         private int index = 0;
+        private BitmapImage i;
 
         public MainWindow()
         {
             InitializeComponent();
-            ChannelFactory<DataServerInterface> foobFactory;
+            ChannelFactory<BusinessServerInterface> foobFactory;
             NetTcpBinding tcp = new NetTcpBinding();
-            string URL = "net.tcp://localhost:8100/DataService";
-            foobFactory = new ChannelFactory<DataServerInterface>(tcp, URL);
+            string URL = "net.tcp://localhost:8200/BusinessService";
+            foobFactory = new ChannelFactory<BusinessServerInterface>(tcp, URL);
             foob = foobFactory.CreateChannel();
             totalTxt.Text = foob.GetNumEntries().ToString();
 
@@ -48,15 +50,22 @@ namespace WPFApp
             int bal = 0;
             uint acct = 0;
             uint pin = 0;
+            i = new BitmapImage();
             try
             {
                 index = Int32.Parse(IndexVal.Text);
+                if(img.Source == null)
+                {
+                    img.Source = i;
+                }
+    
                 foob.GetValuesForEntry(index, out acct, out pin, out bal, out fname, out lname);
                 Fname.Text = fname;
                 LName.Text = lname;
                 Balance.Text = bal.ToString("C");
                 AcntNo.Text = acct.ToString();
                 PIN.Text = pin.ToString("D4");
+         
             }
             catch (FormatException)
             {
@@ -73,15 +82,17 @@ namespace WPFApp
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            BitmapImage image = null;
             OpenFileDialog open = new OpenFileDialog();
             open.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp;)|*.jpg; *.jpeg; *.gif; *.bmp;";
             bool? result = open.ShowDialog();
             if (result == true)
             {
                 String filePath = open.FileName;
-                BitmapImage image = new BitmapImage(new Uri(filePath));
+                image = new BitmapImage(new Uri(filePath));
                 img.Source = image;
             }
+            
         }
     }
 }

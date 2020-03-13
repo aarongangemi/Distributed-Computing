@@ -4,14 +4,11 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
 
-namespace Remoting_Server
+namespace Tutorial_2
 {
-    //Make this a service contract as it is a service interface
-
     [ServiceContract] //Defines that interface is for distributed objects
-    public interface DataServerInterface
+    public interface BusinessServerInterface
     {
         //Each of these are service function contracts. They need to be tagged as OperationContracts.
         //Defines that method will be for distributed objects
@@ -20,8 +17,5 @@ namespace Remoting_Server
         [OperationContract]
         void GetValuesForEntry(int index, out uint acctNo, out uint pin,
                                out int bal, out string fname, out string lname);
-        [OperationContract]
-        string GetLastName(int idx);
-
     }
 }

@@ -25,7 +25,7 @@ namespace Tutorial_1
                 ds.balance = 1;
                 dataGen.GetNextAccount(out ds.pin, out ds.acctNo,
                                        out ds.firstName, out ds.lastName,
-                                       out ds.balance);
+                                       out ds.balance, out ds.filePath);
                 dataStruct.Add(ds);
             }
         }
@@ -104,5 +104,13 @@ namespace Tutorial_1
         {
             return dataStruct.Capacity;
         }
+
+        public string SetFilePath(out string filePath,int index)
+        {
+       
+            filePath = dataStruct.ElementAt(index).filePath;
+            return dataStruct.ElementAt(index).filePath;
+        }
+
     }
 }

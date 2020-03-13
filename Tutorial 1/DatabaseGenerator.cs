@@ -59,15 +59,20 @@ namespace Tutorial_1
             return random.Next(1, 999999999);
         }
 
+        public string GetFilePath()
+        {
+            return "";
+        }
         public void GetNextAccount(out uint pin, out uint acctNo,
                                    out string firstName, out string lastName,
-                                   out int balance)
+                                   out int balance, out string filePath)
         {
             pin = GetPin();
             acctNo = GetAcctNo();
             firstName = GetFirstname();
             lastName = GetLastname();
             balance = GetBalance();
+            filePath = GetFilePath();
         }
     }
 }

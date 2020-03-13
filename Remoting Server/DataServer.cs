@@ -34,5 +34,10 @@ namespace Remoting_Server
             fname = database.GetFirstNameByIndex(index);
             lname = database.GetLastNameByIndex(index);
         }
+
+        string GetLastName(int idx)
+        {
+            return database.GetLastNameByIndex(idx);
+        }
     }
 }

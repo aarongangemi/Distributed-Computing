@@ -14,6 +14,7 @@ namespace Tutorial_1
         public int balance;
         public string firstName;
         public string lastName;
+        public string filePath;
         public DataStruct()
         {
             acctNo = 0;
@@ -21,6 +22,7 @@ namespace Tutorial_1
             balance = 0;
             firstName = "";
             lastName = "";
+            filePath = "";
         }
     }
 }

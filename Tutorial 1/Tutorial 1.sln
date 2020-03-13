@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remoting Server", "..\Remot
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFApp", "..\WPFApp\WPFApp.csproj", "{7DE5E92F-4713-4C04-83EC-EFD128890F8D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorial 2", "..\Tutorial 2\Tutorial 2.csproj", "{1DF552D0-0D6D-481F-AF29-757920D7CEAB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{7DE5E92F-4713-4C04-83EC-EFD128890F8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DE5E92F-4713-4C04-83EC-EFD128890F8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7DE5E92F-4713-4C04-83EC-EFD128890F8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DF552D0-0D6D-481F-AF29-757920D7CEAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DF552D0-0D6D-481F-AF29-757920D7CEAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DF552D0-0D6D-481F-AF29-757920D7CEAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DF552D0-0D6D-481F-AF29-757920D7CEAB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
