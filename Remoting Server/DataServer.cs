@@ -15,14 +15,9 @@ namespace Remoting_Server
     //Must be internal because it must be accessed through the interface
     internal class DataServer : DataServerInterface
     {
-        private DatabaseClass database;
-        public DataServer()
-        {
-            database = new DatabaseClass();
-        }
+        private DatabaseClass database = new DatabaseClass();
         public int GetNumEntries()
         {
-            database = new DatabaseClass();
             return database.GetNumRecords();
         }
         public void GetValuesForEntry(int index, out uint acctNo, out uint pin,
@@ -33,11 +28,6 @@ namespace Remoting_Server
             bal = database.GetBalanceByIndex(index);
             fname = database.GetFirstNameByIndex(index);
             lname = database.GetLastNameByIndex(index);
-        }
-
-        string GetLastName(int idx)
-        {
-            return database.GetLastNameByIndex(idx);
         }
     }
 }

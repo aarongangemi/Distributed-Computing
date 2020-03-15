@@ -17,5 +17,7 @@ namespace Tutorial_2
         [OperationContract]
         void GetValuesForEntry(int index, out uint acctNo, out uint pin,
                                out int bal, out string fname, out string lname);
+        [OperationContract]
+        int SearchForValue(string str);
     }
 }

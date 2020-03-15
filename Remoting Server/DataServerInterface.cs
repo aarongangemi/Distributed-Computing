@@ -20,8 +20,5 @@ namespace Remoting_Server
         [OperationContract]
         void GetValuesForEntry(int index, out uint acctNo, out uint pin,
                                out int bal, out string fname, out string lname);
-        [OperationContract]
-        string GetLastName(int idx);
-
     }
 }

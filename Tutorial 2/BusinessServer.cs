@@ -15,6 +15,7 @@ namespace Tutorial_2
     class BusinessServer : BusinessServerInterface
     {
         private DataServerInterface foob;
+        
         public int GetNumEntries()
         {
             ChannelFactory<DataServerInterface> foobFactory;
@@ -35,15 +36,31 @@ namespace Tutorial_2
             foob.GetValuesForEntry(index, out acctNo, out pin, out bal, out fname, out lname);
         }
 
-        public void searchForValue(string str)
+        public int SearchForValue(string str)
         {
-            for(int i = 0; i < foob.GetNumEntries(); i++)
+            ChannelFactory<DataServerInterface> foobFactory;
+            NetTcpBinding tcp = new NetTcpBinding();
+            string URL = "net.tcp://localhost:8100/DataService";
+            foobFactory = new ChannelFactory<DataServerInterface>(tcp, URL);
+            foob = foobFactory.CreateChannel();
+            int i;
+            uint acntNo, pin;
+            int bal;
+            int val = -1;
+            string fname, lname;
+            for (i = 0; i < foob.GetNumEntries(); i++)
             {
-                if (foob.GetLastName(i).Equals(str))
+                GetValuesForEntry(i, out acntNo, out pin, out bal, out fname, out lname);
+                if (lname.Equals(str))
                 {
-                    return foob.GetValuesForEntry(i, out 1, out 2222, out 0, out "", out "");
+                    val = i;
+                    break;
                 }
             }
+            return val;
         }
+
+
+        }
+
     }
-}

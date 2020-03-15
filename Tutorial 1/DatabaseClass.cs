@@ -14,7 +14,7 @@ namespace Tutorial_1
         {
             dataStruct = new List<DataStruct>();
             Random rand = new Random();
-            for (int i = 0; i < 500; i++)
+            for (int i = 0; i < 100000; i++)
             {
                 DataStruct ds = new DataStruct();
                 DatabaseGenerator dataGen = new DatabaseGenerator(rand);
