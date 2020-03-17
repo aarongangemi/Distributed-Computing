@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Tutorial_2
@@ -14,35 +15,33 @@ namespace Tutorial_2
     //Must be internal because it must be accessed through the interface
     class BusinessServer : BusinessServerInterface
     {
+        ChannelFactory<DataServerInterface> foobFactory;
         private DataServerInterface foob;
-        
-        public int GetNumEntries()
+        NetTcpBinding tcp;
+        string URL;
+        public BusinessServer()
         {
-            ChannelFactory<DataServerInterface> foobFactory;
-            NetTcpBinding tcp = new NetTcpBinding();
-            string URL = "net.tcp://localhost:8100/DataService";
+            tcp = new NetTcpBinding();
+            URL = "net.tcp://localhost:8100/DataService";
+            tcp.MaxBufferSize = 2147483647;
+            tcp.MaxReceivedMessageSize = 2147483647;
+            tcp.MaxBufferPoolSize = 2147483647;
             foobFactory = new ChannelFactory<DataServerInterface>(tcp, URL);
             foob = foobFactory.CreateChannel();
+
+        }
+        public int GetNumEntries()
+        {
             return foob.GetNumEntries();
         }
 
         public void GetValuesForEntry(int index, out uint acctNo, out uint pin, out int bal, out string fname, out string lname)
         {
-            ChannelFactory<DataServerInterface> foobFactory;
-            NetTcpBinding tcp = new NetTcpBinding();
-            string URL = "net.tcp://localhost:8100/DataService";
-            foobFactory = new ChannelFactory<DataServerInterface>(tcp, URL);
-            foob = foobFactory.CreateChannel();
             foob.GetValuesForEntry(index, out acctNo, out pin, out bal, out fname, out lname);
         }
 
         public int SearchForValue(string str)
         {
-            ChannelFactory<DataServerInterface> foobFactory;
-            NetTcpBinding tcp = new NetTcpBinding();
-            string URL = "net.tcp://localhost:8100/DataService";
-            foobFactory = new ChannelFactory<DataServerInterface>(tcp, URL);
-            foob = foobFactory.CreateChannel();
             int i;
             uint acntNo, pin;
             int bal;
@@ -61,6 +60,7 @@ namespace Tutorial_2
         }
 
 
-        }
+
+    }
 
     }

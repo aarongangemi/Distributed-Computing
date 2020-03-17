@@ -15,6 +15,10 @@ namespace Tutorial_2
             ServiceHost host; //Service host in OS
             NetTcpBinding tcp = new NetTcpBinding();  //Create .NET TCP port
             host = new ServiceHost(typeof(BusinessServer));
+            tcp.OpenTimeout = new TimeSpan(0, 30, 0);
+            tcp.CloseTimeout = new TimeSpan(0, 30, 0);
+            tcp.SendTimeout = new TimeSpan(0, 30, 0);
+            tcp.ReceiveTimeout = new TimeSpan(0, 30, 0);
             host.AddServiceEndpoint(typeof(BusinessServerInterface), tcp, "net.tcp://0.0.0.0:8200/BusinessService");
             host.Open();
             Console.WriteLine("System online");

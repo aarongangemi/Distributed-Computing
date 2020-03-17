@@ -1,37 +1,19 @@
-﻿using Microsoft.Win32;
-using Remoting_Server;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
+﻿using System;
 using System.Runtime.Remoting.Messaging;
 using System.ServiceModel;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using System.Web.UI.WebControls;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Tutorial_2;
 using MessageBox = System.Windows.Forms.MessageBox;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
-using ProgressBar = System.Windows.Controls.ProgressBar;
 
 namespace WPFApp
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public delegate void UpdateProgressBarDelegate(DependencyProperty dp, Object value);
-    public delegate int SearchOperation(string str); //Delegate Definition
+    public delegate int SearchOperation(string str);
     
     public partial class MainWindow : Window
     {
@@ -41,9 +23,18 @@ namespace WPFApp
         public MainWindow()
         {
             InitializeComponent();
+
             ChannelFactory<BusinessServerInterface> foobFactory;
             NetTcpBinding tcp = new NetTcpBinding();
             string URL = "net.tcp://localhost:8200/BusinessService";
+            tcp.OpenTimeout = new TimeSpan(0, 30, 0);
+            tcp.CloseTimeout = new TimeSpan(0, 30, 0);
+            tcp.SendTimeout = new TimeSpan(0, 30, 0);
+            tcp.ReceiveTimeout = new TimeSpan(0, 30, 0);
+            tcp.MaxBufferSize = 2147483647;
+            tcp.MaxReceivedMessageSize = 2147483647;
+            tcp.MaxBufferPoolSize = 2147483647;
+      
             foobFactory = new ChannelFactory<BusinessServerInterface>(tcp, URL);
             foob = foobFactory.CreateChannel();
             totalTxt.Text = foob.GetNumEntries().ToString();
@@ -126,6 +117,7 @@ namespace WPFApp
 
         private void onAddCompletion(IAsyncResult asyncRes)
         {
+        
             uint acntNo, pin;
             int bal;
             string fname, lname;
@@ -134,6 +126,7 @@ namespace WPFApp
             AsyncResult asyncObj = (AsyncResult)asyncRes;
             if (asyncObj.EndInvokeCalled == false)
             {
+                progressProcessingAsync();
                 addDel = (SearchOperation) asyncObj.AsyncDelegate;
                 iResult = addDel.EndInvoke(asyncObj);
                 Console.WriteLine("Result is: " + iResult);
@@ -158,6 +151,7 @@ namespace WPFApp
                     AcntNo.IsReadOnly = false;
                     imgBtn.IsEnabled = true;
                     GoBtn.IsEnabled = true;
+                    IndexVal.IsReadOnly = false;
                 }
             }
 
@@ -167,5 +161,28 @@ namespace WPFApp
             this.Visibility = Visibility.Hidden;
             objSecondWindow.Show();
         }
+
+        private async Task progressProcessingAsync()
+        {
+            var progress = new Progress<int>(percent =>
+            {
+                ProgBar.Value = percent;
+            });
+            await Task.Run(() => processProgress(progress));
+        }
+
+        public void processProgress(IProgress<int> progress)
+        {
+            for (int i = 0; i != 100; i++)
+            {
+                Thread.Sleep(100);
+                if (progress != null)
+                {
+                    progress.Report(i);
+                }
+            }
+        }
+
+
     }
     }
