@@ -11,17 +11,17 @@
             <RowDefinition Height="7*"/>
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
-        <TextBox Name ="Fname" HorizontalAlignment="Left" Height="28" Margin="265,29,0,0" TextWrapping="Wrap" Text="First Name" VerticalAlignment="Top" Width="262"/>
-        <TextBox Name = "LName" HorizontalAlignment="Left" Height="23" Margin="265,76,0,0" TextWrapping="Wrap" Text="Last Name" VerticalAlignment="Top" Width="262"/>
-        <TextBox Name ="AcntNo" HorizontalAlignment="Left" Height="23" Margin="265,118,0,0" TextWrapping="Wrap" Text="Account Number" VerticalAlignment="Top" Width="262"/>
-        <TextBox Name ="PIN" HorizontalAlignment="Left" Height="23" Margin="265,160,0,0" TextWrapping="Wrap" Text="PIN" VerticalAlignment="Top" Width="262"/>
-        <TextBox Name ="Balance" HorizontalAlignment="Left" Height="23" Margin="265,201,0,0" TextWrapping="Wrap" Text="Balance" VerticalAlignment="Top" Width="262"/>
+        <TextBox Name ="Fname" HorizontalAlignment="Left" Height="28" Margin="148,29,0,0" TextWrapping="Wrap" Text="First Name" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name = "LName" HorizontalAlignment="Left" Height="23" Margin="148,76,0,0" TextWrapping="Wrap" Text="Last Name" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name ="AcntNo" HorizontalAlignment="Left" Height="23" Margin="148,111,0,0" TextWrapping="Wrap" Text="Account Number" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name ="PIN" HorizontalAlignment="Left" Height="23" Margin="148,160,0,0" TextWrapping="Wrap" Text="PIN" VerticalAlignment="Top" Width="85"/>
+        <TextBox Name ="Balance" HorizontalAlignment="Left" Height="23" Margin="148,204,0,0" TextWrapping="Wrap" Text="Balance" VerticalAlignment="Top" Width="195"/>
         <TextBox Name ="IndexVal" HorizontalAlignment="Left" Height="23" Margin="148,259,0,0" TextWrapping="Wrap" Text="Index" VerticalAlignment="Top" Width="120"/>
-        <Button Name ="GoBtn" Content="Go!" HorizontalAlignment="Left" Margin="619,25.6,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click" Grid.Row="1"/>
+        <Button Name ="GoBtn" Content="Go!" HorizontalAlignment="Left" Margin="679,80.6,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click" Grid.Row="1"/>
         <Label Content="Total No. Of Items" HorizontalAlignment="Left" Margin="148,6,0,0" VerticalAlignment="Top" Grid.Row="1"/>
         <TextBox Name ="totalTxt" HorizontalAlignment="Left" Height="23" Margin="265,9,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" Grid.Row="1"/>
         <Image HorizontalAlignment="Left" Height="100" Margin="133,99,0,0" VerticalAlignment="Top" Width="100"/>
-        <Image Margin="29,29,539.6,40" Source="download.png" Stretch="Fill"/>
+        <Image Margin="29,29,665.6,170.4" Source="download.png" Stretch="Fill"/>
         <Button Name ="imgBtn" Content="Upload Image File" HorizontalAlignment="Left" Margin="325,259,0,0" VerticalAlignment="Top" Width="147" Height="23" Click="Button_Click_1"/>
         <Image Name="img" HorizontalAlignment="Left" Height="114" Margin="586,201,0,0" VerticalAlignment="Top" Width="133" Grid.RowSpan="2"/>
         <Button Content="Search" HorizontalAlignment="Left" Height="23" Margin="291,47.6,0,0" VerticalAlignment="Top" Width="121" Grid.Row="1" RenderTransformOrigin="0.5,0.5" Click="Button_Click_2">
@@ -36,8 +36,7 @@
         </Button>
         <TextBox Name="searchTxt" HorizontalAlignment="Left" Height="23" Margin="148,48.6,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Enter Last Name" VerticalAlignment="Top" Width="120"/>
         <ProgressBar Name ="ProgBar" HorizontalAlignment="Left" Height="23" Margin="459,48.6,0,0" Grid.Row="1" VerticalAlignment="Top" Width="108"/>
-        <Button Content="View Access Log" HorizontalAlignment="Left" Margin="642,90.6,0,0" Grid.Row="1" VerticalAlignment="Top" Width="112" Click="Button_Click_3"/>
-        <TextBlock Name="LogText" HorizontalAlignment="Left" Height="154" Margin="586,29,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="168"/>
+        <TextBlock x:Name="LogText" HorizontalAlignment="Left" Height="225" Margin="437,29,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="317"><Run Text="Access Log:"/></TextBlock>
 
     </Grid>
 </Window>
