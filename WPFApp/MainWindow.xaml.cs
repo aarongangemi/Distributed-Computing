@@ -20,13 +20,11 @@ namespace WPFApp
     public partial class MainWindow : Window
     {
         private BusinessServerInterface foob;
-        private int LogNumber = 0;
         private BitmapImage i;
 
         public MainWindow()
         {
             InitializeComponent();
-            LogText.Text = "Access Log: " + "\n";
             ChannelFactory<BusinessServerInterface> foobFactory;
             NetTcpBinding tcp = new NetTcpBinding();
             string URL = "net.tcp://localhost:8200/BusinessService";
@@ -37,7 +35,7 @@ namespace WPFApp
             tcp.MaxBufferSize = 2147483647;
             tcp.MaxReceivedMessageSize = 2147483647;
             tcp.MaxBufferPoolSize = 2147483647;
-      
+             
             foobFactory = new ChannelFactory<BusinessServerInterface>(tcp, URL);
             foob = foobFactory.CreateChannel();
             totalTxt.Text = foob.GetNumEntries().ToString();
@@ -67,7 +65,6 @@ namespace WPFApp
                 Balance.Text = bal.ToString("C");
                 AcntNo.Text = acct.ToString();
                 PIN.Text = pin.ToString("D4");
-                Log("Search for entry at index: " + idx);
             }
             catch (FormatException)
             {
@@ -93,7 +90,6 @@ namespace WPFApp
                 string filePath = open.FileName;
                 image = new BitmapImage(new Uri(filePath));
                 img.Source = image;
-                Log("Uploaded image from path: " + filePath);
             }
             
         }
@@ -122,7 +118,6 @@ namespace WPFApp
 
         private void onAddCompletion(IAsyncResult asyncRes)
         {
-            DateTime now = DateTime.Now;
             uint acntNo, pin;
             int bal;
             string fname, lname;
@@ -157,7 +152,6 @@ namespace WPFApp
                     imgBtn.IsEnabled = true;
                     GoBtn.IsEnabled = true;
                     IndexVal.IsReadOnly = false;
-                    Log("Searched for: '" + lname + "' at: " + now.ToString("F"));
                 }
             }
 
@@ -188,14 +182,5 @@ namespace WPFApp
                 }
             }
         }
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        private void Log(string logString)
-        {
-            LogNumber++;
-            LogText.Text = LogText.Text + LogNumber.ToString() + ". " + logString + "\n";
-        }
-
-
     }
     }

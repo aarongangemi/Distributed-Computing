@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.ServiceModel;
 using System.Text;
 using System.Threading;
@@ -15,6 +16,7 @@ namespace Tutorial_2
     //Must be internal because it must be accessed through the interface
     class BusinessServer : BusinessServerInterface
     {
+        private int LogNumber = 0;
         ChannelFactory<DataServerInterface> foobFactory;
         private DataServerInterface foob;
         NetTcpBinding tcp;
@@ -38,10 +40,12 @@ namespace Tutorial_2
         public void GetValuesForEntry(int index, out uint acctNo, out uint pin, out int bal, out string fname, out string lname)
         {
             foob.GetValuesForEntry(index, out acctNo, out pin, out bal, out fname, out lname);
+            Log("Retrieved values for Person: " + fname + " " + lname);
         }
 
         public int SearchForValue(string str)
         {
+            DateTime now = DateTime.Now;
             int i;
             uint acntNo, pin;
             int bal;
@@ -53,10 +57,18 @@ namespace Tutorial_2
                 if (lname.Equals(str))
                 {
                     val = i;
+                    Log("Found " + lname + " for entry at index: " + i + " at: "+ now.ToString("F"));
                     break;
                 }
             }
             return val;
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        private void Log(string logString)
+        {
+            LogNumber++;
+            Console.WriteLine(LogNumber.ToString() + ". " + logString + "\n");
         }
 
 

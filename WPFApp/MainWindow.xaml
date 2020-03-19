@@ -36,7 +36,6 @@
         </Button>
         <TextBox Name="searchTxt" HorizontalAlignment="Left" Height="23" Margin="148,48.6,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Enter Last Name" VerticalAlignment="Top" Width="120"/>
         <ProgressBar Name ="ProgBar" HorizontalAlignment="Left" Height="23" Margin="459,48.6,0,0" Grid.Row="1" VerticalAlignment="Top" Width="108"/>
-        <TextBlock x:Name="LogText" HorizontalAlignment="Left" Height="225" Margin="437,29,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="317"><Run Text="Access Log:"/></TextBlock>
 
     </Grid>
 </Window>
