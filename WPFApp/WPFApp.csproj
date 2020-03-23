@@ -35,6 +35,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\Tutorial 1\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=106.0.0.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\Tutorial 1\packages\RestSharp.106.10.1\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -112,6 +118,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Bis-GUI\Bis-GUI.csproj">
+      <Project>{EC4D7C2D-06DD-4BF7-92AF-1A72B276470A}</Project>
+      <Name>Bis-GUI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Remoting Server\Remoting Server.csproj">
       <Project>{ACFDC249-8F81-4ED1-A58C-F366E6737F7D}</Project>
       <Name>Remoting Server</Name>
@@ -119,6 +129,10 @@
     <ProjectReference Include="..\Tutorial 2\Tutorial 2.csproj">
       <Project>{1DF552D0-0D6D-481F-AF29-757920D7CEAB}</Project>
       <Name>Tutorial 2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Web Service\Web Service.csproj">
+      <Project>{07CEEC24-8265-4F0E-99BB-B22510F9339F}</Project>
+      <Name>Web Service</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
