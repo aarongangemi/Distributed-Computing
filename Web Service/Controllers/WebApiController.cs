@@ -36,11 +36,30 @@ namespace Web_Service.Controllers
         }
 
         //POST api/<controller>
-        public void Post([FromBody]string value)
+        public DataIntermed Post(string value)
         {
-
+            DataIntermed dataInter = new DataIntermed();
+            DataModel model = new DataModel();
+            int i;
+            uint acntNo, pin;
+            int bal;
+            string fname, lname;
+            for (i = 0; i < model.getNumEntries(); i++)
+            {
+                model.GetValuesForEntry(i, out acntNo, out pin, out bal, out fname, out lname);
+                if (lname.Equals(value))
+                {
+                    dataInter.lname = lname;
+                    dataInter.acct = acntNo;
+                    dataInter.pin = pin;
+                    dataInter.bal = bal;
+                    dataInter.fname = fname;
+                    break;
+                }
+            }
+            return dataInter;
         }
-        
+
         //PUT api/<controller>/5
         public void Put(int id,[FromBody]string value)
         {

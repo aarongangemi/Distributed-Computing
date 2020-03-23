@@ -92,7 +92,6 @@ namespace WPFApp
         //The Search Button
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            searchDataText = searchTxt.Text;
             Fname.IsReadOnly = true;
             LName.IsReadOnly = true;
             Balance.IsReadOnly = true;
@@ -113,43 +112,49 @@ namespace WPFApp
 
         private void onAddCompletion(IAsyncResult asyncRes)
         {
-            SearchData mySearch = new SearchData();
-            mySearch.searchStr = searchDataText;
-            RestRequest request = new RestRequest("api/Search/");
-            request.AddJsonBody(mySearch);
-            IRestResponse resp = client.Post(request);
-            DataIntermed dataInter = JsonConvert.DeserializeObject<DataIntermed>(resp.Content);
-            int iResult = 0;
-            SearchOperation addDel;
-            AsyncResult asyncObj = (AsyncResult)asyncRes;
-            if (asyncObj.EndInvokeCalled == false)
+            Dispatcher.BeginInvoke((Action)(() =>
             {
-                progressProcessingAsync();
-                addDel = (SearchOperation)asyncObj.AsyncDelegate;
-                iResult = addDel.EndInvoke(asyncObj);
-                Console.WriteLine("\n Result is: " + iResult);
-            }
-            asyncObj.AsyncWaitHandle.Close();
-            if (iResult == -1)
-            {
-                MessageBox.Show("\n Could not find existing record with entered last name");
-            }
-            else
-            {
-                Fname.Text = dataInter.fname;
-                LName.Text = dataInter.lname;
-                Balance.Text = dataInter.bal.ToString("C");
-                AcntNo.Text = dataInter.acct.ToString();
-                PIN.Text = dataInter.pin.ToString("D4");
-                Fname.IsReadOnly = false;
-                LName.IsReadOnly = false;
-                Balance.IsReadOnly = false;
-                PIN.IsReadOnly = false;
-                AcntNo.IsReadOnly = false;
-                imgBtn.IsEnabled = true;
-                GoBtn.IsEnabled = true;
-                IndexVal.IsReadOnly = false;
-            }
+                int iResult = 0;
+                SearchOperation addDel;
+                AsyncResult asyncObj = (AsyncResult)asyncRes;
+                if (asyncObj.EndInvokeCalled == false)
+                {
+                    progressProcessingAsync();
+                    addDel = (SearchOperation)asyncObj.AsyncDelegate;
+                    iResult = addDel.EndInvoke(asyncObj);
+                    Console.WriteLine("\n Result is: " + iResult);
+                }
+                asyncObj.AsyncWaitHandle.Close();
+                if (iResult == -1)
+                {
+                    MessageBox.Show("\n Could not find existing record with entered last name");
+                }
+                else
+                {
+                    searchDataText = searchTxt.Text;
+                    SearchData mySearch = new SearchData();
+                    mySearch.searchStr = searchDataText;
+                    RestRequest request = new RestRequest("api/search/");
+                    request.AddJsonBody(mySearch.searchStr);
+                    IRestResponse resp = client.Post(request);
+                    DataIntermed dataInter = JsonConvert.DeserializeObject<DataIntermed>(resp.Content);
+                    model.GetValuesForEntry(iResult, out dataInter.acct, out dataInter.pin, out dataInter.bal, out dataInter.fname, out dataInter.lname);
+                    Fname.IsReadOnly = false;
+                    LName.IsReadOnly = false;
+                    Balance.IsReadOnly = false;
+                    PIN.IsReadOnly = false;
+                    AcntNo.IsReadOnly = false;
+                    imgBtn.IsEnabled = true;
+                    GoBtn.IsEnabled = true;
+                    IndexVal.IsReadOnly = false;
+                    Fname.Text = dataInter.fname;
+                    LName.Text = dataInter.lname;
+                    Balance.Text = dataInter.bal.ToString("C");
+                    AcntNo.Text = dataInter.acct.ToString();
+                    PIN.Text = dataInter.pin.ToString("D4");
+                }
+            }));
+            
         }
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
