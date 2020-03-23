@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using RestSharp;
 using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Remoting.Messaging;
 using System.ServiceModel;
@@ -40,7 +41,7 @@ namespace WPFApp
             totalTxt.Text = numOfItems.Content;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
             i = new BitmapImage();
             int idx;
@@ -48,13 +49,13 @@ namespace WPFApp
             {
                 idx = Int32.Parse(IndexVal.Text);
                 RestRequest request = new RestRequest("api/WebApi/" + idx.ToString());
-                IRestResponse response = client.Get(request);
+                IRestResponse response = await client.ExecuteGetAsync(request);
                 DataIntermed dataInter = JsonConvert.DeserializeObject<DataIntermed>(response.Content);
                 if (img.Source == null)
                 {
                     img.Source = i;
                 }
-                model.GetValuesForEntry(idx, out dataInter.acct, out dataInter.pin, out dataInter.bal, out dataInter.fname, out dataInter.lname);
+
                 Fname.Text = dataInter.fname;
                 LName.Text = dataInter.lname;
                 Balance.Text = dataInter.bal.ToString("C");
@@ -92,69 +93,96 @@ namespace WPFApp
         //The Search Button
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            Fname.IsReadOnly = true;
-            LName.IsReadOnly = true;
-            Balance.IsReadOnly = true;
-            AcntNo.IsReadOnly = true;
-            PIN.IsReadOnly = true;
-            IndexVal.IsReadOnly = true;
-            imgBtn.IsEnabled = false;
-            GoBtn.IsEnabled = false;
-            SearchOperation del;
-            AsyncCallback callbackDel;
-            del = model.SearchForValue;
-            callbackDel = this.onAddCompletion;
-            //SearchTxt.text is the field for the last name
-            del.BeginInvoke(searchTxt.Text, callbackDel, null);
-            System.Console.WriteLine("Waiting for Completion");
-            System.Console.ReadLine();
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += (o, r) =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    Fname.IsReadOnly = true;
+                    LName.IsReadOnly = true;
+                    Balance.IsReadOnly = true;
+                    AcntNo.IsReadOnly = true;
+                    PIN.IsReadOnly = true;
+                    IndexVal.IsReadOnly = true;
+                    imgBtn.IsEnabled = false;
+                    GoBtn.IsEnabled = false;
+                    SearchOperation del;
+                    AsyncCallback callbackDel;
+                    del = WebCommunications;
+                    callbackDel = this.onAddCompletion;
+                    //SearchTxt.text is the field for the last name
+                    del.BeginInvoke(searchTxt.Text, callbackDel, null);
+                    System.Console.WriteLine("Waiting for Completion");
+                    System.Console.ReadLine();
+                });
+            };
+            worker.RunWorkerAsync();
         }
 
-        private void onAddCompletion(IAsyncResult asyncRes)
+        private async void onAddCompletion(IAsyncResult asyncRes)
         {
-            Dispatcher.BeginInvoke((Action)(() =>
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += (o, r) =>
+             {
+                 Dispatcher.Invoke(async () =>
+                 {
+
+                     int iResult = 0;
+                     SearchOperation addDel;
+                     AsyncResult asyncObj = (AsyncResult)asyncRes;
+                     if (asyncObj.EndInvokeCalled == false)
+                     {
+                         progressProcessingAsync();
+                         addDel = (SearchOperation)asyncObj.AsyncDelegate;
+                         iResult = addDel.EndInvoke(asyncObj);
+                         Console.WriteLine("\n Result is: " + iResult);
+                     }
+                     asyncObj.AsyncWaitHandle.Close();
+                     if (iResult == -1)
+                     {
+                         MessageBox.Show("\n Could not find existing record with entered last name");
+                     }
+                     else
+                     {
+                         Fname.IsReadOnly = false;
+                         LName.IsReadOnly = false;
+                         Balance.IsReadOnly = false;
+                         PIN.IsReadOnly = false;
+                         AcntNo.IsReadOnly = false;
+                         imgBtn.IsEnabled = true;
+                         GoBtn.IsEnabled = true;
+                         IndexVal.IsReadOnly = false;
+                     }
+                 });
+
+             };
+            worker.RunWorkerAsync();
+        }
+
+        private int WebCommunications(string str)
+        {
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += (o, r) =>
             {
-                int iResult = 0;
-                SearchOperation addDel;
-                AsyncResult asyncObj = (AsyncResult)asyncRes;
-                if (asyncObj.EndInvokeCalled == false)
+                Dispatcher.Invoke(async () =>
                 {
-                    progressProcessingAsync();
-                    addDel = (SearchOperation)asyncObj.AsyncDelegate;
-                    iResult = addDel.EndInvoke(asyncObj);
-                    Console.WriteLine("\n Result is: " + iResult);
-                }
-                asyncObj.AsyncWaitHandle.Close();
-                if (iResult == -1)
-                {
-                    MessageBox.Show("\n Could not find existing record with entered last name");
-                }
-                else
-                {
-                    searchDataText = searchTxt.Text;
+                    searchDataText = str;
                     SearchData mySearch = new SearchData();
                     mySearch.searchStr = searchDataText;
-                    RestRequest request = new RestRequest("api/search/");
-                    request.AddJsonBody(mySearch.searchStr);
+                    RestRequest request = new RestRequest("api/Search/");
+                    request.AddJsonBody(mySearch);
+                    var response = await client.ExecutePostAsync(request);
                     IRestResponse resp = client.Post(request);
                     DataIntermed dataInter = JsonConvert.DeserializeObject<DataIntermed>(resp.Content);
-                    model.GetValuesForEntry(iResult, out dataInter.acct, out dataInter.pin, out dataInter.bal, out dataInter.fname, out dataInter.lname);
-                    Fname.IsReadOnly = false;
-                    LName.IsReadOnly = false;
-                    Balance.IsReadOnly = false;
-                    PIN.IsReadOnly = false;
-                    AcntNo.IsReadOnly = false;
-                    imgBtn.IsEnabled = true;
-                    GoBtn.IsEnabled = true;
-                    IndexVal.IsReadOnly = false;
                     Fname.Text = dataInter.fname;
                     LName.Text = dataInter.lname;
                     Balance.Text = dataInter.bal.ToString("C");
                     AcntNo.Text = dataInter.acct.ToString();
                     PIN.Text = dataInter.pin.ToString("D4");
-                }
-            }));
-            
+                });
+                };
+            worker.RunWorkerAsync();
+            return 1;
         }
 
         private void Button_Click_3(object sender, RoutedEventArgs e)

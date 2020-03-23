@@ -41,19 +41,11 @@ namespace Web_Service.Controllers
             DataIntermed dataInter = new DataIntermed();
             DataModel model = new DataModel();
             int i;
-            uint acntNo, pin;
-            int bal;
-            string fname, lname;
             for (i = 0; i < model.getNumEntries(); i++)
             {
-                model.GetValuesForEntry(i, out acntNo, out pin, out bal, out fname, out lname);
-                if (lname.Equals(value))
+                model.GetValuesForEntry(i, out dataInter.acct, out dataInter.pin, out dataInter.bal, out dataInter.fname, out dataInter.lname);
+                if (dataInter.lname.Equals(value))
                 {
-                    dataInter.lname = lname;
-                    dataInter.acct = acntNo;
-                    dataInter.pin = pin;
-                    dataInter.bal = bal;
-                    dataInter.fname = fname;
                     break;
                 }
             }
