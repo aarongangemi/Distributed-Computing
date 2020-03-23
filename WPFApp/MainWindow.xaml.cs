@@ -91,98 +91,20 @@ namespace WPFApp
         }
 
         //The Search Button
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private async void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            BackgroundWorker worker = new BackgroundWorker();
-            worker.DoWork += (o, r) =>
-            {
-                Dispatcher.Invoke(() =>
-                {
-                    Fname.IsReadOnly = true;
-                    LName.IsReadOnly = true;
-                    Balance.IsReadOnly = true;
-                    AcntNo.IsReadOnly = true;
-                    PIN.IsReadOnly = true;
-                    IndexVal.IsReadOnly = true;
-                    imgBtn.IsEnabled = false;
-                    GoBtn.IsEnabled = false;
-                    SearchOperation del;
-                    AsyncCallback callbackDel;
-                    del = WebCommunications;
-                    callbackDel = this.onAddCompletion;
-                    //SearchTxt.text is the field for the last name
-                    del.BeginInvoke(searchTxt.Text, callbackDel, null);
-                    System.Console.WriteLine("Waiting for Completion");
-                    System.Console.ReadLine();
-                });
-            };
-            worker.RunWorkerAsync();
-        }
-
-        private async void onAddCompletion(IAsyncResult asyncRes)
-        {
-            BackgroundWorker worker = new BackgroundWorker();
-            worker.DoWork += (o, r) =>
-             {
-                 Dispatcher.Invoke(async () =>
-                 {
-
-                     int iResult = 0;
-                     SearchOperation addDel;
-                     AsyncResult asyncObj = (AsyncResult)asyncRes;
-                     if (asyncObj.EndInvokeCalled == false)
-                     {
-                         progressProcessingAsync();
-                         addDel = (SearchOperation)asyncObj.AsyncDelegate;
-                         iResult = addDel.EndInvoke(asyncObj);
-                         Console.WriteLine("\n Result is: " + iResult);
-                     }
-                     asyncObj.AsyncWaitHandle.Close();
-                     if (iResult == -1)
-                     {
-                         MessageBox.Show("\n Could not find existing record with entered last name");
-                     }
-                     else
-                     {
-                         Fname.IsReadOnly = false;
-                         LName.IsReadOnly = false;
-                         Balance.IsReadOnly = false;
-                         PIN.IsReadOnly = false;
-                         AcntNo.IsReadOnly = false;
-                         imgBtn.IsEnabled = true;
-                         GoBtn.IsEnabled = true;
-                         IndexVal.IsReadOnly = false;
-                     }
-                 });
-
-             };
-            worker.RunWorkerAsync();
-        }
-
-        private int WebCommunications(string str)
-        {
-            BackgroundWorker worker = new BackgroundWorker();
-            worker.DoWork += (o, r) =>
-            {
-                Dispatcher.Invoke(async () =>
-                {
-                    searchDataText = str;
-                    SearchData mySearch = new SearchData();
-                    mySearch.searchStr = searchDataText;
-                    RestRequest request = new RestRequest("api/Search/");
-                    request.AddJsonBody(mySearch);
-                    var response = await client.ExecutePostAsync(request);
-                    IRestResponse resp = client.Post(request);
-                    DataIntermed dataInter = JsonConvert.DeserializeObject<DataIntermed>(resp.Content);
-                    Fname.Text = dataInter.fname;
-                    LName.Text = dataInter.lname;
-                    Balance.Text = dataInter.bal.ToString("C");
-                    AcntNo.Text = dataInter.acct.ToString();
-                    PIN.Text = dataInter.pin.ToString("D4");
-                });
-                };
-            worker.RunWorkerAsync();
-            return 1;
+            await progressProcessingAsync();
+            SearchData mySearch = new SearchData();
+            mySearch.searchStr = searchTxt.Text;
+            RestRequest request = new RestRequest("api/Search/");
+            request.AddJsonBody(mySearch);
+            IRestResponse response = await client.ExecutePostAsync(request);
+            DataIntermed dataInter = JsonConvert.DeserializeObject<DataIntermed>(response.Content);
+            Fname.Text = dataInter.fname;
+            LName.Text = dataInter.lname;
+            Balance.Text = dataInter.bal.ToString("C");
+            AcntNo.Text = dataInter.acct.ToString();
+            PIN.Text = dataInter.pin.ToString("D4");
         }
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
@@ -192,11 +114,12 @@ namespace WPFApp
             objSecondWindow.Show();
         }
 
-        private async void progressProcessingAsync()
+        private async Task progressProcessingAsync()
         {
             var progress = new Progress<int>(percent =>
             {
                 ProgBar.Value = percent;
+                ProgLabel.Content = percent.ToString() + "%";
             });
             await Task.Run(() => processProgress(progress));
         }
@@ -205,7 +128,7 @@ namespace WPFApp
         {
             for (int i = 0; i != 100; i++)
             {
-                Thread.Sleep(100);
+                Thread.Sleep(250);
                 if (progress != null)
                 {
                     progress.Report(i);
