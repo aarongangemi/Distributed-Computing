@@ -27,14 +27,11 @@ namespace WPFApp
         private string URL;
         private RestClient client;
         private BitmapImage i;
-        private DataModel model;
-        private string searchDataText;
-
+        
         public MainWindow()
         {
-            model = new DataModel();
             InitializeComponent();
-            URL = "https://localhost:44383/";
+            URL = "https://localhost:44306/";
             client = new RestClient(URL);
             RestRequest request = new RestRequest("api/webapi");
             IRestResponse numOfItems = client.Get(request);
@@ -48,7 +45,7 @@ namespace WPFApp
             try
             {
                 idx = Int32.Parse(IndexVal.Text);
-                RestRequest request = new RestRequest("api/WebApi/" + idx.ToString());
+                RestRequest request = new RestRequest("api/webapi/" + idx.ToString());
                 IRestResponse response = await client.ExecuteGetAsync(request);
                 DataIntermed dataInter = JsonConvert.DeserializeObject<DataIntermed>(response.Content);
                 if (img.Source == null)
@@ -128,7 +125,7 @@ namespace WPFApp
         {
             for (int i = 0; i != 100; i++)
             {
-                Thread.Sleep(250);
+                Thread.Sleep(150);
                 if (progress != null)
                 {
                     progress.Report(i);
