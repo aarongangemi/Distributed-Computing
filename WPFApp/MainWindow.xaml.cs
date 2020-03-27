@@ -2,17 +2,10 @@
 using Newtonsoft.Json;
 using RestSharp;
 using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Runtime.Remoting.Messaging;
-using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using Tutorial_2;
-using Web_Service.Models;
 using MessageBox = System.Windows.Forms.MessageBox;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 
