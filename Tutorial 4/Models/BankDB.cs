@@ -13,7 +13,7 @@ namespace Tutorial_4.Models
             
         }
 
-        public static UserAccessInterface GetUserAccess()
+        public UserAccessInterface GetUserAccess()
         {
 
         }
@@ -28,7 +28,7 @@ namespace Tutorial_4.Models
 
         }
 
-        public static void SaveToDisk()
+        public void SaveToDisk()
         {
             //Save all users and accounts to disk
         }
