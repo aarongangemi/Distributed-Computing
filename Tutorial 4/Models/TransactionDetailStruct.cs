@@ -5,10 +5,7 @@ using System.Web;
 
 namespace Tutorial_4.Models
 {
-    public class Account
+    public class TransactionDetailStruct
     {
-        private int acntId;
-        private int userId;
-        private double acntBalance;
     }
 }
