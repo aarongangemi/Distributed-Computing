@@ -5,11 +5,12 @@ using System.Web;
 
 namespace Tutorial4.Models
 {
-    internal class TransactionDetailsStruct
+    public class TransactionDetailsStruct
     {
         public uint transactionId;
         public uint senderId;
         public uint receiverId;
+        public uint amount;
      
     }
 }

@@ -4,36 +4,47 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Tutorial4.Models;
 
 namespace Tutorial4.Controllers
 {
     public class TransactionController : ApiController
     {
         // GET api/<controller>
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        BankDB.TransactionAccessInterface transactionAccess = Bank.bankData.GetTransactionInterface();
 
         // GET api/<controller>/5
-        public string Get(int id)
+        [Route("api/Transactions/Create/{acnt1}/{acnt2}/{amount}")]
+        [HttpPost]
+        public TransactionDetailsStruct CreateTransaction(uint acnt1, uint acnt2, uint amount)
         {
-            return "value";
+            TransactionDetailsStruct transactionStruct = new TransactionDetailsStruct();
+            transactionStruct.transactionId = transactionAccess.CreateTransaction();
+            transactionAccess.SelectTransaction(transactionStruct.transactionId);
+            transactionAccess.SetAmount(amount);
+            transactionAccess.SetSendr(acnt1);
+            transactionAccess.SetRecvr(acnt2);
+            transactionStruct.senderId = transactionAccess.GetSendrAcct();
+            transactionStruct.receiverId = transactionAccess.GetRecvrAcct();
+            transactionStruct.amount = transactionAccess.GetAmount();
+    
+            return transactionStruct;
         }
 
         // POST api/<controller>
-        public void Post([FromBody]string value)
+        [Route("api/Transactions")]
+        [HttpGet]
+        public TransactionDetailsStruct GetTransaction()
         {
+            List<uint> transactionList = transactionAccess.GetTransactions();
+            TransactionDetailsStruct transaction = new TransactionDetailsStruct();
+            transactionAccess.SelectTransaction(transactionList.ElementAt(transactionList.Count() - 1));
+            transaction.transactionId = transactionList.ElementAt(transactionList.Count() - 1);
+            transaction.senderId = transactionAccess.GetSendrAcct();
+            transaction.receiverId = transactionAccess.GetRecvrAcct();
+            transaction.amount = transactionAccess.GetAmount();
+            return transaction;
         }
 
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/<controller>/5
-        public void Delete(int id)
-        {
-        }
     }
 }
