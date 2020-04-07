@@ -29,8 +29,17 @@ namespace Tutorial4.Controllers
         }
 
         // POST api/<controller>
-        public void Post([FromBody]string value)
+        [Route("api/User/{userId}")]
+        public UserDetailsStruct GetUser(uint userId)
         {
+            string FirstName, LastName;
+            userAccess.SelectUser(userId);
+            userAccess.GetUserName(out FirstName, out LastName);
+            UserDetailsStruct userData = new UserDetailsStruct();
+            userData.firstName = FirstName;
+            userData.lastName = LastName;
+            userData.userId = userId;
+            return userData;
         }
 
         // PUT api/<controller>/5

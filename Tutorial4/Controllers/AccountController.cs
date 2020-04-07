@@ -12,10 +12,6 @@ namespace Tutorial4.Controllers
     {
         // GET api/<controller>
         BankDB.AccountAccessInterface acntAccess = Bank.bankData.GetAccountInterface();
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
         // GET api/<controller>/5
         [Route("api/Account/{accountID}")]
@@ -33,13 +29,36 @@ namespace Tutorial4.Controllers
 
         [Route("api/Account/Create/{userID}")]
         [HttpPost]
-        public uint createAcnt(uint userID)
+        public AccountDetailsStruct createAcnt(uint userID)
         {
             uint acntID = acntAccess.CreateAccount(userID);
             acntAccess.SelectAccount(acntID);
-            acntAccess.Deposit(52);
-            return acntID;
+            AccountDetailsStruct ads = new AccountDetailsStruct();
+            ads.userId = userID;
+            ads.acntBal = 0;
+            ads.acntId = acntID;
+            return ads;
         }
+
+        [Route("api/Account/Deposit/{accountID}/{amount}")]
+        [HttpPost]
+        public uint DepositValue(uint accountID, uint amount)
+        {
+            acntAccess.SelectAccount(accountID);
+            acntAccess.Deposit(amount);
+            return acntAccess.GetBalance();
+        }
+
+        [Route("api/Account/Withdraw/{accountID}/{amount}")]
+        [HttpPost]
+        public uint WithdrawValue(uint accountID, uint amount)
+        {
+            acntAccess.SelectAccount(accountID);
+            acntAccess.Withdraw(amount);
+            return acntAccess.GetBalance();
+        }
+
+
 
     }
 
