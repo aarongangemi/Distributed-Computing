@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Tutorial4.Models
 {
-    public class Bank
+    public static class Bank
     {
         public static BankDB.BankDB bankData = new BankDB.BankDB();
     }

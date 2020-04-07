@@ -11,12 +11,5 @@ namespace Tutorial4.Models
         public uint userId;
         public string firstName;
         public string lastName;
-        
-        public UserDetailsStruct()
-        {
-            userId = 0;
-            firstName = "";
-            lastName = "";
-        }
     }
 }

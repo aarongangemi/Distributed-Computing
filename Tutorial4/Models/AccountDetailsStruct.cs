@@ -6,17 +6,10 @@ using BankDB;
 
 namespace Tutorial4.Models
 {
-    internal class AccountDetailsStruct
+    public class AccountDetailsStruct
     {
         public uint acntId;
         public uint userId;
         public double acntBal;
-
-        public AccountDetailsStruct()
-        {
-            acntId = 0;
-            userId = 0;
-            acntBal = 0.0;
-        }
     }
 }

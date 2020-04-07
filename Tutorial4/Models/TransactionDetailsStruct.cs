@@ -10,11 +10,6 @@ namespace Tutorial4.Models
         public uint transactionId;
         public uint senderId;
         public uint receiverId;
-        public TransactionDetailsStruct()
-        {
-            transactionId = 0;
-            senderId = 0;
-            receiverId = 0;
-        }
+     
     }
 }

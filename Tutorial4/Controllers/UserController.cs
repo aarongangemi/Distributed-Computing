@@ -4,21 +4,28 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Tutorial4.Models;
 
 namespace Tutorial4.Controllers
 {
-    public class AdminController : ApiController
+    public class UserController : ApiController
     {
         // GET api/<controller>
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+
+        BankDB.UserAccessInterface userAccess = Bank.bankData.GetUserAccess();
 
         // GET api/<controller>/5
-        public string Get(int id)
+        [Route("api/User")]
+        [HttpPost]
+        public UserDetailsStruct createUser()
         {
-            return "value";
+            
+            UserDetailsStruct uds = new UserDetailsStruct();
+            uds.userId = userAccess.CreateUser();
+            userAccess.SelectUser(uds.userId);
+            userAccess.SetUserName("John", "Smith");
+            userAccess.GetUserName(out uds.firstName, out uds.lastName);
+            return uds;
         }
 
         // POST api/<controller>
