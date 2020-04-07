@@ -27,7 +27,6 @@ namespace Tutorial4.Controllers
             transactionStruct.senderId = transactionAccess.GetSendrAcct();
             transactionStruct.receiverId = transactionAccess.GetRecvrAcct();
             transactionStruct.amount = transactionAccess.GetAmount();
-    
             return transactionStruct;
         }
 

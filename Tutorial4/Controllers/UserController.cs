@@ -25,6 +25,7 @@ namespace Tutorial4.Controllers
             userAccess.SelectUser(uds.userId);
             userAccess.SetUserName("John", "Smith");
             userAccess.GetUserName(out uds.firstName, out uds.lastName);
+            Bank.bankData.SaveToDisk();
             return uds;
         }
 
