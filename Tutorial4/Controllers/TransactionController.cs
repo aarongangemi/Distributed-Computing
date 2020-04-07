@@ -18,6 +18,7 @@ namespace Tutorial4.Controllers
         [HttpPost]
         public TransactionDetailsStruct CreateTransaction(uint acnt1, uint acnt2, uint amount)
         {
+            Bank.bankData.ProcessAllTransactions();
             TransactionDetailsStruct transactionStruct = new TransactionDetailsStruct();
             transactionStruct.transactionId = transactionAccess.CreateTransaction();
             transactionAccess.SelectTransaction(transactionStruct.transactionId);
@@ -33,7 +34,7 @@ namespace Tutorial4.Controllers
         // POST api/<controller>
         [Route("api/Transactions")]
         [HttpGet]
-        public TransactionDetailsStruct GetTransaction()
+        public TransactionDetailsStruct GetTransactions()
         {
             List<uint> transactionList = transactionAccess.GetTransactions();
             TransactionDetailsStruct transaction = new TransactionDetailsStruct();

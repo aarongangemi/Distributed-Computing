@@ -47,7 +47,6 @@ namespace Tutorial4.Controllers
         {
             acntAccess.SelectAccount(accountID);
             acntAccess.Deposit(amount);
-            Bank.bankData.SaveToDisk();
             return acntAccess.GetBalance();
         }
 
@@ -57,7 +56,6 @@ namespace Tutorial4.Controllers
         {
             acntAccess.SelectAccount(accountID);
             acntAccess.Withdraw(amount);
-            Bank.bankData.SaveToDisk();
             return acntAccess.GetBalance();
         }
 
