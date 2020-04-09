@@ -31,6 +31,7 @@ namespace Tutorial4.Controllers
 
         // POST api/<controller>
         [Route("api/User/{userId}")]
+        [HttpGet]
         public UserDetailsStruct GetUser(uint userId)
         {
             string FirstName, LastName;
@@ -41,16 +42,6 @@ namespace Tutorial4.Controllers
             userData.lastName = LastName;
             userData.userId = userId;
             return userData;
-        }
-
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/<controller>/5
-        public void Delete(int id)
-        {
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -8,38 +10,72 @@ using Tutorial4.Models;
 
 namespace Tutorial4BusinessTier.Controllers
 {
+
     public class BankApiController : ApiController
     {
-        // GET api/<controller>
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
+        private string URL = "https://localhost:44304/";
+        private RestClient client;
+        uint acntBalance;
         // GET api/<controller>/5
-        [Route("api/BankApi/Save")]
-        [HttpPost]
-        public void SaveData()
+        public async void GetAccount()
         {
-            Bank.bankData.SaveToDisk();
+            RestRequest request = new RestRequest("api/Account/{accountID}");
+            IRestResponse response = await client.ExecuteGetAsync(request);
+            AccountDetailsStruct acntStruct = JsonConvert.DeserializeObject<AccountDetailsStruct>(response.Content);
+            //Use Account struct to show fields
         }
-
         // POST api/<controller>
-        [Route("api/BankApi/ProcessTransactions")]
-        [HttpGet]
-        public void ProcessTransactions()
+        public async void DepositMoney()
         {
-            Bank.bankData.ProcessAllTransactions();
+            //Create HTML amount input form here
+            AmountChanger amntObj = new AmountChanger();
+            //Need to set amntObj fields
+            RestRequest request = new RestRequest("api/Account/Deposit/{accountID}");
+            request.AddJsonBody(amntObj);
+            IRestResponse response = await client.ExecutePostAsync(request);
+            acntBalance = JsonConvert.DeserializeObject<uint>(response.Content);
         }
 
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
+        public async void WithdrawMoney()
         {
+            //Create HTML amount input form here
+            AmountChanger amntObj = new AmountChanger();
+            //Need to set amntObj fields
+            RestRequest request = new RestRequest("api/Account/Withdraw");
+            request.AddJsonBody(amntObj);
+            IRestResponse response = await client.ExecutePostAsync(request);
+            acntBalance = JsonConvert.DeserializeObject<uint>(response.Content);
         }
 
-        // DELETE api/<controller>/5
-        public void Delete(int id)
+        public async void createAccountAndUser()
         {
+            UserDetailsStruct user = new UserDetailsStruct();
+            AccountDetailsStruct acnt = new AccountDetailsStruct();
+            //Set user fields
+            RestRequest userRequest = new RestRequest("api/User");
+            userRequest.AddJsonBody(userRequest);
+            IRestResponse response = await client.ExecutePostAsync(userRequest);
+            uint userID = JsonConvert.DeserializeObject<uint>(response.Content);
+            RestRequest acntRequest = new RestRequest("api/Account/Create/");
+            acntRequest.AddJsonBody(acntRequest);
+            IRestResponse acntResponse = await client.ExecutePostAsync(acntRequest);
+            uint acntID = JsonConvert.DeserializeObject<uint>(response.Content);
         }
+
+        public async void GetUser()
+        {
+            RestRequest request = new RestRequest("api/User/{userId}");
+            IRestResponse response = await client.ExecuteGetAsync(request);
+            UserDetailsStruct user = JsonConvert.DeserializeObject<UserDetailsStruct>(response.Content);
+        }
+
+      public async void createTransaction()
+      {
+            TransactionDetailsStruct transaction = new TransactionDetailsStruct();
+            RestRequest restRequest = new RestRequest("api/Transactions");
+            restRequest.AddJsonBody(transaction);
+            IRestResponse response = await client.ExecutePostAsync(restRequest);
+            transaction = JsonConvert.DeserializeObject<TransactionDetailsStruct>(response.Content);
+      }
     }
 }

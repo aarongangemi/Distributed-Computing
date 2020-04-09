@@ -27,9 +27,9 @@ namespace Tutorial4.Controllers
             return ads;
         }
 
-        [Route("api/Account/Create/{userID}")]
+        [Route("api/Account/Create/")]
         [HttpPost]
-        public AccountDetailsStruct createAcnt(uint userID)
+        public AccountDetailsStruct createAcnt([FromBody] uint userID)
         {
             uint acntID = acntAccess.CreateAccount(userID);
             acntAccess.SelectAccount(acntID);
@@ -41,21 +41,21 @@ namespace Tutorial4.Controllers
             return ads;
         }
 
-        [Route("api/Account/Deposit/{accountID}/{amount}")]
+        [Route("api/Account/Deposit/}")]
         [HttpPost]
-        public uint DepositValue(uint accountID, uint amount)
+        public uint DepositValue([FromBody] AmountChanger amntObj)
         {
-            acntAccess.SelectAccount(accountID);
-            acntAccess.Deposit(amount);
+            acntAccess.SelectAccount(amntObj.accountID);
+            acntAccess.Deposit(amntObj.amount);
             return acntAccess.GetBalance();
         }
 
-        [Route("api/Account/Withdraw/{accountID}/{amount}")]
+        [Route("api/Account/Withdraw")]
         [HttpPost]
-        public uint WithdrawValue(uint accountID, uint amount)
+        public uint WithdrawValue([FromBody] AmountChanger amntObj)
         {
-            acntAccess.SelectAccount(accountID);
-            acntAccess.Withdraw(amount);
+            acntAccess.SelectAccount(amntObj.accountID);
+            acntAccess.Withdraw(amntObj.amount);
             return acntAccess.GetBalance();
         }
 
