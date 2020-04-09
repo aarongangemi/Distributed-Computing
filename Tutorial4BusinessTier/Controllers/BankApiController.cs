@@ -6,12 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Mvc;
 using Tutorial4.Models;
 
 namespace Tutorial4BusinessTier.Controllers
 {
 
-    public class BankApiController : ApiController
+    public class BankApiController : Controller
     {
         private string URL = "https://localhost:44304/";
         private RestClient client;
@@ -49,17 +50,14 @@ namespace Tutorial4BusinessTier.Controllers
 
         public async void createAccountAndUser()
         {
-            UserDetailsStruct user = new UserDetailsStruct();
-            AccountDetailsStruct acnt = new AccountDetailsStruct();
             //Set user fields
             RestRequest userRequest = new RestRequest("api/User");
-            userRequest.AddJsonBody(userRequest);
             IRestResponse response = await client.ExecutePostAsync(userRequest);
             uint userID = JsonConvert.DeserializeObject<uint>(response.Content);
             RestRequest acntRequest = new RestRequest("api/Account/Create/");
-            acntRequest.AddJsonBody(acntRequest);
+            acntRequest.AddJsonBody(userID);
             IRestResponse acntResponse = await client.ExecutePostAsync(acntRequest);
-            uint acntID = JsonConvert.DeserializeObject<uint>(response.Content);
+            uint acntID = JsonConvert.DeserializeObject<uint>(acntResponse.Content);
         }
 
         public async void GetUser()
@@ -72,10 +70,16 @@ namespace Tutorial4BusinessTier.Controllers
       public async void createTransaction()
       {
             TransactionDetailsStruct transaction = new TransactionDetailsStruct();
-            RestRequest restRequest = new RestRequest("api/Transactions");
+            RestRequest restRequest = new RestRequest("api/Transactions/Create");
             restRequest.AddJsonBody(transaction);
             IRestResponse response = await client.ExecutePostAsync(restRequest);
             transaction = JsonConvert.DeserializeObject<TransactionDetailsStruct>(response.Content);
       }
+      public ActionResult Account()
+      {
+            ViewBag.Message = "Bank Account's page";
+            return View();
+      }
+
     }
 }

@@ -41,7 +41,7 @@ namespace Tutorial4.Controllers
             return ads;
         }
 
-        [Route("api/Account/Deposit/}")]
+        [Route("api/Account/Deposit/")]
         [HttpPost]
         public uint DepositValue([FromBody] AmountChanger amntObj)
         {

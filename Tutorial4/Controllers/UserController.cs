@@ -19,11 +19,10 @@ namespace Tutorial4.Controllers
         [HttpPost]
         public UserDetailsStruct createUser()
         {
-            
             UserDetailsStruct uds = new UserDetailsStruct();
             uds.userId = userAccess.CreateUser();
             userAccess.SelectUser(uds.userId);
-            userAccess.SetUserName("John", "Smith");
+            userAccess.SetUserName(uds.firstName, uds.lastName);
             userAccess.GetUserName(out uds.firstName, out uds.lastName);
             Bank.bankData.SaveToDisk();
             return uds;
