@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "Accounts Page";
+}
+<form>
+    <label>Search a User</label><br/>
+    <input type="text" id="id" placeholder="User Id" /><br /><br />
+    <input type="text" id="fname" name="fname" placeholder="First Name" /><br /><br />
+    <input type="text" id="lname" name="lname" placeholder="Last Name" /><br /><br />
+</form>
+<button id="submitBtn" onclick="GetUser()">Get User</button>
+<br />
+
+<script>
+    function GetUser() {
+        console.log("Get User");
+        $.ajax({
+            url: 'api/User/' + $('#id').val(),
+            type: 'get',
+            contentType: 'application/json',
+            processData: false,
+            success: function (data, textStatus, jQxhr) {
+                var obj = data;
+                $("#fname").val(obj.firstName);
+                $("#lname").val(obj.lastName);
+                $("#id").val(obj.userId);
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log(errorThrown);
+            }
+        })
+    }
+</script>
+
+<form>
+    <label>Create a User</label><br/>
+    <input type="text" id="acntFirstName" name="acntFirstName" placeholder="First Name" /><br /><br />
+    <input type="text" id="acntLastName" name="acntLastName" placeholder="Last Name" /><br /><br />
+</form>
+<button id="submitBtn" onclick="CreateUser()">Get User</button>
+<script>
+    function CreateUser() {
+        console.log("Creating User");
+        $.ajax({
+            url: 'api/BankApi/Create/' + $('#acntFirstName').val() + '/' + $('#acntLastName').val(),
+            type: 'post',
+            contentType: 'application/json',
+            processData: false,
+            success: function (data, textStatus, jQxhr) {
+                console.log(textStatus);
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log(errorThrown)
+            }
+        })
+    }
+</script>
+
