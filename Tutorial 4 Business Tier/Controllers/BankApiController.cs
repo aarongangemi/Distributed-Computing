@@ -14,23 +14,26 @@ namespace Tutorial_4_Business_Tier.Controllers
     {
         private string URL = "https://localhost:44312/";
         private RestClient client;
-        public AccountDetailsStruct GetAccount()
+
+        [Route("Main/api/BankApi/Account/{accountID}")]
+        [HttpGet]
+        public AccountDetailsStruct GetAccount(uint accountID)
         {
             client = new RestClient(URL);
-            RestRequest request = new RestRequest("api/Account/{accountID}");
+            RestRequest request = new RestRequest("api/Account/"+accountID.ToString());
             IRestResponse response = client.Get(request);
             return JsonConvert.DeserializeObject<AccountDetailsStruct>(response.Content);
         }
 
-        [Route("api/BankApi/Deposit/{accountID}")]
-        public void DepositMoney(uint accountID)
+        [Route("Main/api/BankApi/Deposit/{accountID}/{amount}")]
+        public void DepositMoney(uint accountID, uint amount)
         {
             client = new RestClient(URL);
-            RestRequest request = new RestRequest("api/Account/Deposit/"+accountID.ToString());
+            RestRequest request = new RestRequest("api/Account/Deposit/"+accountID.ToString() + "/" + amount.ToString());
             client.Post(request);
         }
 
-        [Route("api/BankApi/Withdraw/{accountID}/{amount}")]
+        [Route("Main/api/BankApi/Withdraw/{accountID}/{amount}")]
         [HttpPost]
         public void WithdrawMoney(uint accountID, uint amount)
         {

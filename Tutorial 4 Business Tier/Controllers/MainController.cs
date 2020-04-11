@@ -8,21 +8,21 @@ namespace Tutorial_4_Business_Tier.Controllers
 {
     public class MainController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Users()
         {
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult Accounts()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Your Accounts Page";
 
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult Transactions()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Your Transactions Page.";
 
             return View();
         }

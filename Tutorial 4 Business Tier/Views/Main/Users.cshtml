@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Accounts Page";
+    ViewBag.Title = "Users Page";
 }
 <form>
     <label>Search a User</label><br/>
@@ -14,7 +14,7 @@
     function GetUser() {
         console.log("Get User");
         $.ajax({
-            url: 'api/User/' + $('#id').val(),
+            url: 'api/BankApi/GetUser/' + $("#id").val(),
             type: 'get',
             contentType: 'application/json',
             processData: false,

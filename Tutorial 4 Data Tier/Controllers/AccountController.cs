@@ -42,7 +42,7 @@ namespace Tutorial_4_Data_Tier.Controllers
             return ads;
         }
 
-        [Route("api/Account/Deposit/")]
+        [Route("api/Account/Deposit/{accountID}/{amount}")]
         [HttpPost]
         public uint DepositValue(uint accountID, uint amount)
         {
