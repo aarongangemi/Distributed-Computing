@@ -14,20 +14,20 @@ namespace Tutorial_4_Data_Tier.Controllers
         BankDB.TransactionAccessInterface transactionAccess = Bank.bankData.GetTransactionInterface();
 
         // GET api/<controller>/5
-        [Route("api/Transactions/Create/")]
+        [Route("api/Transactions/Create/{amount}/{senderID}/{receiverID}")]
         [HttpPost]
-        public void CreateTransaction()
+        public void CreateTransaction(uint amount, uint senderID, uint receiverID)
         {
             TransactionDetailsStruct tran = new TransactionDetailsStruct();
-            Bank.bankData.ProcessAllTransactions();
             tran.transactionId = transactionAccess.CreateTransaction();
+            tran.amount = amount;
+            tran.senderId = senderID;
+            tran.receiverId = receiverID;
             transactionAccess.SelectTransaction(tran.transactionId);
             transactionAccess.SetAmount(tran.amount);
             transactionAccess.SetSendr(tran.senderId);
             transactionAccess.SetRecvr(tran.receiverId);
-            tran.senderId = transactionAccess.GetSendrAcct();
-            tran.receiverId = transactionAccess.GetRecvrAcct();
-            tran.amount = transactionAccess.GetAmount();
+            Bank.bankData.ProcessAllTransactions();
         }
 
         // POST api/<controller>

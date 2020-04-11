@@ -65,12 +65,12 @@ namespace Tutorial_4_Business_Tier.Controllers
             return JsonConvert.DeserializeObject<UserDetailsStruct>(response.Content);
         }
 
-        [Route("api/BankApi/CreateTransaction")]
+        [Route("Main/api/BankApi/CreateTransaction/{amount}/{senderID}/{receiverID}")] 
         [HttpPost]
-        public void createTransaction()
+        public void createTransaction(uint amount, uint senderID, uint receiverID)
         {
             client = new RestClient(URL);
-            RestRequest restRequest = new RestRequest("api/Transactions/Create");
+            RestRequest restRequest = new RestRequest("api/Transactions/Create/" + amount + "/" + senderID + "/" + receiverID);
             client.Post(restRequest);
         }
 

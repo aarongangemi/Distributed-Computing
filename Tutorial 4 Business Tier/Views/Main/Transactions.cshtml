@@ -1,7 +1,29 @@
 ﻿@{
-    ViewBag.Title = "About";
+    ViewBag.Title = "Transaction Page";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<p>Use this area to provide additional information.</p>
+<form>
+    <label>Search my Account</label><br />
+    <input type="text" id="amount" name="amount" placeholder="Amount" /><br /><br />
+    <input type="text" id="senderID" name="senderID" placeholder="Sender ID" /><br /><br />
+    <input type="text" id="receiverID" name="receiverID" placeholder="Receiver ID" /><br /><br />
+</form>
+<button id="submitBtn" onclick="CompleteTransaction()">Complete Transaction</button>
+<br />
+<script>
+    function CompleteTransaction() {
+        console.log("Create Transaction");
+        $.ajax({
+            url: "api/BankApi/CreateTransaction/" + $("#amount").val() + "/" + $("#senderID").val() + "/" + $("#receiverID").val(),
+            type: 'post',
+            contentType: 'application/json',
+            processData: false,
+            success: function (data, textStatus, jQxhr) {
+                console.log(textStatus);
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log(errorThrown)
+            }
+        })
+    }
+    </script>
