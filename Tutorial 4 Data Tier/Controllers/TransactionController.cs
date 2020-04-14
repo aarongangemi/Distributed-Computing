@@ -27,7 +27,6 @@ namespace Tutorial_4_Data_Tier.Controllers
             transactionAccess.SetAmount(tran.amount);
             transactionAccess.SetSendr(tran.senderId);
             transactionAccess.SetRecvr(tran.receiverId);
-            Bank.bankData.ProcessAllTransactions();
         }
 
         // POST api/<controller>

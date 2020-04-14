@@ -38,7 +38,6 @@ namespace Tutorial_4_Data_Tier.Controllers
             ads.userId = userID;
             ads.acntBal = 0;
             ads.acntId = acntID;
-            Bank.bankData.SaveToDisk();
             return ads;
         }
 

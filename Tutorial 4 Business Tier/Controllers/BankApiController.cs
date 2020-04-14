@@ -31,6 +31,8 @@ namespace Tutorial_4_Business_Tier.Controllers
             client = new RestClient(URL);
             RestRequest request = new RestRequest("api/Account/Deposit/"+accountID.ToString() + "/" + amount.ToString());
             client.Post(request);
+            RestRequest saveRequest = new RestRequest("api/Save");
+            client.Post(saveRequest);
         }
 
         [Route("Main/api/BankApi/Withdraw/{accountID}/{amount}")]
@@ -40,6 +42,8 @@ namespace Tutorial_4_Business_Tier.Controllers
             client = new RestClient(URL);
             RestRequest request = new RestRequest("api/Account/Withdraw/" + accountID.ToString() + "/" + amount.ToString());
             client.Post(request);
+            RestRequest saveRequest = new RestRequest("api/Save");
+            client.Post(saveRequest);
         }
 
         [Route("api/BankApi/Create/{fname}/{lname}")]
@@ -53,6 +57,8 @@ namespace Tutorial_4_Business_Tier.Controllers
             uint userID = JsonConvert.DeserializeObject<uint>(response.Content);
             RestRequest acntRequest = new RestRequest("api/Account/Create/" + userID.ToString());
             client.Post(acntRequest);
+            RestRequest saveRequest = new RestRequest("api/Save");
+            client.Post(saveRequest);
         }
 
         [Route("api/BankApi/GetUser/{userId}")]
@@ -72,6 +78,10 @@ namespace Tutorial_4_Business_Tier.Controllers
             client = new RestClient(URL);
             RestRequest restRequest = new RestRequest("api/Transactions/Create/" + amount + "/" + senderID + "/" + receiverID);
             client.Post(restRequest);
+            RestRequest transactionRequest = new RestRequest("api/ProcessTransactions");
+            client.Post(transactionRequest);
+            RestRequest saveRequest = new RestRequest("api/Save");
+            client.Post(saveRequest);
         }
 
     }

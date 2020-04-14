@@ -4,36 +4,25 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Tutorial_4_Data_Tier.Models;
 
 namespace Tutorial_4_Data_Tier.Controllers
 {
     public class AdminController : ApiController
     {
         // GET api/<controller>
-        public IEnumerable<string> Get()
+        [Route("api/Save")]
+        [HttpPost]
+        public void Save()
         {
-            return new string[] { "value1", "value2" };
+            Bank.bankData.SaveToDisk();
         }
 
-        // GET api/<controller>/5
-        public string Get(int id)
+        [Route("api/ProcessTransactions")]
+        [HttpPost]
+        public void processTransactions()
         {
-            return "value";
-        }
-
-        // POST api/<controller>
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/<controller>/5
-        public void Delete(int id)
-        {
+            Bank.bankData.ProcessAllTransactions();
         }
     }
 }

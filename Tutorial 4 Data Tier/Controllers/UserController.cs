@@ -20,7 +20,6 @@ namespace Tutorial_4_Data_Tier.Controllers
             uds.lastName = lname;
             userAccess.SetUserName(uds.firstName, uds.lastName);
             userAccess.GetUserName(out uds.firstName, out uds.lastName);
-            Bank.bankData.SaveToDisk();
             return uds.userId;
         }
 
