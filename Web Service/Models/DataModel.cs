@@ -38,7 +38,7 @@ namespace Web_Service.Models
             uint acntNo, pin;
             int bal;
             int val = -1;
-            string fname, lname;
+            string fname, lname, filePath;
             for (i = 0; i < foob.GetNumEntries(); i++)
             {
                 GetValuesForEntry(i, out acntNo, out pin, out bal, out fname, out lname);

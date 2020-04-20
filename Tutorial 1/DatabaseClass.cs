@@ -104,13 +104,5 @@ namespace Tutorial_1
         {
             return dataStruct.Capacity;
         }
-
-        public string SetFilePath(out string filePath,int index)
-        {
-       
-            filePath = dataStruct.ElementAt(index).filePath;
-            return dataStruct.ElementAt(index).filePath;
-        }
-
     }
 }

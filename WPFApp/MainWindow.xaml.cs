@@ -24,7 +24,7 @@ namespace WPFApp
         public MainWindow()
         {
             InitializeComponent();
-            URL = "https://localhost:44306/";
+            URL = "https://localhost:44383/";
             client = new RestClient(URL);
             RestRequest request = new RestRequest("api/webapi");
             IRestResponse numOfItems = client.Get(request);
