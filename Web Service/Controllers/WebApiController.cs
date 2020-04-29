@@ -50,21 +50,7 @@ namespace Web_Service.Controllers
                 }
             }
             return dataInter;
-        }
-
-        //PUT api/<controller>/5
-        public void Put(int id,[FromBody]string value)
-        {
-
-        }
-
-        //DELETE api/<controller>/5
-        public void Delete(int id)
-        {
-
-        }
-
-        
+        }        
     }
     
 }

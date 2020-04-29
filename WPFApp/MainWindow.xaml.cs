@@ -20,7 +20,7 @@ namespace WPFApp
         private string URL;
         private RestClient client;
         private BitmapImage i;
-        private Boolean found;
+        private bool found;
         public MainWindow()
         {
             InitializeComponent();

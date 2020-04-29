@@ -11,6 +11,12 @@ namespace Web_Service.Controllers
 {
     public class GetValuesController : ApiController
     {
+
+        public int Get()
+        {
+            DataModel model = new DataModel();
+            return model.getNumEntries();
+        }
         public DataIntermed Get(int id)
         {
             DataModel model = new DataModel();
