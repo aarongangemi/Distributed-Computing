@@ -11,6 +11,7 @@ namespace Remoting_Server
 {
     //Concurrency Mode indicates that server will be multi-threaded
     //UseSynchronisationContext indicates that we will handle synchronisation
+    //InstanceContextMode ensures data tier implemented will be singleton
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = false, InstanceContextMode =InstanceContextMode.Single)]
     //Must be internal because it must be accessed through the interface
     internal class DataServer : DataServerInterface
