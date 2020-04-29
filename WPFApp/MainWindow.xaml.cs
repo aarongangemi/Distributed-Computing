@@ -20,15 +20,16 @@ namespace WPFApp
         private string URL;
         private RestClient client;
         private BitmapImage i;
-        
+        private Boolean found;
         public MainWindow()
         {
             InitializeComponent();
             URL = "https://localhost:44383/";
             client = new RestClient(URL);
-            RestRequest request = new RestRequest("api/webapi");
+            RestRequest request = new RestRequest("api/WebApi");
             IRestResponse numOfItems = client.Get(request);
             totalTxt.Text = numOfItems.Content;
+            found = false;
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
@@ -83,12 +84,25 @@ namespace WPFApp
         //The Search Button
         private async void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            await progressProcessingAsync();
+            int sleepTime;
+            if(Int32.Parse(IndexVal.Text) > 50000)
+            {
+                sleepTime = 1500;               
+            }
+            else
+            {
+                sleepTime = 750;
+            }
+            progressProcessingAsync(sleepTime);
             SearchData mySearch = new SearchData();
             mySearch.searchStr = searchTxt.Text;
             RestRequest request = new RestRequest("api/Search/");
             request.AddJsonBody(mySearch);
             IRestResponse response = await client.ExecutePostAsync(request);
+            if(response.IsSuccessful)
+            {
+                found = true;
+            }
             DataIntermed dataInter = JsonConvert.DeserializeObject<DataIntermed>(response.Content);
             Fname.Text = dataInter.fname;
             LName.Text = dataInter.lname;
@@ -104,24 +118,31 @@ namespace WPFApp
             objSecondWindow.Show();
         }
 
-        private async Task progressProcessingAsync()
+        private async Task progressProcessingAsync(int sleepTime)
         {
             var progress = new Progress<int>(percent =>
             {
                 ProgBar.Value = percent;
                 ProgLabel.Content = percent.ToString() + "%";
             });
-            await Task.Run(() => processProgress(progress));
+            await Task.Run(() => processProgress(progress, sleepTime));
         }
 
-        public void processProgress(IProgress<int> progress)
+        public void processProgress(IProgress<int> progress, int sleepTime)
         {
+            progress.Report(0);
             for (int i = 0; i != 100; i++)
             {
-                Thread.Sleep(150);
+                Thread.Sleep(sleepTime);
                 if (progress != null)
                 {
                     progress.Report(i);
+                }
+                if(found)
+                {
+                    progress.Report(100);
+                    found = false;
+                    break;
                 }
             }
         }

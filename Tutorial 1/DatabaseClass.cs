@@ -102,7 +102,7 @@ namespace Tutorial_1
 
         public int GetNumRecords()
         {
-            return dataStruct.Capacity;
+            return dataStruct.Count;
         }
     }
 }
