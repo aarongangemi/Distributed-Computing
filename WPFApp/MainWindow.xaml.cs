@@ -19,7 +19,6 @@ namespace WPFApp
     {
         private string URL;
         private RestClient client;
-        private BitmapImage i;
         private bool found;
         public MainWindow()
         {
@@ -28,13 +27,12 @@ namespace WPFApp
             client = new RestClient(URL);
             RestRequest request = new RestRequest("api/WebApi");
             IRestResponse numOfItems = client.Get(request);
-            totalTxt.Text = numOfItems.Content;
+            NoOfItems.Content = numOfItems.Content;
             found = false;
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private async void Click_Go(object sender, RoutedEventArgs e)
         {
-            i = new BitmapImage();
             int idx;
             try
             {
@@ -42,47 +40,41 @@ namespace WPFApp
                 RestRequest request = new RestRequest("api/webapi/" + idx.ToString());
                 IRestResponse response = await client.ExecuteGetAsync(request);
                 DataIntermed dataInter = JsonConvert.DeserializeObject<DataIntermed>(response.Content);
-                if (img.Source == null)
-                {
-                    img.Source = i;
-                }
-
-                Fname.Text = dataInter.fname;
-                LName.Text = dataInter.lname;
-                Balance.Text = dataInter.bal.ToString("C");
-                AcntNo.Text = dataInter.acct.ToString();
-                PIN.Text = dataInter.pin.ToString("D4");
+                Fname.Content = "First Name: " + dataInter.fname;
+                Lname.Content = "Last Name: " + dataInter.lname;
+                Balance.Content = "Balance: " + dataInter.bal.ToString("C");
+                AcntNo.Content = "Account No: " + dataInter.acct;
+                PIN.Content = "PIN: " + dataInter.pin.ToString("D4");
             }
             catch (FormatException)
             {
                 MessageBox.Show("Invalid Data was found, please try again");
-                Fname.Clear();
-                LName.Clear();
-                Balance.Clear();
-                AcntNo.Clear();
-                PIN.Clear();
+                Fname.Content = "First Name:";
+                Lname.Content = "Last Name: ";
+                Balance.Content = "Balance: ";
+                AcntNo.Content = "Account Number";
+                PIN.Content = "PIN: ";
             }
 
 
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Click_Upload_Image(object sender, RoutedEventArgs e)
         {
-            BitmapImage image = null;
             OpenFileDialog open = new OpenFileDialog();
             open.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp;)|*.jpg; *.jpeg; *.gif; *.bmp;";
             bool? result = open.ShowDialog();
             if (result == true)
             {
                 string filePath = open.FileName;
-                image = new BitmapImage(new Uri(filePath));
+                BitmapImage image = new BitmapImage(new Uri(filePath));
                 img.Source = image;
             }
 
         }
 
         //The Search Button
-        private async void Button_Click_2(object sender, RoutedEventArgs e)
+        private async void Click_Search_btn(object sender, RoutedEventArgs e)
         {
             int sleepTime;
             if(Int32.Parse(IndexVal.Text) > 50000)
@@ -104,11 +96,11 @@ namespace WPFApp
                 found = true;
             }
             DataIntermed dataInter = JsonConvert.DeserializeObject<DataIntermed>(response.Content);
-            Fname.Text = dataInter.fname;
-            LName.Text = dataInter.lname;
-            Balance.Text = dataInter.bal.ToString("C");
-            AcntNo.Text = dataInter.acct.ToString();
-            PIN.Text = dataInter.pin.ToString("D4");
+            Fname.Content = "First Name: " + dataInter.fname;
+            Lname.Content = "Last Name: " + dataInter.lname;
+            Balance.Content = "Balance: " + dataInter.bal.ToString("C");
+            AcntNo.Content = "Account Number: " + dataInter.acct.ToString();
+            PIN.Content = "PIN: " + dataInter.pin.ToString("D4");
         }
 
         private void Button_Click_3(object sender, RoutedEventArgs e)

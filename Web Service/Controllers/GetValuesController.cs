@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Windows.Media.Imaging;
 using Web_Service.Models;
 
 namespace Web_Service.Controllers

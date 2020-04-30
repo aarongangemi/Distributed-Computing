@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace Tutorial_1
 {
@@ -58,21 +59,16 @@ namespace Tutorial_1
         {
             return random.Next(1, 999999999);
         }
-
-        public string GetFilePath()
-        {
-            return "";
-        }
         public void GetNextAccount(out uint pin, out uint acctNo,
                                    out string firstName, out string lastName,
-                                   out int balance, out string filePath)
+                                   out int balance)
         {
             pin = GetPin();
             acctNo = GetAcctNo();
             firstName = GetFirstname();
             lastName = GetLastname();
             balance = GetBalance();
-            filePath = GetFilePath();
+
         }
     }
 }
