@@ -20,7 +20,7 @@ namespace Remoting_Server
             tcp.CloseTimeout = new TimeSpan(0, 30, 0);
             tcp.SendTimeout = new TimeSpan(0, 30, 0);
             tcp.ReceiveTimeout = new TimeSpan(0, 30, 0);
-            host.AddServiceEndpoint(typeof(DataServerInterface), tcp, "net.tcp://0.0.0.0:8100/DataService");
+            host.AddServiceEndpoint(typeof(IDataServerInterface.IDataServerInterface), tcp, "net.tcp://0.0.0.0:8100/DataService");
             host.Open();
             Console.WriteLine("System online");
             Console.ReadLine();

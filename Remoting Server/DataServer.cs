@@ -14,7 +14,7 @@ namespace Remoting_Server
     //InstanceContextMode ensures data tier implemented will be singleton
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = false, InstanceContextMode =InstanceContextMode.Single)]
     //Must be internal because it must be accessed through the interface
-    internal class DataServer : DataServerInterface
+    internal class DataServer : IDataServerInterface.IDataServerInterface
     {
         private DatabaseClass database = new DatabaseClass();
         public int GetNumEntries()

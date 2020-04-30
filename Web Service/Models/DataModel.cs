@@ -1,4 +1,5 @@
-﻿using Remoting_Server;
+﻿using IDataServerInterface;
+using Remoting_Server;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +12,13 @@ namespace Web_Service.Models
     {
         private NetTcpBinding tcp;
         private string URL;
-        ChannelFactory<DataServerInterface> foobFactory;
-        DataServerInterface foob;
+        ChannelFactory<IDataServerInterface.IDataServerInterface> foobFactory;
+        IDataServerInterface.IDataServerInterface foob;
         public DataModel()
         {
             tcp = new NetTcpBinding();
             URL = "net.tcp://localhost:8100/DataService";
-            foobFactory = new ChannelFactory<DataServerInterface>(tcp, URL);
+            foobFactory = new ChannelFactory<IDataServerInterface.IDataServerInterface>(tcp, URL);
             foob = foobFactory.CreateChannel();
         }
 

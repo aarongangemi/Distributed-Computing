@@ -1,4 +1,5 @@
-﻿using Remoting_Server;
+﻿using IDataServerInterface;
+using Remoting_Server;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,8 +18,8 @@ namespace Tutorial_2
     class BusinessServer : BusinessServerInterface
     {
         private int LogNumber = 0;
-        ChannelFactory<DataServerInterface> foobFactory;
-        private DataServerInterface foob;
+        ChannelFactory<IDataServerInterface.IDataServerInterface> foobFactory;
+        private IDataServerInterface.IDataServerInterface foob;
         NetTcpBinding tcp;
         string URL;
         public BusinessServer()
@@ -28,7 +29,7 @@ namespace Tutorial_2
             tcp.MaxBufferSize = 2147483647;
             tcp.MaxReceivedMessageSize = 2147483647;
             tcp.MaxBufferPoolSize = 2147483647;
-            foobFactory = new ChannelFactory<DataServerInterface>(tcp, URL);
+            foobFactory = new ChannelFactory<IDataServerInterface.IDataServerInterface>(tcp, URL);
             foob = foobFactory.CreateChannel();
 
         }

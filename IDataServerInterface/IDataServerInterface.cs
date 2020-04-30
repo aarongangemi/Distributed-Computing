@@ -4,14 +4,13 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
 
-namespace Remoting_Server
+namespace IDataServerInterface
 {
     //Make this a service contract as it is a service interface
 
     [ServiceContract] //Defines that interface is for distributed objects
-    public interface DataServerInterface
+    public interface IDataServerInterface
     {
         //Each of these are service function contracts. They need to be tagged as OperationContracts.
         //Defines that method will be for distributed objects

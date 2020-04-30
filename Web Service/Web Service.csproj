@@ -202,6 +202,10 @@
       <Project>{EC4D7C2D-06DD-4BF7-92AF-1A72B276470A}</Project>
       <Name>Bis-GUI</Name>
     </ProjectReference>
+    <ProjectReference Include="..\IDataServerInterface\IDataServerInterface.csproj">
+      <Project>{4CE0B788-5CAF-44FA-8B24-7701E8DE869D}</Project>
+      <Name>IDataServerInterface</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Remoting Server\Remoting Server.csproj">
       <Project>{ACFDC249-8F81-4ED1-A58C-F366E6737F7D}</Project>
       <Name>Remoting Server</Name>

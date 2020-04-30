@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1DF552D0-0D6D-481F-AF29-757920D7CEAB}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>Tutorial_2</RootNamespace>
-    <AssemblyName>Tutorial 2</AssemblyName>
+    <ProjectGuid>{4CE0B788-5CAF-44FA-8B24-7701E8DE869D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>IDataServerInterface</RootNamespace>
+    <AssemblyName>IDataServerInterface</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -44,23 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusinessServer.cs" />
-    <Compile Include="BusinessServerInterface.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="IDataServerInterface.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\IDataServerInterface\IDataServerInterface.csproj">
-      <Project>{4CE0B788-5CAF-44FA-8B24-7701E8DE869D}</Project>
-      <Name>IDataServerInterface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Remoting Server\Remoting Server.csproj">
-      <Project>{ACFDC249-8F81-4ED1-A58C-F366E6737F7D}</Project>
-      <Name>Remoting Server</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -14,34 +14,34 @@ namespace Tutorial_1
         {
             random = rand;
         }
+
+        /****************************************************************
+         * Purpose: To return a random first name from the list in the method 
+         * Reference: List of names obtained from: https://www.rong-chang.com/namesdict/popular_names.htm
+         * Reference: https://www.c-sharpcorner.com/article/how-to-select-a-random-string-from-an-array-of-strings/
+         * ***************************************************************/
         private string GetFirstname()
         {
-            int length = 7;
-            StringBuilder str = new StringBuilder();
-            char letter;
-            for (int i = 0; i < length; i++)
-            {
-                double flt = random.NextDouble();
-                int shift = Convert.ToInt32(Math.Floor(25 * flt));
-                letter = Convert.ToChar(shift + 65);
-                str.Append(letter);
-            }
-            return str.ToString();
+            string[] fnameArray = { "James", "John", "Robert", "Michael", "William",
+                "David", "Richard", "Charles", "Joseph", "Thomas", "Christopher", 
+                "Daniel", "Paul", "Mark", "Donald", "George", "Kenneth", "Steven", 
+                "Edward", "Brian", "Ronalds", "Anthony", "Kevin", "Jason", "Aaron" };
+            int arrayIdx = random.Next(fnameArray.Length);
+            return fnameArray[arrayIdx];
         }
 
+        /*****************************************************************
+         * Purpose: To return a random last name from the list in the method
+         * Reference: List of last names obtained from: https://www.worldatlas.com/articles/the-25-most-popular-last-names-in-the-united-states.html
+         *****************************************************************/
         private string GetLastname()
         {
-            int length = 7;
-            StringBuilder str = new StringBuilder();
-            char letter;
-            for (int i = 0; i < length; i++)
-            {
-                double flt = random.NextDouble();
-                int shift = Convert.ToInt32(Math.Floor(25 * flt));
-                letter = Convert.ToChar(shift + 65);
-                str.Append(letter);
-            }
-            return str.ToString();
+            string[] lnameArray = {"Smith", "Johnson","Williams", "Jones", "Brown", "Davis",
+                "Miller", "Wilson", "Moore", "Taylor", "Anderson", "Thomas", "Jackson",
+                "White", "Harris", "Martin", "Thompson", "Garcia", "Martinez",
+                "Robinson","Clark", "Rodriguez", "Lewis", "Lee", "Walker"};
+            int arrayIdx = random.Next(lnameArray.Length);
+            return lnameArray[arrayIdx];
         }
 
         private uint GetPin()
