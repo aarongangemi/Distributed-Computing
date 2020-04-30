@@ -1,0 +1,51 @@
+
+Log File Function: Upload profile image
+Image upload from File Path: C:\Users\61459\OneDrive\Desktop\Photo Album Gift\94582177_255116952279236_4152795829733687296_n.jpg
+Log file function: Get Account Details by index
+Account 24857458 retrieved for: Jason Wilson at index: 99999
+Log file function: Search by lastname
+Account: 90951107 has searched for last name: Martin and found a result for: Christopher Martin
+Log file function: Get Account Details by index
+Account 97443003 retrieved for: Paul Martin at index: 111
+Log file function: Search by lastname
+Account: 62764310 has searched for last name: Williams and found a result for: George Williams
+Log file function: Get Account Details by index
+Account 17490749 retrieved for: William Harris at index: 9999
+Log file function: Search by lastname
+Account: 96888684 has searched for last name: Martin and found a result for: Thomas Martin
+Log file function: Search by lastname
+Account: 98521523 has searched for last name: Thompson and found a result for: Kevin Thompson
+Log file function: Search by lastname
+Account: 91835388 has searched for last name: Martin and found a result for: John Martin
+Log file function: Search by lastname
+Account: 79044807 has searched for last name: Thompson and found a result for: Brian Thompson
+Log file function: Search by lastname
+Account: 56698072 has searched for last name: Martin and found a result for: Charles Martin
+Log file function: Search by lastname
+Account: 85099214 has searched for last name: Thompson and found a result for: Aaron Thompson
+Log file function: Get Account Details by index
+Account 28906937 retrieved for: Thomas Rodriguez at index: 22
+Log file function: Search by lastname
+Account: 98422692 has searched for last name: Williams and found a result for: Joseph Williams
+Log file function: Search by lastname
+Account: 56698072 has searched for last name: Martin and found a result for: Charles Martin
+Log file function: Get Account Details by index
+Account 18515213 retrieved for: Edward Taylor at index: 22
+Log file function: Search by lastname
+Account: 99201718 has searched for last name: Martin and found a result for: Thomas Martin
+Log file function: Search by lastname
+Account: 12807354 has searched for last name: Thompson and found a result for: Mark Thompson
+Log file function: Search by lastname
+Account: 73826776 has searched for last name: Williams and found a result for: Charles Williams
+Log file function: Search by lastname
+Account: 52164830 has searched for last name: Jackson and found a result for: Daniel Jackson
+Log File Function: Upload profile image
+Image upload from File Path: C:\Users\61459\OneDrive\Desktop\Photo Album Gift\94582177_255116952279236_4152795829733687296_n.jpg
+Log file function: Get Account Details by index
+Account 42013344 retrieved for: Ronalds Brown at index: 111
+Log file function: Search by lastname
+Account: 98917375 has searched for last name: Martin and found a result for: Charles Martin
+Log file function: Get Account Details by index
+Account 48273887 retrieved for: Michael Martinez at index: 2222
+Log file function: Search by lastname
+Account: 10459374 has searched for last name: Thompson and found a result for: Joseph Thompson

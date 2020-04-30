@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using RestSharp;
 using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,6 +21,7 @@ namespace WPFApp
         private string URL;
         private RestClient client;
         private bool found;
+        private StreamWriter writer;
         public MainWindow()
         {
             InitializeComponent();
@@ -29,6 +31,7 @@ namespace WPFApp
             IRestResponse numOfItems = client.Get(request);
             NoOfItems.Content = numOfItems.Content;
             found = false;
+            
         }
 
         private async void Click_Go(object sender, RoutedEventArgs e)
@@ -45,6 +48,11 @@ namespace WPFApp
                 Balance.Content = "Balance: " + dataInter.bal.ToString("C");
                 AcntNo.Content = "Account No: " + dataInter.acct;
                 PIN.Content = "PIN: " + dataInter.pin.ToString("D4");
+                writer = new StreamWriter("C:/Users/61459/source/repos/aarongangemi/Distributed-Computing/WPFApp/Log file.txt", append: true);
+                writer.WriteLine("Log file function: Get Account Details by index");
+                writer.WriteLine("Account " + dataInter.acct + " retrieved for: " + dataInter.fname + " " + dataInter.lname + " at index: " + idx.ToString());
+                writer.Close();
+
             }
             catch (FormatException)
             {
@@ -54,6 +62,8 @@ namespace WPFApp
                 Balance.Content = "Balance: ";
                 AcntNo.Content = "Account Number";
                 PIN.Content = "PIN: ";
+                writer.WriteLine("Formatting data error - Error Attempt");
+                writer.Close();
             }
 
 
@@ -69,6 +79,10 @@ namespace WPFApp
                 string filePath = open.FileName;
                 BitmapImage image = new BitmapImage(new Uri(filePath));
                 img.Source = image;
+                writer = new StreamWriter("C:/Users/61459/source/repos/aarongangemi/Distributed-Computing/WPFApp/Log file.txt", append: true);
+                writer.WriteLine("Log File Function: Upload profile image");
+                writer.WriteLine("Image upload from File Path: " + filePath);
+                writer.Close();
             }
 
         }
@@ -76,56 +90,51 @@ namespace WPFApp
         //The Search Button
         private async void Click_Search_btn(object sender, RoutedEventArgs e)
         {
-            int sleepTime;
-            if(Int32.Parse(IndexVal.Text) > 50000)
-            {
-                sleepTime = 1500;               
-            }
-            else
-            {
-                sleepTime = 750;
-            }
-            progressProcessingAsync(sleepTime);
+            progressProcessingAsync();
             SearchData mySearch = new SearchData();
             mySearch.searchStr = searchTxt.Text;
             RestRequest request = new RestRequest("api/Search/");
             request.AddJsonBody(mySearch);
             IRestResponse response = await client.ExecutePostAsync(request);
-            if(response.IsSuccessful)
+            DataIntermed dataInter = JsonConvert.DeserializeObject<DataIntermed>(response.Content);
+            if (response.IsSuccessful)
             {
                 found = true;
+                writer = new StreamWriter("C:/Users/61459/source/repos/aarongangemi/Distributed-Computing/WPFApp/Log file.txt", append: true);
+                writer.WriteLine("Log file function: Search by lastname");
+                writer.WriteLine("Account: " + dataInter.acct +
+                    " has searched for last name: " + dataInter.lname
+                    + " and found a result for: " + dataInter.fname + " " +
+                    dataInter.lname);
+                writer.Close();
             }
-            DataIntermed dataInter = JsonConvert.DeserializeObject<DataIntermed>(response.Content);
             Fname.Content = "First Name: " + dataInter.fname;
             Lname.Content = "Last Name: " + dataInter.lname;
             Balance.Content = "Balance: " + dataInter.bal.ToString("C");
             AcntNo.Content = "Account Number: " + dataInter.acct.ToString();
             PIN.Content = "PIN: " + dataInter.pin.ToString("D4");
+
         }
 
-        private void Button_Click_3(object sender, RoutedEventArgs e)
-        {
-            WPFApp.AccessLog objSecondWindow = new WPFApp.AccessLog();
-            this.Visibility = Visibility.Hidden;
-            objSecondWindow.Show();
-        }
 
-        private async Task progressProcessingAsync(int sleepTime)
+
+        private async Task progressProcessingAsync()
         {
+            ProgBar.Value = 0;
             var progress = new Progress<int>(percent =>
             {
                 ProgBar.Value = percent;
                 ProgLabel.Content = percent.ToString() + "%";
             });
-            await Task.Run(() => processProgress(progress, sleepTime));
+            await Task.Run(() => processProgress(progress));
         }
 
-        public void processProgress(IProgress<int> progress, int sleepTime)
+        public void processProgress(IProgress<int> progress)
         {
             progress.Report(0);
             for (int i = 0; i != 100; i++)
             {
-                Thread.Sleep(sleepTime);
+                Thread.Sleep(10);
                 if (progress != null)
                 {
                     progress.Report(i);
