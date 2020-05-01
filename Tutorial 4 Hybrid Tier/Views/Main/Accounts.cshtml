@@ -5,28 +5,29 @@
 <form>
     <label>Search my Account</label><br />
     <input type="text" id="acntId" name="acntId" placeholder="Account ID" /><br /><br />
-    <input type="text" id="userId" name="UserId" placeholder="User ID" /><br /><br />
-    <input type="text" id="bal" name="bal" placeholder="Account Balance" /><br /><br />
+    <input type="text" id="userId" name="UserId" placeholder="User ID" readonly/><br /><br />
+    <input type="text" id="bal" name="bal" placeholder="Account Balance" readonly /><br /><br />
 </form>
 <button id="submitBtn" onclick="GetAccount()">Get Account</button>
 <br />
 <form>
     <label>Deposit Money</label><br />
-    <input type="text" id="acntIdDeposit" name="acntIdDeposit" placeholder="Enter Account ID" /><br /><br />
+    <input type="text" id="acntIdDeposit" name="acntIdDeposit" placeholder="Enter Account ID"/><br /><br />
     <input type="text" id="amount" name="amount" placeholder="Deposit Amount" /><br /><br />
 </form>
 <button id="DepositBtn" onclick="Deposit()">Deposit</button>
 <br />
 <form>
     <label>Withdraw Money</label><br />
-    <input type="text" id="acntIdWithdraw" name="acntIdWithdraw" placeholder="Enter Account ID" /><br /><br />
-    <input type="text" id="amountWithdraw" name="amountWithdraw" placeholder="Withdraw Amount" /><br /><br />
+    <input type="text" id="acntIdWithdraw" name="acntIdWithdraw" placeholder="Enter Account ID" pattern="[0-9]+"/><br /><br />
+    <input type="text" id="amountWithdraw" name="amountWithdraw" placeholder="Withdraw Amount" pattern="[0-9]+" /><br /><br />
 </form>
 <button id="DepositBtn" onclick="Withdraw()">Withdraw</button>
 <br/>
 <script>
     function GetAccount() {
         console.log("Get Account");
+
         $.ajax({
             url: "api/BankApi/Account/" + $("#acntId").val(),
             type: 'get',
@@ -37,9 +38,12 @@
                 $("#bal").val(obj.acntBal);
                 $("#userId").val(obj.userId);
                 $("#acntId").val(obj.acntId);
+                alert("Account Found");
             },
             error: function (jqXhr, textStatus, errorThrown) {
                 console.log(errorThrown);
+                alert("invalid data found");
+                $("#acntId").val("Account ID");
             }
         })
     }
@@ -53,9 +57,13 @@
             processData: false,
             success: function (data, textStatus, jQxhr) {
                 console.log(textStatus);
+                alert("Deposit Successful");
             },
             error: function (jqXhr, textStatus, errorThrown) {
-                console.log(errorThrown)
+                console.log(errorThrown);
+                alert("invalid data found, please try again");
+                $("#acntIdDeposit").val("Enter Account ID");
+                $("#amount").val("Deposit Amount");
             }
         })
     }
@@ -69,9 +77,13 @@
             processData: false,
             success: function (data, textStatus, jQxhr) {
                 console.log(textStatus);
+                alert("Withdrawal successful");
             },
             error: function (jqXhr, textStatus, errorThrown) {
-                console.log(errorThrown)
+                console.log(errorThrown);
+                alert("invalid data found");
+                $("#acntIdWithdraw").val("Enter Account ID");
+                $("#amountWithdraw").val("Withdraw Amount");
             }
         })
     }

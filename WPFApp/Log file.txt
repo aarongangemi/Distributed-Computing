@@ -49,3 +49,43 @@ Log file function: Get Account Details by index
 Account 48273887 retrieved for: Michael Martinez at index: 2222
 Log file function: Search by lastname
 Account: 10459374 has searched for last name: Thompson and found a result for: Joseph Thompson
+Log file function: Get Account Details by index
+Account 99184244 retrieved for: James Walker at index: 11
+Log File Function: Upload profile image
+Image upload from File Path: C:\Users\61459\OneDrive\Desktop\Photo Album Gift\94740001_216766053110148_5445301065631137792_n.jpg
+Log file function: Search by lastname
+Account: 51073958 has searched for last name: Thompson and found a result for: Charles Thompson
+Log file function: Search by lastname
+Account: 61285092 has searched for last name: Martin and found a result for: John Martin
+Log file function: Search by lastname
+Account: 99184244 has searched for last name: Walker and found a result for: James Walker
+Log file function: Get Account Details by index
+Account 99184244 retrieved for: James Walker at index: 11
+Log file function: Search by lastname
+Account: 99184244 has searched for last name: Walker and found a result for: James Walker
+Log file function: Get Account Details by index
+Account 58696147 retrieved for: Paul Garcia at index: 222
+Log file function: Search by lastname
+Account: 37535261 has searched for last name: Martin and found a result for: Robert Martin
+Log file function: Search by lastname
+Account: 90320242 has searched for last name: Thompson and found a result for: Aaron Thompson
+Log file function: Search by lastname
+Account: 90320242 has searched for last name: Thompson and found a result for: Aaron Thompson
+Log file function: Search by lastname
+Account: 58424945 has searched for last name: Garcia and found a result for: Robert Garcia
+Log file function: Search by lastname
+Account: 73456066 has searched for last name: Martin and found a result for: Kenneth Martin
+Log file function: Search by lastname
+Account: 73456066 has searched for last name: Martin and found a result for: Kenneth Martin
+Log file function: Search by lastname
+Account: 73456066 has searched for last name: Martin and found a result for: Kenneth Martin
+Log file function: Search by lastname
+Account: 52017599 has searched for last name: Thompson and found a result for: Mark Thompson
+Log file function: Search by lastname
+Account: 35906757 has searched for last name: Martin and found a result for: Charles Martin
+Log file function: Search by lastname
+Account: 93426353 has searched for last name: Thompson and found a result for: Aaron Thompson
+Log file function: Search by lastname
+Account: 84670741 has searched for last name: Garcia and found a result for: Steven Garcia
+Log file function: Get Account Details by index
+Account 15086529 retrieved for: William Lewis at index: 9999

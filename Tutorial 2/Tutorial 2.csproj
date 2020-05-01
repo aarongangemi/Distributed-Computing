@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="IDataServerInterface, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\IDataServerInterface\bin\Debug\IDataServerInterface.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -54,10 +58,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\IDataServerInterface\IDataServerInterface.csproj">
-      <Project>{4CE0B788-5CAF-44FA-8B24-7701E8DE869D}</Project>
-      <Name>IDataServerInterface</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Remoting Server\Remoting Server.csproj">
       <Project>{ACFDC249-8F81-4ED1-A58C-F366E6737F7D}</Project>
       <Name>Remoting Server</Name>

@@ -121,6 +121,7 @@ namespace WPFApp
         private async Task progressProcessingAsync()
         {
             ProgBar.Value = 0;
+          
             var progress = new Progress<int>(percent =>
             {
                 ProgBar.Value = percent;
@@ -134,7 +135,7 @@ namespace WPFApp
             progress.Report(0);
             for (int i = 0; i != 100; i++)
             {
-                Thread.Sleep(10);
+                Thread.Sleep(100);
                 if (progress != null)
                 {
                     progress.Report(i);

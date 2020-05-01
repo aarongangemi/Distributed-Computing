@@ -11,6 +11,7 @@
 <button id="submitBtn" onclick="CompleteTransaction()">Complete Transaction</button>
 <br />
 <script>
+
     function CompleteTransaction() {
         console.log("Create Transaction");
         $.ajax({
@@ -20,9 +21,15 @@
             processData: false,
             success: function (data, textStatus, jQxhr) {
                 console.log(textStatus);
+                alert("Transaction from: " + $("#senderID").val() + " to " + $("#receiverID").val() + " was successful");
             },
             error: function (jqXhr, textStatus, errorThrown) {
                 console.log(errorThrown)
+                alert("Invalid data entered for transaction, please try again");
+                $("#amount").val("Amount");
+                $("#senderID").val("Sender ID");
+                $("#receiverID").val("Receiver ID");
+
             }
         })
     }

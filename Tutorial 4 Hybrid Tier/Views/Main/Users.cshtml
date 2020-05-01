@@ -3,13 +3,12 @@
 }
 <form>
     <label>Search a User</label><br/>
-    <input type="text" id="id" placeholder="User Id" /><br /><br />
-    <input type="text" id="fname" name="fname" placeholder="First Name" /><br /><br />
-    <input type="text" id="lname" name="lname" placeholder="Last Name" /><br /><br />
+    <input type="text" id="id" placeholder="User Id"/><br /><br />
+    <input type="text" id="fname" name="fname" placeholder="First Name" readonly/><br /><br />
+    <input type="text" id="lname" name="lname" placeholder="Last Name" readonly /><br /><br />
 </form>
 <button id="submitBtn" onclick="GetUser()">Get User</button>
 <br />
-
 <script>
     function GetUser() {
         console.log("Get User");
@@ -23,9 +22,14 @@
                 $("#fname").val(obj.firstName);
                 $("#lname").val(obj.lastName);
                 $("#id").val(obj.userId);
+                alert("User: " + obj.userId + "was found");
             },
             error: function (jqXhr, textStatus, errorThrown) {
                 console.log(errorThrown);
+                alert("Invalid data entered for user, please try again");
+                $("#id").val("User Id");
+                $("#fname").val("First Name");
+                $("#lname").val("Last Name");
             }
         })
     }
@@ -34,7 +38,7 @@
 <form>
     <label>Create a User</label><br/>
     <input type="text" id="acntFirstName" name="acntFirstName" placeholder="First Name" /><br /><br />
-    <input type="text" id="acntLastName" name="acntLastName" placeholder="Last Name" /><br /><br />
+    <input type="text" id="acntLastName" name="acntLastName" placeholder="Last Name"/><br /><br />
 </form>
 <button id="submitBtn" onclick="CreateUser()">Create User</button>
 <script>
@@ -46,10 +50,14 @@
             contentType: 'application/json',
             processData: false,
             success: function (data, textStatus, jQxhr) {
-                console.log(textStatus);
+                    console.log(textStatus);
+                    alert("Account created");
             },
             error: function (jqXhr, textStatus, errorThrown) {
                 console.log(errorThrown)
+                alert("Invalid data entered to create user, please try again");
+                $('#acntFirstName').val("First Name");
+                $('#acntLastName').val("Last Name");
             }
         })
     }
