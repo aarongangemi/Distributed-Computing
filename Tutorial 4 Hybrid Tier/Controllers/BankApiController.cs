@@ -15,7 +15,7 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
         private string URL = "https://localhost:44312/";
         private RestClient client;
 
-        [Route("Main/api/BankApi/Account/{accountID}")]
+        [Route("api/BankApi/Account/{accountID}")]
         [HttpGet]
         public AccountDetailsStruct GetAccount(uint accountID)
         {
@@ -25,7 +25,7 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
             return JsonConvert.DeserializeObject<AccountDetailsStruct>(response.Content);
         }
 
-        [Route("Main/api/BankApi/Deposit/{accountID}/{amount}")]
+        [Route("api/BankApi/Deposit/{accountID}/{amount}")]
         public void DepositMoney(uint accountID, uint amount)
         {
             client = new RestClient(URL);
@@ -35,7 +35,7 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
             client.Post(saveRequest);
         }
 
-        [Route("Main/api/BankApi/Withdraw/{accountID}/{amount}")]
+        [Route("api/BankApi/Withdraw/{accountID}/{amount}")]
         [HttpPost]
         public void WithdrawMoney(uint accountID, uint amount)
         {
@@ -71,7 +71,7 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
             return JsonConvert.DeserializeObject<UserDetailsStruct>(response.Content);
         }
 
-        [Route("Main/api/BankApi/CreateTransaction/{amount}/{senderID}/{receiverID}")] 
+        [Route("api/BankApi/CreateTransaction/{amount}/{senderID}/{receiverID}")] 
         [HttpPost]
         public void createTransaction(uint amount, uint senderID, uint receiverID)
         {
