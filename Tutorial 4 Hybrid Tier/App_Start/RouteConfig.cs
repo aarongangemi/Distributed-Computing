@@ -16,7 +16,7 @@ namespace Tutorial_4_Hybrid_Tier
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Main", action = "Users", id = UrlParameter.Optional }
+                defaults: new { controller = "Main", action = "Tutorial5Index", id = UrlParameter.Optional }
             );
         }
     }

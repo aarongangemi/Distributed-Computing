@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<html>
+    <head>
+        <br />
+        <title>Gangemi's Bank - Tutorial 5</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <div id="Accounts">
+            <button onclick="LoadAccounts()">Load Accounts</button>
+            <button onclick="LoadUsers()">Load Users</button>
+            <button onclick="LoadTransactions()">Load Transactions</button>
+        </div>
+        <div id="Content">
+        </div>
+        <script>
+            function LoadAccounts() {
+                $.ajax({
+                    url: 'https://localhost:44347/Main/Accounts',
+                    type: 'get',
+                    processData: false,
+                    success: function (data, t, j) {
+                        $('#Content').html(data);
+                    },
+                    error: function (j, t, e) {
+                        console.log("Error occured: " + e);
+                    }
+                });
+            }
+
+            function LoadUsers() {
+                $.ajax({
+                    url: 'https://localhost:44347/Main/Users',
+                    type: 'get',
+                    processData: false,
+                    success: function (data, t, j) {
+                        $('#Content').html(data);
+                    },
+                    error: function (j, t, e) {
+                        console.log("Error occured: " + e);
+                    }
+                });
+            }
+            function LoadTransactions() {
+                $.ajax({
+                    url: 'https://localhost:44347/Main/Transactions',
+                    type: 'get',
+                    processData: false,
+                    success: function (data, t, j) {
+                        $('#Content').html(data);
+                    },
+                    error: function (j, t, e) {
+                        console.log("Error occured: " + e);
+                    }
+                });
+            }
+
+
+        </script>
+    </body>
+</html>
+
+

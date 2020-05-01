@@ -8,6 +8,11 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
 {
     public class MainController : Controller
     {
+        public ActionResult Tutorial5Index()
+        {
+            ViewBag.Message = "Gangemi's Bank";
+            return View();
+        }
         public ActionResult Users()
         {
             return View();
