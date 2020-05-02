@@ -1,6 +1,7 @@
 ﻿using Bis_GUI;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -10,6 +11,7 @@ using Tutorial_3_Web_Service.Models;
 
 namespace Tutorial_3_Web_Service.Controllers
 {
+
     public class WebApiController : ApiController
     {
         //GET api/<controller>
@@ -46,8 +48,7 @@ namespace Tutorial_3_Web_Service.Controllers
             for (i = 0; i < model.getNumEntries(); i++)
             {
                 model.GetValuesForEntry(i, out dataInter.acct, out dataInter.pin, out dataInter.bal, out dataInter.fname, out dataInter.lname, out dataInter.filePath);
-                if (dataInter.lname.Equals(value))
-                {
+                if (dataInter.lname.Equals(value)) { 
                     break;
                 }
             }
@@ -55,7 +56,7 @@ namespace Tutorial_3_Web_Service.Controllers
         }
 
 
-        public DataIntermed Post(int idx, [FromBody] string filePath)
+        public DataIntermed setFilePath(int idx, [FromBody] string filePath)
         {
             DataIntermed dataInter = new DataIntermed();
             DataModel model = new DataModel();

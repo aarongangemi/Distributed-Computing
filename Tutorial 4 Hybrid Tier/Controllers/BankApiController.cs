@@ -29,6 +29,9 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
                     client = new RestClient(URL);
                     RestRequest request = new RestRequest("api/Account/" + accountID.ToString());
                     IRestResponse response = client.Get(request);
+                    writer = new StreamWriter("C:/Users/61459/source/repos/aarongangemi/Distributed-Computing/Tutorial 4 Hybrid Tier/Web Service Log file.txt", append: true);
+                    writer.WriteLine("Retrieved Account: " + accountID.ToString());
+                    writer.Close();
                     return JsonConvert.DeserializeObject<AccountDetailsStruct>(response.Content);
                 }
                 else
@@ -65,6 +68,9 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
                     client.Post(request);
                     RestRequest saveRequest = new RestRequest("api/Save");
                     client.Post(saveRequest);
+                    writer = new StreamWriter("C:/Users/61459/source/repos/aarongangemi/Distributed-Computing/Tutorial 4 Hybrid Tier/Web Service Log file.txt", append: true);
+                    writer.WriteLine("Deposited " + amount.ToString() + " successfully to account: " + accountID.ToString());
+                    writer.Close();
                 }
             }
             catch(NullReferenceException)
@@ -97,6 +103,9 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
                     client.Post(request);
                     RestRequest saveRequest = new RestRequest("api/Save");
                     client.Post(saveRequest);
+                    writer = new StreamWriter("C:/Users/61459/source/repos/aarongangemi/Distributed-Computing/Tutorial 4 Hybrid Tier/Web Service Log file.txt", append: true);
+                    writer.WriteLine("Withdrew " + amount.ToString() + " successfully from account: " + accountID.ToString());
+                    writer.Close();
                 }
             }
             catch (NullReferenceException)
@@ -131,6 +140,9 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
                         client.Post(acntRequest);
                         RestRequest saveRequest = new RestRequest("api/Save");
                         client.Post(saveRequest);
+                        writer = new StreamWriter("C:/Users/61459/source/repos/aarongangemi/Distributed-Computing/Tutorial 4 Hybrid Tier/Web Service Log file.txt", append: true);
+                        writer.WriteLine("Created user: " + userID.ToString() + "(" + fname + " " + lname + ")" + " with associated account");
+                        writer.Close();
                 }
             }
             catch (NullReferenceException)
@@ -160,6 +172,9 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
                     client = new RestClient(URL);
                     RestRequest request = new RestRequest("api/User/" + userId.ToString());
                     IRestResponse response = client.Get(request);
+                    writer = new StreamWriter("C:/Users/61459/source/repos/aarongangemi/Distributed-Computing/Tutorial 4 Hybrid Tier/Web Service Log file.txt", append: true);
+                    writer.WriteLine("Retrieved User " + userId.ToString() + " successfully");
+                    writer.Close();
                     return JsonConvert.DeserializeObject<UserDetailsStruct>(response.Content);
                 }
                 else
@@ -199,6 +214,9 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
                     client.Post(transactionRequest);
                     RestRequest saveRequest = new RestRequest("api/Save");
                     client.Post(saveRequest);
+                    writer = new StreamWriter("C:/Users/61459/source/repos/aarongangemi/Distributed-Computing/Tutorial 4 Hybrid Tier/Web Service Log file.txt", append: true);
+                    writer.WriteLine("Transaction Created: Sender = " + senderID.ToString() + ", Receiver = " + receiverID.ToString() + ", amount = " + amount.ToString());
+                    writer.Close();
                 }
             }
             catch (NullReferenceException)

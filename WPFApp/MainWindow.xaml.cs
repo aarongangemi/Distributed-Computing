@@ -23,7 +23,7 @@ namespace WPFApp
         private string URL;
         private RestClient client;
         private bool found;
-        private StreamWriter writer;
+        private LogData log;
         public MainWindow()
         {
             InitializeComponent();
@@ -33,7 +33,7 @@ namespace WPFApp
             IRestResponse numOfItems = client.Get(request);
             NoOfItems.Content = numOfItems.Content;
             found = false;
-            
+            log = new LogData();
         }
 
         private async void Click_Go(object sender, RoutedEventArgs e)
@@ -54,10 +54,7 @@ namespace WPFApp
                     PIN.Content = "PIN: " + dataInter.pin.ToString("D4");
                     BitmapImage image = new BitmapImage(new Uri(dataInter.filePath));
                     img.Source = image;
-                    writer = new StreamWriter("C:/Users/61459/source/repos/aarongangemi/Distributed-Computing/WPFApp/Log file.txt", append: true);
-                    writer.WriteLine("Log file function: Get Account Details by index");
-                    writer.WriteLine("Account " + dataInter.acct + " retrieved for: " + dataInter.fname + " " + dataInter.lname + " at index: " + idx.ToString());
-                    writer.Close();
+                    log.logIndexSearch(dataInter);
 
                 }
                 else
@@ -74,17 +71,10 @@ namespace WPFApp
                 IndexVal.Text = "Enter Index";
                 AcntNo.Content = "Account Number";
                 PIN.Content = "PIN: ";
-                writer = new StreamWriter("C:/Users/61459/source/repos/aarongangemi/Distributed-Computing/WPFApp/Log file.txt", append: true);
-                writer.WriteLine("Formatting data error - Error Attempt");
-                writer.Close();
             }
             catch (HttpException)
             {
                 MessageBox.Show("Http Exception raised, please try again");
-                writer = new StreamWriter("C:/Users/61459/source/repos/aarongangemi/Distributed-Computing/WPFApp/Log file.txt", append: true);
-                writer.WriteLine("Log file function: Get Account Details by index");
-                writer.WriteLine("Http Exception was raised");
-                writer.Close();
             }
 
 
@@ -110,10 +100,7 @@ namespace WPFApp
                 PIN.Content = "PIN: " + dataInter.pin.ToString("D4");
                 BitmapImage image = new BitmapImage(new Uri(filePath));
                 img.Source = image;
-                writer = new StreamWriter("C:/Users/61459/source/repos/aarongangemi/Distributed-Computing/WPFApp/Log file.txt", append: true);
-                writer.WriteLine("Log File Function: Upload profile image");
-                writer.WriteLine("Image upload from File Path: " + filePath);
-                writer.Close();
+                log.logImageUpload(filePath);
             }
 
         }
@@ -144,19 +131,13 @@ namespace WPFApp
                 {
                     SearchLabel.Content = "Search Complete";
                     found = true;
-                    writer = new StreamWriter("C:/Users/61459/source/repos/aarongangemi/Distributed-Computing/WPFApp/Log file.txt", append: true);
-                    writer.WriteLine("Log file function: Search by lastname");
-                    writer.WriteLine("Account: " + dataInter.acct +
-                        " has searched for last name: " + dataInter.lname
-                        + " and found a result for: " + dataInter.fname + " " +
-                        dataInter.lname);
-                    writer.Close();
                     Fname.Content = "First Name: " + dataInter.fname;
                     Lname.Content = "Last Name: " + dataInter.lname;
                     Balance.Content = "Balance: " + dataInter.bal.ToString("C");
                     AcntNo.Content = "Account Number: " + dataInter.acct.ToString();
                     PIN.Content = "PIN: " + dataInter.pin.ToString("D4");
                     img.Source = new BitmapImage(new Uri(dataInter.filePath));
+                    log.logSearch(dataInter);
                 }
                 else
                 {
@@ -170,10 +151,6 @@ namespace WPFApp
             {
                 MessageBox.Show("Please enter a valid last name and try again");
                 ProgBar.Value = 100;
-                writer = new StreamWriter("C:/Users/61459/source/repos/aarongangemi/Distributed-Computing/WPFApp/Log file.txt", append: true);
-                writer.WriteLine("Log file function: Search by lastname");
-                writer.WriteLine("format exception thrown, please try a valid string");
-                writer.Close();
                 searchTxt.Text = "Enter Last Name";
             }
         }

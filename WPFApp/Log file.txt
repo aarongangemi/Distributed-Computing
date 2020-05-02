@@ -325,3 +325,7 @@ Log file function: Search by lastname
 format exception thrown, please try a valid string
 Log file function: Search by lastname
 Account: 45719018 has searched for last name: Martin and found a result for: Steven Martin
+Log file function: Get Account Details by index
+Account 59459318 retrieved for: Charles Lewis at index: 212
+Log file function: Get Account Details by index
+Account 60157367 retrieved for: Kevin Garcia at index: 2
