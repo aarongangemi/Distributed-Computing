@@ -14,21 +14,28 @@ namespace Remoting_Server
     //InstanceContextMode ensures data tier implemented will be singleton
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = false, InstanceContextMode =InstanceContextMode.Single)]
     //Must be internal because it must be accessed through the interface
-    internal class DataServer : IDataServerInterface.IDataServerInterface
-    {
+    internal class DataServer : DataServerInterface
+    { 
         private DatabaseClass database = new DatabaseClass();
         public int GetNumEntries()
         {
             return database.GetNumRecords();
         }
         public void GetValuesForEntry(int index, out uint acctNo, out uint pin,
-                               out int bal, out string fname, out string lname)
+                               out int bal, out string fname, out string lname,
+                               out string filePath)
         {
             acctNo = database.GetAcctNoByIndex(index);
             pin = database.GetPINByIndex(index);
             bal = database.GetBalanceByIndex(index);
             fname = database.GetFirstNameByIndex(index);
             lname = database.GetLastNameByIndex(index);
+            filePath = database.getFilePath(index);
+        }
+
+        public void SetFilePath(string filePath, int index)
+        {
+            database.setFilePath(index, filePath);
         }
     }
 }

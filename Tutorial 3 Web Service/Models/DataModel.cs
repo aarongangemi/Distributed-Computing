@@ -1,5 +1,4 @@
-﻿using IDataServerInterface;
-using Remoting_Server;
+﻿using Remoting_Server;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +11,13 @@ namespace Tutorial_3_Web_Service.Models
     {
         private NetTcpBinding tcp;
         private string URL;
-        ChannelFactory<IDataServerInterface.IDataServerInterface> foobFactory;
-        IDataServerInterface.IDataServerInterface foob;
+        ChannelFactory<DataServerInterface> foobFactory;
+        DataServerInterface foob;
         public DataModel()
         {
             tcp = new NetTcpBinding();
             URL = "net.tcp://localhost:8100/DataService";
-            foobFactory = new ChannelFactory<IDataServerInterface.IDataServerInterface>(tcp, URL);
+            foobFactory = new ChannelFactory<DataServerInterface>(tcp, URL);
             foob = foobFactory.CreateChannel();
         }
 
@@ -27,9 +26,9 @@ namespace Tutorial_3_Web_Service.Models
             return foob.GetNumEntries();
         }
 
-        public void GetValuesForEntry(int idx, out uint acntNo, out uint pin, out int balance, out string fname, out string lname)
+        public void GetValuesForEntry(int idx, out uint acntNo, out uint pin, out int balance, out string fname, out string lname, out string filePath)
         {
-            foob.GetValuesForEntry(idx, out acntNo, out pin, out balance, out fname, out lname);
+            foob.GetValuesForEntry(idx, out acntNo, out pin, out balance, out fname, out lname, out filePath);
         }
 
         public int SearchForValue(string str)
@@ -39,10 +38,10 @@ namespace Tutorial_3_Web_Service.Models
             uint acntNo, pin;
             int bal;
             int val = -1;
-            string fname, lname;
+            string fname, lname, filePath;
             for (i = 0; i < foob.GetNumEntries(); i++)
             {
-                GetValuesForEntry(i, out acntNo, out pin, out bal, out fname, out lname);
+                GetValuesForEntry(i, out acntNo, out pin, out bal, out fname, out lname, out filePath);
                 if (lname.Equals(str))
                 {
                     val = i;
@@ -51,6 +50,11 @@ namespace Tutorial_3_Web_Service.Models
                 }
             }
             return val;
+        }
+
+        public void UpdateFilePath(string filePath, int index)
+        {
+            foob.SetFilePath(filePath, index);
         }
     }
 }

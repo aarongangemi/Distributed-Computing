@@ -33,9 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="IDataServerInterface">
-      <HintPath>..\IDataServerInterface\bin\Debug\IDataServerInterface.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -50,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataServer.cs" />
+    <Compile Include="DataServerInterface.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

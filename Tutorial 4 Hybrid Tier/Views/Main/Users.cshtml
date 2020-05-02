@@ -27,9 +27,6 @@
             error: function (jqXhr, textStatus, errorThrown) {
                 console.log(errorThrown);
                 alert("Invalid data entered for user, please try again");
-                $("#id").val("User Id");
-                $("#fname").val("First Name");
-                $("#lname").val("Last Name");
             }
         })
     }
@@ -56,8 +53,6 @@
             error: function (jqXhr, textStatus, errorThrown) {
                 console.log(errorThrown)
                 alert("Invalid data entered to create user, please try again");
-                $('#acntFirstName').val("First Name");
-                $('#acntLastName').val("Last Name");
             }
         })
     }

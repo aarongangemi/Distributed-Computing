@@ -26,13 +26,14 @@ namespace Tutorial_3_Web_Service.Controllers
             DataIntermed dataIm = new DataIntermed();
             uint acntNo, pin;
             int balance;
-            string fname, lname;
-            model.GetValuesForEntry(id, out acntNo, out pin, out balance, out fname, out lname);
+            string fname, lname, filePath;
+            model.GetValuesForEntry(id, out acntNo, out pin, out balance, out fname, out lname, out filePath);
             dataIm.acct = acntNo;
             dataIm.pin = pin;
             dataIm.bal = balance;
             dataIm.fname = fname;
             dataIm.lname = lname;
+            dataIm.filePath = filePath;
             return dataIm;
         }
 
@@ -44,12 +45,22 @@ namespace Tutorial_3_Web_Service.Controllers
             int i;
             for (i = 0; i < model.getNumEntries(); i++)
             {
-                model.GetValuesForEntry(i, out dataInter.acct, out dataInter.pin, out dataInter.bal, out dataInter.fname, out dataInter.lname);
+                model.GetValuesForEntry(i, out dataInter.acct, out dataInter.pin, out dataInter.bal, out dataInter.fname, out dataInter.lname, out dataInter.filePath);
                 if (dataInter.lname.Equals(value))
                 {
                     break;
                 }
             }
+            return dataInter;
+        }
+
+
+        public DataIntermed Post(int idx, [FromBody] string filePath)
+        {
+            DataIntermed dataInter = new DataIntermed();
+            DataModel model = new DataModel();
+            model.UpdateFilePath(filePath, idx);
+            model.GetValuesForEntry(idx, out dataInter.acct, out dataInter.pin, out dataInter.bal, out dataInter.fname, out dataInter.lname, out dataInter.filePath);
             return dataInter;
         }
        

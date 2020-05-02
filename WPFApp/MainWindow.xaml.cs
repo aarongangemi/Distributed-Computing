@@ -3,8 +3,10 @@ using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using MessageBox = System.Windows.Forms.MessageBox;
@@ -40,19 +42,28 @@ namespace WPFApp
             try
             {
                 idx = Int32.Parse(IndexVal.Text);
-                RestRequest request = new RestRequest("api/webapi/" + idx.ToString());
-                IRestResponse response = await client.ExecuteGetAsync(request);
-                DataIntermed dataInter = JsonConvert.DeserializeObject<DataIntermed>(response.Content);
-                Fname.Content = "First Name: " + dataInter.fname;
-                Lname.Content = "Last Name: " + dataInter.lname;
-                Balance.Content = "Balance: " + dataInter.bal.ToString("C");
-                AcntNo.Content = "Account No: " + dataInter.acct;
-                PIN.Content = "PIN: " + dataInter.pin.ToString("D4");
-                writer = new StreamWriter("C:/Users/61459/source/repos/aarongangemi/Distributed-Computing/WPFApp/Log file.txt", append: true);
-                writer.WriteLine("Log file function: Get Account Details by index");
-                writer.WriteLine("Account " + dataInter.acct + " retrieved for: " + dataInter.fname + " " + dataInter.lname + " at index: " + idx.ToString());
-                writer.Close();
+                if (idx >= 0  && idx < Int32.Parse(NoOfItems.Content.ToString()))
+                {
+                    RestRequest request = new RestRequest("api/webapi/" + idx.ToString());
+                    IRestResponse response = await client.ExecuteGetAsync(request);
+                    DataIntermed dataInter = JsonConvert.DeserializeObject<DataIntermed>(response.Content);
+                    Fname.Content = "First Name: " + dataInter.fname;
+                    Lname.Content = "Last Name: " + dataInter.lname;
+                    Balance.Content = "Balance: " + dataInter.bal.ToString("C");
+                    AcntNo.Content = "Account No: " + dataInter.acct;
+                    PIN.Content = "PIN: " + dataInter.pin.ToString("D4");
+                    BitmapImage image = new BitmapImage(new Uri(dataInter.filePath));
+                    img.Source = image;
+                    writer = new StreamWriter("C:/Users/61459/source/repos/aarongangemi/Distributed-Computing/WPFApp/Log file.txt", append: true);
+                    writer.WriteLine("Log file function: Get Account Details by index");
+                    writer.WriteLine("Account " + dataInter.acct + " retrieved for: " + dataInter.fname + " " + dataInter.lname + " at index: " + idx.ToString());
+                    writer.Close();
 
+                }
+                else
+                {
+                    throw new FormatException("Index out of range");
+                }
             }
             catch (FormatException)
             {
@@ -60,9 +71,19 @@ namespace WPFApp
                 Fname.Content = "First Name:";
                 Lname.Content = "Last Name: ";
                 Balance.Content = "Balance: ";
+                IndexVal.Text = "Enter Index";
                 AcntNo.Content = "Account Number";
                 PIN.Content = "PIN: ";
+                writer = new StreamWriter("C:/Users/61459/source/repos/aarongangemi/Distributed-Computing/WPFApp/Log file.txt", append: true);
                 writer.WriteLine("Formatting data error - Error Attempt");
+                writer.Close();
+            }
+            catch (HttpException)
+            {
+                MessageBox.Show("Http Exception raised, please try again");
+                writer = new StreamWriter("C:/Users/61459/source/repos/aarongangemi/Distributed-Computing/WPFApp/Log file.txt", append: true);
+                writer.WriteLine("Log file function: Get Account Details by index");
+                writer.WriteLine("Http Exception was raised");
                 writer.Close();
             }
 
@@ -76,7 +97,17 @@ namespace WPFApp
             bool? result = open.ShowDialog();
             if (result == true)
             {
-                string filePath = open.FileName;
+                int idx = Int32.Parse(IndexVal.Text);
+                string filePath = Path.GetFullPath(open.FileName);
+                RestRequest request = new RestRequest("api/webapi/" + idx);
+                request.AddJsonBody(filePath);
+                IRestResponse response = client.Post(request);
+                DataIntermed dataInter = JsonConvert.DeserializeObject<DataIntermed>(response.Content);
+                Fname.Content = "First Name: " + dataInter.fname;
+                Lname.Content = "Last Name: " + dataInter.lname;
+                Balance.Content = "Balance: " + dataInter.bal.ToString("C");
+                AcntNo.Content = "Account No: " + dataInter.acct;
+                PIN.Content = "PIN: " + dataInter.pin.ToString("D4");
                 BitmapImage image = new BitmapImage(new Uri(filePath));
                 img.Source = image;
                 writer = new StreamWriter("C:/Users/61459/source/repos/aarongangemi/Distributed-Computing/WPFApp/Log file.txt", append: true);
@@ -90,33 +121,62 @@ namespace WPFApp
         //The Search Button
         private async void Click_Search_btn(object sender, RoutedEventArgs e)
         {
-            progressProcessingAsync();
-            SearchData mySearch = new SearchData();
-            mySearch.searchStr = searchTxt.Text;
-            RestRequest request = new RestRequest("api/Search/");
-            request.AddJsonBody(mySearch);
-            IRestResponse response = await client.ExecutePostAsync(request);
-            DataIntermed dataInter = JsonConvert.DeserializeObject<DataIntermed>(response.Content);
-            if (response.IsSuccessful)
+            try
             {
-                found = true;
+                SearchLabel.Content = "Searching 100000 results for Last name";
+                if (searchTxt.Text.Length == 0)
+                {
+                    throw new FormatException("Cannot allow empty string as last name, try again");
+                }
+                var regex = new Regex("^[a-zA-Z]*$");
+                if(!regex.IsMatch(searchTxt.Text))
+                {
+                    throw new FormatException("Cannot allow illegal characters");
+                }
+                progressProcessingAsync();
+                SearchData mySearch = new SearchData();
+                mySearch.searchStr = searchTxt.Text;
+                RestRequest request = new RestRequest("api/Search/");
+                request.AddJsonBody(mySearch);
+                IRestResponse response = await client.ExecutePostAsync(request);
+                DataIntermed dataInter = JsonConvert.DeserializeObject<DataIntermed>(response.Content);
+                if (dataInter != null)
+                {
+                    SearchLabel.Content = "Search Complete";
+                    found = true;
+                    writer = new StreamWriter("C:/Users/61459/source/repos/aarongangemi/Distributed-Computing/WPFApp/Log file.txt", append: true);
+                    writer.WriteLine("Log file function: Search by lastname");
+                    writer.WriteLine("Account: " + dataInter.acct +
+                        " has searched for last name: " + dataInter.lname
+                        + " and found a result for: " + dataInter.fname + " " +
+                        dataInter.lname);
+                    writer.Close();
+                    Fname.Content = "First Name: " + dataInter.fname;
+                    Lname.Content = "Last Name: " + dataInter.lname;
+                    Balance.Content = "Balance: " + dataInter.bal.ToString("C");
+                    AcntNo.Content = "Account Number: " + dataInter.acct.ToString();
+                    PIN.Content = "PIN: " + dataInter.pin.ToString("D4");
+                    img.Source = new BitmapImage(new Uri(dataInter.filePath));
+                }
+                else
+                {
+                    ProgBar.Value = 100;
+                    SearchLabel.Content = "Search Complete";
+                    throw new FormatException("Unable to find last name provided, try again");
+                }
+
+            }
+            catch(FormatException)
+            {
+                MessageBox.Show("Please enter a valid last name and try again");
+                ProgBar.Value = 100;
                 writer = new StreamWriter("C:/Users/61459/source/repos/aarongangemi/Distributed-Computing/WPFApp/Log file.txt", append: true);
                 writer.WriteLine("Log file function: Search by lastname");
-                writer.WriteLine("Account: " + dataInter.acct +
-                    " has searched for last name: " + dataInter.lname
-                    + " and found a result for: " + dataInter.fname + " " +
-                    dataInter.lname);
+                writer.WriteLine("format exception thrown, please try a valid string");
                 writer.Close();
+                searchTxt.Text = "Enter Last Name";
             }
-            Fname.Content = "First Name: " + dataInter.fname;
-            Lname.Content = "Last Name: " + dataInter.lname;
-            Balance.Content = "Balance: " + dataInter.bal.ToString("C");
-            AcntNo.Content = "Account Number: " + dataInter.acct.ToString();
-            PIN.Content = "PIN: " + dataInter.pin.ToString("D4");
-
         }
-
-
 
         private async Task progressProcessingAsync()
         {
@@ -135,10 +195,11 @@ namespace WPFApp
             progress.Report(0);
             for (int i = 0; i != 100; i++)
             {
-                Thread.Sleep(100);
+                Thread.Sleep(1500);
                 if (progress != null)
                 {
                     progress.Report(i);
+                    
                 }
                 if(found)
                 {
@@ -147,6 +208,7 @@ namespace WPFApp
                     break;
                 }
             }
+           
         }
     }
 }

@@ -17,13 +17,15 @@ namespace Tutorial_3_Web_Service.Controllers
             DataModel model = new DataModel();
             for (int i = 0; i < model.getNumEntries(); i++)
             {
-                model.GetValuesForEntry(i, out dataInter.acct, out dataInter.pin, out dataInter.bal, out dataInter.fname, out dataInter.lname);
+                model.GetValuesForEntry(i, out dataInter.acct, out dataInter.pin, out dataInter.bal, out dataInter.fname, out dataInter.lname, out dataInter.filePath);
                 if (dataInter.lname.Equals(value.searchStr))
                 {
-                    break;
+                    return dataInter;
                 }
             }
-            return dataInter;
+            return null;
+            
         }
+
     }
 }

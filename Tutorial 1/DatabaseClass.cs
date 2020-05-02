@@ -18,14 +18,9 @@ namespace Tutorial_1
             {
                 DataStruct ds = new DataStruct();
                 DatabaseGenerator dataGen = new DatabaseGenerator(rand);
-                ds.pin = 0;
-                ds.acctNo = 0;
-                ds.firstName = "A";
-                ds.lastName = "D";
-                ds.balance = 1;
                 dataGen.GetNextAccount(out ds.pin, out ds.acctNo,
                                        out ds.firstName, out ds.lastName,
-                                       out ds.balance);
+                                       out ds.balance, out ds.filePath);
                 dataStruct.Add(ds);
             }
         }
@@ -33,7 +28,7 @@ namespace Tutorial_1
         public uint GetAcctNoByIndex(int index)
         {
             uint value;
-            if(index >= 0 || index <= dataStruct.Count())
+            if(index >= 0 && index <= dataStruct.Count())
             {
                 value = dataStruct.ElementAt(index).acctNo;
             }
@@ -47,7 +42,7 @@ namespace Tutorial_1
         public uint GetPINByIndex(int index)
         {
             uint value;
-            if (index >= 0 || index <= dataStruct.Count())
+            if (index >= 0 && index <= dataStruct.Count())
             {
                 value = dataStruct.ElementAt(index).pin;
             }
@@ -61,7 +56,7 @@ namespace Tutorial_1
         public string GetFirstNameByIndex(int index)
         {
             string value;
-            if (index >= 0 || index <= dataStruct.Count())
+            if (index >= 0 && index <= dataStruct.Count())
             {
                 value = dataStruct.ElementAt(index).firstName;
             }
@@ -75,7 +70,7 @@ namespace Tutorial_1
         public string GetLastNameByIndex(int index)
         {
             string value;
-            if (index >= 0 || index <= dataStruct.Count())
+            if (index >= 0 && index <= dataStruct.Count())
             {
                 value = dataStruct.ElementAt(index).lastName;
             }
@@ -89,7 +84,7 @@ namespace Tutorial_1
         public int GetBalanceByIndex(int index)
         {
             int value;
-            if (index >= 0 || index <= dataStruct.Count())
+            if (index >= 0 && index <= dataStruct.Count())
             {
                 value = dataStruct.ElementAt(index).balance;
             }
@@ -105,5 +100,21 @@ namespace Tutorial_1
             return dataStruct.Count;
         }
 
+        public string getFilePath(int index)
+        {
+            if(index >= 0 && index <= dataStruct.Count())
+            {
+                return dataStruct.ElementAt(index).filePath;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public void setFilePath(int index, string filePath)
+        {
+             dataStruct.ElementAt(index).filePath = filePath;
+        }
     }
 }

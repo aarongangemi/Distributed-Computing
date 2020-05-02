@@ -24,14 +24,16 @@ namespace Tutorial_3_Web_Service.Controllers
             DataIntermed dataIm = new DataIntermed();
             uint acntNo, pin;
             int balance;
-            string fname, lname;
-            model.GetValuesForEntry(id, out acntNo, out pin, out balance, out fname, out lname);
+            string fname, lname, filePath;
+            model.GetValuesForEntry(id, out acntNo, out pin, out balance, out fname, out lname, out filePath);
             dataIm.acct = acntNo;
             dataIm.pin = pin;
             dataIm.bal = balance;
             dataIm.fname = fname;
             dataIm.lname = lname;
+            dataIm.filePath = filePath;
             return dataIm;
         }
+
     }
 }
