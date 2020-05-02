@@ -3,12 +3,14 @@ using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.IO;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using static System.Net.Mime.MediaTypeNames;
 using MessageBox = System.Windows.Forms.MessageBox;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 
@@ -82,25 +84,38 @@ namespace WPFApp
 
         private void Click_Upload_Image(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog open = new OpenFileDialog();
-            open.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp;)|*.jpg; *.jpeg; *.gif; *.bmp;";
-            bool? result = open.ShowDialog();
-            if (result == true)
+            try
+            { 
+                OpenFileDialog open = new OpenFileDialog();
+                open.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp;)|*.jpg; *.jpeg; *.gif; *.bmp;";
+                bool? result = open.ShowDialog();
+                if (result == true)
+                {
+                    int idx = Int32.Parse(IndexVal.Text);
+                    if (idx >= 0 && idx < Int32.Parse(NoOfItems.Content.ToString()))
+                    {
+                        FilePathData file = new FilePathData();
+                        string filePath = Path.GetFullPath(open.FileName);
+                        file.filePath = filePath;
+                        file.indexToUpdate = idx;
+                        RestRequest request = new RestRequest("api/webapi/");
+                        request.AddJsonBody(file);
+                        IRestResponse response = client.Post(request);
+                        DataIntermed dataInter = JsonConvert.DeserializeObject<DataIntermed>(response.Content);
+                        Fname.Content = "First Name: " + dataInter.fname;
+                        Lname.Content = "Last Name: " + dataInter.lname;
+                        Balance.Content = "Balance: " + dataInter.bal.ToString("C");
+                        AcntNo.Content = "Account No: " + dataInter.acct;
+                        PIN.Content = "PIN: " + dataInter.pin.ToString("D4");
+                        BitmapImage image = new BitmapImage(new Uri(dataInter.filePath));
+                        img.Source = image;
+                        log.logImageUpload(filePath);
+                    }
+                }
+            }
+            catch(FormatException)
             {
-                int idx = Int32.Parse(IndexVal.Text);
-                string filePath = Path.GetFullPath(open.FileName);
-                RestRequest request = new RestRequest("api/webapi/" + idx);
-                request.AddJsonBody(filePath);
-                IRestResponse response = client.Post(request);
-                DataIntermed dataInter = JsonConvert.DeserializeObject<DataIntermed>(response.Content);
-                Fname.Content = "First Name: " + dataInter.fname;
-                Lname.Content = "Last Name: " + dataInter.lname;
-                Balance.Content = "Balance: " + dataInter.bal.ToString("C");
-                AcntNo.Content = "Account No: " + dataInter.acct;
-                PIN.Content = "PIN: " + dataInter.pin.ToString("D4");
-                BitmapImage image = new BitmapImage(new Uri(filePath));
-                img.Source = image;
-                log.logImageUpload(filePath);
+                MessageBox.Show("Invalid index entered, please try again");
             }
 
         }

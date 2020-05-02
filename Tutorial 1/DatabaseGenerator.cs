@@ -71,6 +71,12 @@ namespace Tutorial_1
             filePath = GetFilePath();
         }
 
+        /******************************************************
+         * Purpose: To set the file path as the default image
+         * Image obtained from: https://www.pinterest.com.au/pin/494481234082475699/
+         * Author: John Connaly Jr
+         * Date Accessed: 02/05/2020
+         * *****************************************************/
         private string GetFilePath()
         {
             return "C:/WebStuff/ProfileImage.jpg";

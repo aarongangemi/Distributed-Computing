@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Web.Http;
 using System.Windows.Media.Imaging;
 using Tutorial_3_Web_Service.Models;
@@ -56,12 +57,12 @@ namespace Tutorial_3_Web_Service.Controllers
         }
 
 
-        public DataIntermed setFilePath(int idx, [FromBody] string filePath)
+        public DataIntermed Post([FromBody] FilePathData fileValue)
         {
             DataIntermed dataInter = new DataIntermed();
             DataModel model = new DataModel();
-            model.UpdateFilePath(filePath, idx);
-            model.GetValuesForEntry(idx, out dataInter.acct, out dataInter.pin, out dataInter.bal, out dataInter.fname, out dataInter.lname, out dataInter.filePath);
+            model.UpdateFilePath(fileValue.filePath, fileValue.indexToUpdate);
+            model.GetValuesForEntry(fileValue.indexToUpdate, out dataInter.acct, out dataInter.pin, out dataInter.bal, out dataInter.fname, out dataInter.lname, out dataInter.filePath);
             return dataInter;
         }
        

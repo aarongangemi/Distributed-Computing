@@ -22,6 +22,7 @@ using System.Threading.Tasks;
                                    out int bal, out string fname, out string lname,
                                    out string filePath);
 
+            [OperationContract]
             void SetFilePath(string filePath, int index);
         }
     }
