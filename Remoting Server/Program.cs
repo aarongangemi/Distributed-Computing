@@ -16,7 +16,7 @@ namespace Remoting_Server
             ServiceHost host; //Service host in OS
             NetTcpBinding tcp = new NetTcpBinding();  //Create .NET TCP port
             host = new ServiceHost(typeof(DataServer));  //Host Implementation class
-            host.AddServiceEndpoint(typeof(DataServerInterface), tcp, "net.tcp://0.0.0.0:8100/DataService");
+            host.AddServiceEndpoint(typeof(IDataServerInterface.IDataServerInterface), tcp, "net.tcp://0.0.0.0:8100/DataService");
             host.Open();
             Console.WriteLine("System online");
             Console.ReadLine();

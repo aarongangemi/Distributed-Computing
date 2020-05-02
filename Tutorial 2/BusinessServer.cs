@@ -21,6 +21,7 @@ namespace Tutorial_2
         private int LogNumber = 0;
         ChannelFactory<IDataServerInterface.IDataServerInterface> foobFactory;
         private IDataServerInterface.IDataServerInterface foob;
+        
         NetTcpBinding tcp;
         string URL;
         public BusinessServer()
@@ -39,9 +40,9 @@ namespace Tutorial_2
             return foob.GetNumEntries();
         }
 
-        public void GetValuesForEntry(int index, out uint acctNo, out uint pin, out int bal, out string fname, out string lname)
+        public void GetValuesForEntry(int index, out uint acctNo, out uint pin, out int bal, out string fname, out string lname, out string filePath)
         {
-            foob.GetValuesForEntry(index, out acctNo, out pin, out bal, out fname, out lname);
+            foob.GetValuesForEntry(index, out acctNo, out pin, out bal, out fname, out lname, out filePath);
             Log("Retrieved values for Person: " + fname + " " + lname);
         }
 
@@ -52,10 +53,10 @@ namespace Tutorial_2
             uint acntNo, pin;
             int bal;
             int val = -1;
-            string fname, lname;
+            string fname, lname, filePath;
             for (i = 0; i < foob.GetNumEntries(); i++)
             {
-                GetValuesForEntry(i, out acntNo, out pin, out bal, out fname, out lname);
+                GetValuesForEntry(i, out acntNo, out pin, out bal, out fname, out lname, out filePath);
                 if (lname.Equals(str))
                 {
                     val = i;

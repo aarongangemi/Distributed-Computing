@@ -11,13 +11,13 @@ namespace Tutorial_3_Web_Service.Models
     {
         private NetTcpBinding tcp;
         private string URL;
-        ChannelFactory<DataServerInterface> foobFactory;
-        DataServerInterface foob;
+        ChannelFactory<IDataServerInterface.IDataServerInterface> foobFactory;
+        IDataServerInterface.IDataServerInterface foob;
         public DataModel()
         {
             tcp = new NetTcpBinding();
             URL = "net.tcp://localhost:8100/DataService";
-            foobFactory = new ChannelFactory<DataServerInterface>(tcp, URL);
+            foobFactory = new ChannelFactory<IDataServerInterface.IDataServerInterface>(tcp, URL);
             foob = foobFactory.CreateChannel();
         }
 

@@ -5,14 +5,11 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 
-
-    namespace Remoting_Server
+namespace IDataServerInterface
+{
+    [ServiceContract] //Defines that interface is for distributed objects
+    public interface IDataServerInterface
     {
-        //Make this a service contract as it is a service interface
-
-        [ServiceContract] //Defines that interface is for distributed objects
-        public interface DataServerInterface
-        {
             //Each of these are service function contracts. They need to be tagged as OperationContracts.
             //Defines that method will be for distributed objects
             [OperationContract]
@@ -25,4 +22,5 @@ using System.Threading.Tasks;
             [OperationContract]
             void SetFilePath(string filePath, int index);
         }
-    }
+    
+}

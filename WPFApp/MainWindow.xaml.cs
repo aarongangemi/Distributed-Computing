@@ -111,6 +111,10 @@ namespace WPFApp
                         img.Source = image;
                         log.logImageUpload(filePath);
                     }
+                    else
+                    {
+                        throw new FormatException("Index out of range, please try again");
+                    }
                 }
             }
             catch(FormatException)

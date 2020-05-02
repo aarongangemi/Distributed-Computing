@@ -17,7 +17,7 @@ namespace Tutorial_2
         int GetNumEntries();
         [OperationContract]
         void GetValuesForEntry(int index, out uint acctNo, out uint pin,
-                               out int bal, out string fname, out string lname);
+                               out int bal, out string fname, out string lname, out string filePath);
         [OperationContract]
         int SearchForValue(string str);
     }
