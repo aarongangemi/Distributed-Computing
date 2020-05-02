@@ -174,16 +174,15 @@ namespace WPFApp
             }
         }
 
-        private async Task progressProcessingAsync()
+        private void progressProcessingAsync()
         {
             ProgBar.Value = 0;
-          
             var progress = new Progress<int>(percent =>
             {
                 ProgBar.Value = percent;
                 ProgLabel.Content = percent.ToString() + "%";
             });
-            await Task.Run(() => processProgress(progress));
+            Task.Run(() => processProgress(progress));
         }
 
         public void processProgress(IProgress<int> progress)
