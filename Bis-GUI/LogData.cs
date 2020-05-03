@@ -47,5 +47,13 @@ namespace Bis_GUI
                     dataInter.lname);
             writer.Close();
         }
+
+        public void updateAccount(UpdatedUser user)
+        {
+            writer = new StreamWriter(path, append: true);
+            writer.WriteLine("Log file function: Retrieve user");
+            writer.WriteLine("User " + user.fname + " " + user.lname + " at index: " + user.index + " has been updated.");
+            writer.Close();
+        }
     }
 }

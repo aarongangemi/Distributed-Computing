@@ -1,4 +1,5 @@
-﻿using Remoting_Server;
+﻿using Bis_GUI;
+using Remoting_Server;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,6 +56,11 @@ namespace Tutorial_3_Web_Service.Models
         public void UpdateFilePath(string filePath, int index)
         {
             foob.SetFilePath(filePath, index);
+        }
+
+        public void updateUserEntry(int idx, string fname, string lname, uint acntNo, uint pin, int balance)
+        {
+            foob.updateUser(idx, fname, lname, acntNo, pin, balance);
         }
 
     }

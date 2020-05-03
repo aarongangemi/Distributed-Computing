@@ -47,7 +47,7 @@
   <ItemGroup>
     <Reference Include="IDataServerInterface, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\IDataServerInterface\bin\Debug\IDataServerInterface.dll</HintPath>
+      <HintPath>..\Remoting Server\IDataServerInterface\bin\Debug\IDataServerInterface.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="PresentationCore" />

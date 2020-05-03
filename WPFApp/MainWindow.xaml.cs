@@ -1,4 +1,5 @@
 ﻿using Bis_GUI;
+using java.math;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
@@ -26,6 +27,7 @@ namespace WPFApp
         private RestClient client;
         private bool found;
         private LogData log;
+        private static System.Timers.Timer timer = new System.Timers.Timer();
         public MainWindow()
         {
             InitializeComponent();
@@ -34,6 +36,7 @@ namespace WPFApp
             RestRequest request = new RestRequest("api/WebApi");
             IRestResponse numOfItems = client.Get(request);
             NoOfItems.Content = numOfItems.Content;
+            img.Source = new BitmapImage(new Uri("C:/WebStuff/ProfileImage.jpg"));
             found = false;
             log = new LogData();
         }
@@ -49,11 +52,11 @@ namespace WPFApp
                     RestRequest request = new RestRequest("api/webapi/" + idx.ToString());
                     IRestResponse response = await client.ExecuteGetAsync(request);
                     DataIntermed dataInter = JsonConvert.DeserializeObject<DataIntermed>(response.Content);
-                    Fname.Content = "First Name: " + dataInter.fname;
-                    Lname.Content = "Last Name: " + dataInter.lname;
-                    Balance.Content = "Balance: " + dataInter.bal.ToString("C");
-                    AcntNo.Content = "Account No: " + dataInter.acct;
-                    PIN.Content = "PIN: " + dataInter.pin.ToString("D4");
+                    fnameField.Text = dataInter.fname;
+                    lnameField.Text = dataInter.lname;
+                    balanceField.Text = dataInter.bal.ToString();
+                    acntNoField.Text = dataInter.acct.ToString();
+                    pinField.Text = dataInter.pin.ToString("D4");
                     BitmapImage image = new BitmapImage(new Uri(dataInter.filePath));
                     img.Source = image;
                     log.logIndexSearch(dataInter);
@@ -67,12 +70,12 @@ namespace WPFApp
             catch (FormatException)
             {
                 MessageBox.Show("Invalid Data was found, please try again");
-                Fname.Content = "First Name:";
-                Lname.Content = "Last Name: ";
-                Balance.Content = "Balance: ";
+                fnameField.Text = "First Name";
+                lnameField.Text = "Last Name";
+                balanceField.Text = "Balance";
                 IndexVal.Text = "Enter Index";
-                AcntNo.Content = "Account Number";
-                PIN.Content = "PIN: ";
+                acntNoField.Text = "Account Number";
+                pinField.Text = "PIN";
             }
             catch (HttpException)
             {
@@ -102,11 +105,11 @@ namespace WPFApp
                         request.AddJsonBody(file);
                         IRestResponse response = client.Post(request);
                         DataIntermed dataInter = JsonConvert.DeserializeObject<DataIntermed>(response.Content);
-                        Fname.Content = "First Name: " + dataInter.fname;
-                        Lname.Content = "Last Name: " + dataInter.lname;
-                        Balance.Content = "Balance: " + dataInter.bal.ToString("C");
-                        AcntNo.Content = "Account No: " + dataInter.acct;
-                        PIN.Content = "PIN: " + dataInter.pin.ToString("D4");
+                        fnameField.Text = dataInter.fname;
+                        lnameField.Text = dataInter.lname;
+                        balanceField.Text = dataInter.bal.ToString();
+                        acntNoField.Text = dataInter.acct.ToString();
+                        pinField.Text = dataInter.pin.ToString("D4");
                         BitmapImage image = new BitmapImage(new Uri(dataInter.filePath));
                         img.Source = image;
                         log.logImageUpload(filePath);
@@ -150,11 +153,11 @@ namespace WPFApp
                 {
                     SearchLabel.Content = "Search Complete";
                     found = true;
-                    Fname.Content = "First Name: " + dataInter.fname;
-                    Lname.Content = "Last Name: " + dataInter.lname;
-                    Balance.Content = "Balance: " + dataInter.bal.ToString("C");
-                    AcntNo.Content = "Account Number: " + dataInter.acct.ToString();
-                    PIN.Content = "PIN: " + dataInter.pin.ToString("D4");
+                    fnameField.Text = dataInter.fname;
+                    lnameField.Text = dataInter.lname;
+                    balanceField.Text = dataInter.bal.ToString();
+                    acntNoField.Text = dataInter.acct.ToString();
+                    pinField.Text = dataInter.pin.ToString("D4");
                     img.Source = new BitmapImage(new Uri(dataInter.filePath));
                     log.logSearch(dataInter);
                 }
@@ -185,8 +188,18 @@ namespace WPFApp
             Task.Run(() => processProgress(progress));
         }
 
+        /***************************************************************
+         * Purpose: process the progress bar and add a timer to have a timeout if results aren't found
+         * Reference for timer functionality: https://www.tutorialspoint.com/Timer-in-Chash
+         * Author: Karthikeya Boyini
+         * Date Accessed: 03/05/2020
+         * ***************************************************************/
         public void processProgress(IProgress<int> progress)
         {
+            timer.Interval = 30000;
+            timer.Elapsed += OnTimerEnd;
+            timer.AutoReset = true;
+            timer.Enabled = true;
             progress.Report(0);
             for (int i = 0; i != 100; i++)
             {
@@ -194,7 +207,6 @@ namespace WPFApp
                 if (progress != null)
                 {
                     progress.Report(i);
-                    
                 }
                 if(found)
                 {
@@ -204,6 +216,60 @@ namespace WPFApp
                 }
             }
            
+        }
+
+        private void OnTimerEnd(Object source, System.Timers.ElapsedEventArgs e)
+        {
+            found = true;
+            ProgLabel.Content = "Unable to find search string in database, please try again.";
+        }
+
+        private void Click_Update_User(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                RestRequest request = new RestRequest("api/webapi/");
+                UpdatedUser user = new UpdatedUser();
+                user.index = Int32.Parse(IndexVal.Text);
+                if (validateTextFields())
+                {
+                    user.fname = fnameField.Text;
+                    user.lname = lnameField.Text;
+                    user.acct = Convert.ToUInt32(acntNoField.Text);
+                    user.bal = Convert.ToInt32(balanceField.Text);
+                    user.pin = Convert.ToUInt32(pinField.Text);
+                    request.AddJsonBody(user);
+                    IRestResponse response = client.Put(request);
+                    DataIntermed dataInter = JsonConvert.DeserializeObject<DataIntermed>(response.Content);
+                    fnameField.Text = dataInter.fname;
+                    lnameField.Text = dataInter.lname;
+                    acntNoField.Text = dataInter.acct.ToString();
+                    balanceField.Text = dataInter.bal.ToString();
+                    pinField.Text = dataInter.pin.ToString();
+                    AccountStatusLabel.Content = "Account Updated Successfully";
+                    log.updateAccount(user);
+                }
+                else
+                {
+                    MessageBox.Show("Please ensure all user fields are not empty and all fields have correct data types");
+                }
+            }
+            catch(FormatException)
+            {
+                MessageBox.Show("Invalid data entered, please ensure index and data fields are completed successfully");
+            }
+
+        }
+
+        private bool validateTextFields()
+        {
+            if (Int32.Parse(IndexVal.Text) >= 0 && Int32.Parse(IndexVal.Text) < Int32.Parse(NoOfItems.Content.ToString())
+                && !fnameField.Text.Equals("") && !lnameField.Text.Equals("") && !pinField.Text.Equals("") &&
+                !balanceField.Text.Equals("") && !acntNoField.Text.Equals(""))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

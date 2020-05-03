@@ -37,5 +37,10 @@ namespace Remoting_Server
         {
             database.setFilePath(index, filePath);
         }
+
+        public void updateUser(int idx, string fname, string lname, uint acntNo, uint pin, int balance)
+        {
+            database.updateUser(idx, fname,lname,acntNo,pin,balance);
+        }
     }
 }

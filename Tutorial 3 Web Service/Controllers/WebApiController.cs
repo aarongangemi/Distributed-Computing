@@ -21,7 +21,7 @@ namespace Tutorial_3_Web_Service.Controllers
         {
             return model.getNumEntries();
         }
-        
+
         //GET api/<controller>/5
         public DataIntermed Get(int id)
         {
@@ -49,7 +49,7 @@ namespace Tutorial_3_Web_Service.Controllers
             for (i = 0; i < model.getNumEntries(); i++)
             {
                 model.GetValuesForEntry(i, out dataInter.acct, out dataInter.pin, out dataInter.bal, out dataInter.fname, out dataInter.lname, out dataInter.filePath);
-                if (dataInter.lname.Equals(value)) { 
+                if (dataInter.lname.Equals(value)) {
                     break;
                 }
             }
@@ -65,7 +65,18 @@ namespace Tutorial_3_Web_Service.Controllers
             model.GetValuesForEntry(fileValue.indexToUpdate, out dataInter.acct, out dataInter.pin, out dataInter.bal, out dataInter.fname, out dataInter.lname, out dataInter.filePath);
             return dataInter;
         }
-       
+
+        public DataIntermed Put([FromBody] UpdatedUser user)
+        {
+            DataIntermed dataInter = new DataIntermed();
+            DataModel model = new DataModel();
+            model.updateUserEntry(user.index, user.fname, user.lname, user.acct, user.pin, user.bal);
+            model.GetValuesForEntry(user.index, out dataInter.acct, out dataInter.pin, out dataInter.bal, out dataInter.fname, out dataInter.lname, out dataInter.filePath);
+            return dataInter; 
+        }
+
+
+
     }
     
 }

@@ -11,12 +11,12 @@
             <RowDefinition Height="7*"/>
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
-        <TextBox Name ="IndexVal" HorizontalAlignment="Left" Height="23" Margin="133,141,0,0" TextWrapping="Wrap" Text="Enter Index" VerticalAlignment="Top" Width="120"/>
-        <Button Name ="GoBtn" Content="Go!" HorizontalAlignment="Left" Margin="285,117,0,0" VerticalAlignment="Top" Width="75" Click="Click_Go"/>
+        <TextBox Name ="IndexVal" HorizontalAlignment="Left" Height="23" Margin="58,147,0,0" TextWrapping="Wrap" Text="Enter Index" VerticalAlignment="Top" Width="120"/>
+        <Button Name ="GoBtn" Content="Go!" HorizontalAlignment="Left" Margin="189,112,0,0" VerticalAlignment="Top" Width="75" Click="Click_Go"/>
         <Label Content="Total No. Of Items" HorizontalAlignment="Left" Margin="148,58,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.568,-8.979"/>
         <Image Margin="29,29,665.6,170.4" Source="download.png" Stretch="Fill"/>
-        <Button Name ="imgBtn" Content="Upload Image File" HorizontalAlignment="Left" Margin="285,152,0,0" VerticalAlignment="Top" Width="147" Height="23" Click="Click_Upload_Image"/>
-        <Image Name="img" HorizontalAlignment="Left" Height="128" Margin="503,224,0,0" VerticalAlignment="Top" Width="158" Grid.RowSpan="2"/>
+        <Button Name ="imgBtn" Content="Upload Image File" HorizontalAlignment="Left" Margin="189,153,0,0" VerticalAlignment="Top" Width="147" Height="23" Click="Click_Upload_Image"/>
+        <Image Name="img" HorizontalAlignment="Left" Height="128" Margin="536,240,0,0" VerticalAlignment="Top" Width="158" Grid.RowSpan="2"/>
         <Button Content="Search" HorizontalAlignment="Left" Height="21" Margin="272,262,0,0" VerticalAlignment="Top" Width="102" RenderTransformOrigin="0.5,0.5" Click="Click_Search_btn">
             <Button.RenderTransform>
                 <TransformGroup>
@@ -30,13 +30,20 @@
         <TextBox Name="searchTxt" HorizontalAlignment="Left" Height="23" Margin="103,261,0,0" TextWrapping="Wrap" Text="Enter Last Name" VerticalAlignment="Top" Width="120"/>
         <ProgressBar Name ="ProgBar" HorizontalAlignment="Left" Height="23" Margin="76,196,0,0" VerticalAlignment="Top" Width="324"/>
         <Label Name ="ProgLabel" Content="" HorizontalAlignment="Left" Margin="421,193,0,0" VerticalAlignment="Top" Width="52"/>
-        <Label Name ="Fname" Content="First Name:" HorizontalAlignment="Left" Height="32" Margin="503,21,0,0" VerticalAlignment="Top" Width="200"/>
-        <Label Name ="Lname" Content="Last Name:" HorizontalAlignment="Left" Height="32" Margin="503,58,0,0" VerticalAlignment="Top" Width="200"/>
-        <Label Name ="AcntNo" Content="Account No:" HorizontalAlignment="Left" Height="32" Margin="503,95,0,0" VerticalAlignment="Top" Width="180" RenderTransformOrigin="2.886,0.467"/>
-        <Label Name ="PIN" Content="PIN:" HorizontalAlignment="Left" Height="32" Margin="503,132,0,0" VerticalAlignment="Top" Width="119" RenderTransformOrigin="4.818,0.744"/>
-        <Label Name = "Balance" Content="Balance:" HorizontalAlignment="Left" Height="32" Margin="503,169,0,0" VerticalAlignment="Top" Width="229"/>
-        <Label Name ="NoOfItems" Content="Label" HorizontalAlignment="Left" Margin="258,58,0,0" VerticalAlignment="Top" Width="142"/>
+        <Label Name ="NoOfItems" Content="NoOfItemsHere" HorizontalAlignment="Left" Margin="258,58,0,0" VerticalAlignment="Top" Width="142"/>
         <Label Name ="SearchLabel" Content="" HorizontalAlignment="Left" Height="32" Margin="76,224,0,0" VerticalAlignment="Top" Width="304"/>
+        <TextBox Name ="fnameField" HorizontalAlignment="Left" Height="23" Margin="548,56,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="214" />
+        <TextBox Name ="lnameField" HorizontalAlignment="Left" Height="23" Margin="548,84,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="214"/>
+        <TextBox Name ="acntNoField" HorizontalAlignment="Left" Height="23" Margin="548,112,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="214"/>
+        <TextBox Name ="pinField" HorizontalAlignment="Left" Height="23" Margin="548,140,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="214"/>
+        <TextBox Name ="balanceField" HorizontalAlignment="Left" Height="23" Margin="548,168,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="214"/>
+        <Button Content="Update User" HorizontalAlignment="Left" Margin="520,93,0,0" Grid.Row="1" VerticalAlignment="Top" Width="201" Height="23" Click="Click_Update_User"/>
+        <Label Content="First Name:" HorizontalAlignment="Left" Margin="458,56,0,0" VerticalAlignment="Top" Width="72"/>
+        <Label Content="Last Name:" HorizontalAlignment="Left" Margin="458,81,0,0" VerticalAlignment="Top" Width="72"/>
+        <Label Content="Account No:" HorizontalAlignment="Left" Margin="458,108,0,0" VerticalAlignment="Top" Width="85"/>
+        <Label Content="PIN:" HorizontalAlignment="Left" Margin="458,139,0,0" VerticalAlignment="Top" Width="85" RenderTransformOrigin="0.494,1.769"/>
+        <Label Content="Balance:" HorizontalAlignment="Left" Margin="458,165,0,0" VerticalAlignment="Top" Width="85" RenderTransformOrigin="0.494,1.769"/>
+        <Label Name ="AccountStatusLabel" Content="" HorizontalAlignment="Left" Margin="548,201,0,0" VerticalAlignment="Top" Width="214" RenderTransformOrigin="0.494,1.769"/>
 
     </Grid>
 </Window>

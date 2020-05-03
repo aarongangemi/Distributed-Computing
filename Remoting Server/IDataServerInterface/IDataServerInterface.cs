@@ -21,6 +21,9 @@ namespace IDataServerInterface
 
             [OperationContract]
             void SetFilePath(string filePath, int index);
+
+            [OperationContract]
+            void updateUser(int idx, string fname, string lname, uint acntNo, uint pin, int balance);
         }
     
 }

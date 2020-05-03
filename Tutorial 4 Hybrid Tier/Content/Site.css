@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color: yellowgreen;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -21,4 +22,21 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+#imglogo{
+    display:inline-block;
+    margin-left:100px;
+}
+
+#button{
+    margin-top:50px;
+    background-color: cornflowerblue;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    border-radius: 50%;
+    font-size: 16px;
+    height: 75px;
+    margin-right: 100px;
 }

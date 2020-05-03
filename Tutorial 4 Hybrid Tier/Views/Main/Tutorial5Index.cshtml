@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Index";
 }
+<link rel="stylesheet" href="~/Content/Site.css" />
 <html>
     <head>
         <title>Gangemi's Bank - Tutorial 5</title>
@@ -9,10 +10,12 @@
     </head>
     <body>
         <div id="Accounts">
-            <button onclick="LoadAccounts()">Load Accounts</button>
-            <button onclick="LoadUsers()">Load Users</button>
-            <button onclick="LoadTransactions()">Load Transactions</button>
+            <button id="button" onclick="LoadAccounts()"><strong>Load Accounts</strong></button>
+            <button id="button" onclick="LoadUsers()"><strong>Load Users</strong></button>
+            <button id="button" onclick="LoadTransactions()"><strong>Load Transactions</strong></button>
+            <img src="~/Images/BankLogo.png" alt="Bank Logo" id="imglogo" />
         </div>
+        
         <div id="Content">
         </div>
         <script>

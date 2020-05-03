@@ -57,7 +57,7 @@ namespace Tutorial_1
 
         private int GetBalance()
         {
-            return random.Next(1, 999999999);
+            return random.Next(1, 99999999);
         }
         public void GetNextAccount(out uint pin, out uint acctNo,
                                    out string firstName, out string lastName,

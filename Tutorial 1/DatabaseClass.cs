@@ -116,5 +116,14 @@ namespace Tutorial_1
         {
              dataStruct.ElementAt(index).filePath = filePath;
         }
+
+        public void updateUser(int idx, string fname, string lname, uint acntNo, uint pin, int balance)
+        {
+            dataStruct.ElementAt(idx).firstName = fname;
+            dataStruct.ElementAt(idx).lastName = lname;
+            dataStruct.ElementAt(idx).acctNo = acntNo;
+            dataStruct.ElementAt(idx).pin = pin;
+            dataStruct.ElementAt(idx).balance = balance;
+        }
     }
 }
