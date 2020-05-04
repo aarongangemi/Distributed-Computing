@@ -8,6 +8,7 @@ namespace Tutorial_4_Data_Tier.Controllers
 
         BankDB.UserAccessInterface userAccess = Bank.bankData.GetUserAccess();
 
+
         // GET api/<controller>/5
         [Route("api/User/Create/{fname}/{lname}")]
         [HttpPost]
@@ -27,14 +28,14 @@ namespace Tutorial_4_Data_Tier.Controllers
         [HttpGet]
         public UserDetailsStruct GetUser(uint userId)
         {
-            string FirstName, LastName;
-            userAccess.SelectUser(userId);
-            userAccess.GetUserName(out FirstName, out LastName);
-            UserDetailsStruct userData = new UserDetailsStruct();
-            userData.firstName = FirstName;
-            userData.lastName = LastName;
-            userData.userId = userId;
-            return userData;
+                string FirstName, LastName;
+                userAccess.SelectUser(userId);
+                userAccess.GetUserName(out FirstName, out LastName);
+                UserDetailsStruct userData = new UserDetailsStruct();
+                userData.firstName = FirstName;
+                userData.lastName = LastName;
+                userData.userId = userId;
+                return userData;
         }
     }
 }

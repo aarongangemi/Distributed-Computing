@@ -20,6 +20,7 @@ namespace Tutorial_3_Web_Service.Controllers
                 model.GetValuesForEntry(i, out dataInter.acct, out dataInter.pin, out dataInter.bal, out dataInter.fname, out dataInter.lname, out dataInter.filePath);
                 if (dataInter.lname.Equals(value.searchStr))
                 {
+                    dataInter.index = i;
                     return dataInter;
                 }
             }

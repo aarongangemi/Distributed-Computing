@@ -1,33 +1,27 @@
 ﻿using Bis_GUI;
-using java.math;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.IO;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Windows;
 using System.Windows.Media.Imaging;
-using static System.Net.Mime.MediaTypeNames;
 using MessageBox = System.Windows.Forms.MessageBox;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 
 namespace WPFApp
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    public delegate int SearchOperation(string str);
-
     public partial class MainWindow : Window
     {
         private string URL;
         private RestClient client;
         private bool found;
         private LogData log;
-        private static System.Timers.Timer timer = new System.Timers.Timer();
+        private static System.Timers.Timer timer;
+        private bool timerEnded;
         public MainWindow()
         {
             InitializeComponent();
@@ -36,9 +30,16 @@ namespace WPFApp
             RestRequest request = new RestRequest("api/WebApi");
             IRestResponse numOfItems = client.Get(request);
             NoOfItems.Content = numOfItems.Content;
+            if (NoOfItems.Content.Equals(""))
+            {
+                MessageBox.Show("Web Service not running, Program terminating and will not run");
+                Environment.Exit(0);
+            }
             img.Source = new BitmapImage(new Uri("C:/WebStuff/ProfileImage.jpg"));
             found = false;
             log = new LogData();
+            timerEnded = false;
+            timer = new System.Timers.Timer();
         }
 
         private async void Click_Go(object sender, RoutedEventArgs e)
@@ -49,6 +50,7 @@ namespace WPFApp
                 idx = Int32.Parse(IndexVal.Text);
                 if (idx >= 0  && idx < Int32.Parse(NoOfItems.Content.ToString()))
                 {
+                    AccountStatusLabel.Content = "";
                     RestRequest request = new RestRequest("api/webapi/" + idx.ToString());
                     IRestResponse response = await client.ExecuteGetAsync(request);
                     DataIntermed dataInter = JsonConvert.DeserializeObject<DataIntermed>(response.Content);
@@ -64,6 +66,9 @@ namespace WPFApp
                 }
                 else
                 {
+                    log.errorLogMessage("Index could not be passed successfully, " +
+                        "please ensure index is > 0 and < 100,000, and is a valid integer. " +
+                        "Fields will be cleared");
                     throw new FormatException("Index out of range");
                 }
             }
@@ -116,6 +121,9 @@ namespace WPFApp
                     }
                     else
                     {
+                        log.errorLogMessage("Index could not be passed successfully, " +
+                        "please ensure index is > 0 and < 100,000, and is a valid integer. " +
+                        "Fields will be cleared");
                         throw new FormatException("Index out of range, please try again");
                     }
                 }
@@ -132,14 +140,18 @@ namespace WPFApp
         {
             try
             {
-                SearchLabel.Content = "Searching 100000 results for Last name";
+                SearchBtn.IsEnabled = false;
+                SearchLabel.Content = "Searching results for Last name";
                 if (searchTxt.Text.Length == 0)
                 {
+                    log.errorLogMessage("Last name cannot be empty, user must enter valid last name");
                     throw new FormatException("Cannot allow empty string as last name, try again");
                 }
                 var regex = new Regex("^[a-zA-Z]*$");
                 if(!regex.IsMatch(searchTxt.Text))
                 {
+                    log.errorLogMessage("Invalid last name was entered, last name consists of invalid characters. " +
+                        "Ensure last name is only letters from the alphabet");
                     throw new FormatException("Cannot allow illegal characters");
                 }
                 progressProcessingAsync();
@@ -153,6 +165,7 @@ namespace WPFApp
                 {
                     SearchLabel.Content = "Search Complete";
                     found = true;
+                    IndexVal.Text = dataInter.index.ToString();
                     fnameField.Text = dataInter.fname;
                     lnameField.Text = dataInter.lname;
                     balanceField.Text = dataInter.bal.ToString();
@@ -167,23 +180,33 @@ namespace WPFApp
                     SearchLabel.Content = "Search Complete";
                     throw new FormatException("Unable to find last name provided, try again");
                 }
+                SearchBtn.IsEnabled = true;
 
             }
             catch(FormatException)
             {
                 MessageBox.Show("Please enter a valid last name and try again");
+                SearchLabel.Content = "Invalid last name entered, please try again";
                 ProgBar.Value = 100;
                 searchTxt.Text = "Enter Last Name";
+                SearchBtn.IsEnabled = true;
             }
         }
 
         private void progressProcessingAsync()
         {
             ProgBar.Value = 0;
+            timerEnded = false;
             var progress = new Progress<int>(percent =>
             {
                 ProgBar.Value = percent;
                 ProgLabel.Content = percent.ToString() + "%";
+                if (timerEnded)
+                {
+                    SearchLabel.Content = "Account with last name searched does not exist";
+                    SearchBtn.IsEnabled = true;
+                    timerEnded = false;
+                }
             });
             Task.Run(() => processProgress(progress));
         }
@@ -196,14 +219,14 @@ namespace WPFApp
          * ***************************************************************/
         public void processProgress(IProgress<int> progress)
         {
-            timer.Interval = 30000;
+            timer.Interval = 120000;
             timer.Elapsed += OnTimerEnd;
             timer.AutoReset = true;
             timer.Enabled = true;
             progress.Report(0);
             for (int i = 0; i != 100; i++)
             {
-                Thread.Sleep(1500);
+                Thread.Sleep(120000/100);
                 if (progress != null)
                 {
                     progress.Report(i);
@@ -214,14 +237,21 @@ namespace WPFApp
                     found = false;
                     break;
                 }
+                
+                if(timerEnded)
+                {
+                    progress.Report(100);
+                    found = false;
+                    break;
+                }
+               
             }
-           
+
         }
 
         private void OnTimerEnd(Object source, System.Timers.ElapsedEventArgs e)
         {
-            found = true;
-            ProgLabel.Content = "Unable to find search string in database, please try again.";
+            timerEnded = true;
         }
 
         private void Click_Update_User(object sender, RoutedEventArgs e)
@@ -231,7 +261,7 @@ namespace WPFApp
                 RestRequest request = new RestRequest("api/webapi/");
                 UpdatedUser user = new UpdatedUser();
                 user.index = Int32.Parse(IndexVal.Text);
-                if (validateTextFields())
+                if (validateTextFields() && validateRegex())
                 {
                     user.fname = fnameField.Text;
                     user.lname = lnameField.Text;
@@ -251,7 +281,8 @@ namespace WPFApp
                 }
                 else
                 {
-                    MessageBox.Show("Please ensure all user fields are not empty and all fields have correct data types");
+                    MessageBox.Show("Please ensure all user fields are not empty and all fields have correct data types. " +
+                        " There can also not be any spaces in text. Have fun!");
                 }
             }
             catch(FormatException)
@@ -270,6 +301,29 @@ namespace WPFApp
                 return true;
             }
             return false;
+        }
+
+        private bool validateRegex()
+        {
+            bool fieldsTrue;
+            var regex = new Regex("^[a-zA-Z]*$");
+            var numRegex = new Regex("^[0-9]*$");
+            if(regex.IsMatch(fnameField.Text) && regex.IsMatch(lnameField.Text))
+            {
+                if(numRegex.IsMatch(acntNoField.Text) && numRegex.IsMatch(pinField.Text) && numRegex.IsMatch(balanceField.Text))
+                {
+                    fieldsTrue = true;
+                }
+                else
+                {
+                    fieldsTrue = false;
+                }
+            }
+            else
+            {
+                fieldsTrue = false;
+            }
+            return fieldsTrue;
         }
     }
 }

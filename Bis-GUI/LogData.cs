@@ -55,5 +55,12 @@ namespace Bis_GUI
             writer.WriteLine("User " + user.fname + " " + user.lname + " at index: " + user.index + " has been updated.");
             writer.Close();
         }
+
+        public void errorLogMessage(string errorMessage)
+        {
+            writer = new StreamWriter("C:/WebStuff/Tutorial_3_ErrorLog", append: true);
+            writer.WriteLine("Error Occurred: " + errorMessage);
+            writer.Close();
+        }
     }
 }

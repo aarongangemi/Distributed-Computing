@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Web.Http;
+using Tutorial_4_Business_Tier.Models;
 using Tutorial_4_Data_Tier.Models;
 
 namespace Tutorial_4_Hybrid_Tier.Controllers
@@ -16,6 +17,7 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
     {
         private string URL = "https://localhost:44312/";
         private RestClient client;
+        private LogClass log = new LogClass();
         [Route("api/BankApi/Account/{accountID}")]
         [HttpGet]
         public AccountDetailsStruct GetAccount(uint accountID)
@@ -26,11 +28,12 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
                 client = new RestClient(URL);
                 RestRequest request = new RestRequest("api/Account/" + accountID.ToString());
                 IRestResponse response = client.Get(request);
+                log.successLogMessage("Account ID was used to retrieve account: " + accountID.ToString());
                 return JsonConvert.DeserializeObject<AccountDetailsStruct>(response.Content);
             }
             else
             {
-                Console.WriteLine("Invalid data found");
+                log.errorLogMessage("Error retrieving account: " + accountID.ToString() + ". Account ID in invalid format");
                 return null;
             }
         }
@@ -46,6 +49,12 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
                 client.Post(request);
                 RestRequest saveRequest = new RestRequest("api/Save");
                 client.Post(saveRequest);
+                log.successLogMessage(amount.ToString() + "was successfully deposited into account: " + accountID.ToString());
+                
+            }
+            else
+            {
+                log.errorLogMessage("Unable to deposit " + amount + "with account ID: " + accountID);
             }
         }
 
@@ -61,6 +70,12 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
                 client.Post(request);
                 RestRequest saveRequest = new RestRequest("api/Save");
                 client.Post(saveRequest);
+                log.successLogMessage(amount.ToString() + "was successfully withdrawn from account: " + accountID.ToString());
+            }
+            else
+            {
+                log.errorLogMessage("Unable to withdraw " + amount + "with account ID: " + accountID 
+                    + ". Incorrect format of either account ID or amount");
             }
         }
 
@@ -80,6 +95,11 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
                 client.Post(acntRequest);
                 RestRequest saveRequest = new RestRequest("api/Save");
                 client.Post(saveRequest);
+                log.successLogMessage("Account and user successfully created: first name = " + fname + ", last name = " + lname);
+            }
+            else
+            {
+                log.errorLogMessage("unable to create account and user because first name and last name are in incorrect format");
             }
         }
 
@@ -93,11 +113,12 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
                 client = new RestClient(URL);
                 RestRequest request = new RestRequest("api/User/" + userId.ToString());
                 IRestResponse response = client.Get(request);
+                log.successLogMessage("user: " + userId.ToString() + " was successfully retrieved");
                 return JsonConvert.DeserializeObject<UserDetailsStruct>(response.Content);
             }
             else
             {
-                Console.WriteLine("invalid data found");
+                log.errorLogMessage("Unable to retrieve user: " + userId + " . User ID has invalid format.");
                 return null;
             }
         }
@@ -117,6 +138,12 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
                 RestRequest transactionRequest = new RestRequest("api/ProcessTransactions");
                 client.Post(transactionRequest);
                 RestRequest saveRequest = new RestRequest("api/Save");
+            }
+            else
+            {
+                log.errorLogMessage("Unable to create transaction of amount: " + 
+                    amount.ToString() + " to " + receiverID.ToString() 
+                    + ". Either amount, sender ID or reciever ID had invalid format.");
             }
         }
 

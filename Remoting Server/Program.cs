@@ -11,7 +11,6 @@ namespace Remoting_Server
     {
         static void Main(string[] args)
         {
-            
             Console.WriteLine("Welcome to Aaron's Server");
             ServiceHost host; //Service host in OS
             NetTcpBinding tcp = new NetTcpBinding();  //Create .NET TCP port

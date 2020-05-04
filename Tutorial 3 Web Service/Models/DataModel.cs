@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.Web;
+using System.Windows.Forms;
 
 namespace Tutorial_3_Web_Service.Models
 {
@@ -24,7 +25,15 @@ namespace Tutorial_3_Web_Service.Models
 
         public int getNumEntries()
         {
-            return foob.GetNumEntries();
+            try
+            {
+                return foob.GetNumEntries();
+            }
+            catch(EndpointNotFoundException e)
+            {
+                MessageBox.Show("Data Server has not been run before opening web service and Main App. Program will terminate");
+                return -1;
+            }
         }
 
         public void GetValuesForEntry(int idx, out uint acntNo, out uint pin, out int balance, out string fname, out string lname, out string filePath)
