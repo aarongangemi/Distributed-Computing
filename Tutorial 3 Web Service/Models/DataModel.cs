@@ -25,15 +25,7 @@ namespace Tutorial_3_Web_Service.Models
 
         public int getNumEntries()
         {
-            try
-            {
-                return foob.GetNumEntries();
-            }
-            catch(EndpointNotFoundException e)
-            {
-                MessageBox.Show("Data Server has not been run before opening web service and Main App. Program will terminate");
-                return -1;
-            }
+            return foob.GetNumEntries();
         }
 
         public void GetValuesForEntry(int idx, out uint acntNo, out uint pin, out int balance, out string fname, out string lname, out string filePath)

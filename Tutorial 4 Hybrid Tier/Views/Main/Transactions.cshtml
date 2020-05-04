@@ -20,7 +20,6 @@
             contentType: 'application/json',
             processData: false,
             success: function (data, textStatus, jQxhr) {
-                console.log(textStatus);
                 alert("Transaction from: " + $("#senderID").val() + " to " + $("#receiverID").val() + " was successful");
             },
             error: function (jqXhr, textStatus, errorThrown) {

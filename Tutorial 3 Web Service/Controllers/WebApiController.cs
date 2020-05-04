@@ -1,13 +1,6 @@
 ﻿using Bis_GUI;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Web.Http;
-using System.Windows.Media.Imaging;
 using Tutorial_3_Web_Service.Models;
 
 namespace Tutorial_3_Web_Service.Controllers
@@ -74,9 +67,6 @@ namespace Tutorial_3_Web_Service.Controllers
             model.GetValuesForEntry(user.index, out dataInter.acct, out dataInter.pin, out dataInter.bal, out dataInter.fname, out dataInter.lname, out dataInter.filePath);
             return dataInter; 
         }
-
-
-
     }
     
 }

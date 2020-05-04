@@ -22,7 +22,7 @@ namespace Tutorial_4_Data_Tier.Controllers
         [HttpPost]
         public void processTransactions()
         {
-            Bank.bankData.ProcessAllTransactions();
+             Bank.bankData.ProcessAllTransactions();
         }
     }
 }

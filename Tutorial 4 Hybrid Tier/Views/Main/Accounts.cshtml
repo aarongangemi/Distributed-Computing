@@ -3,9 +3,8 @@
 }
 <br />
 <form>
-    <label>Search my Account</label><br />
+    <label>Get Account Balance</label><br />
     <input type="text" id="acntId" name="acntId" placeholder="Account ID" /><br /><br />
-    <input type="text" id="userId" name="UserId" placeholder="User ID" readonly/><br /><br />
     <input type="text" id="bal" name="bal" placeholder="Account Balance" readonly /><br /><br />
 </form>
 <button id="submitBtn" onclick="GetAccount()">Get Account</button>
@@ -36,7 +35,6 @@
             success: function (data, textStatus, jQxhr) {
                 var obj = data;
                 $("#bal").val(obj.acntBal);
-                $("#userId").val(obj.userId);
                 $("#acntId").val(obj.acntId);
                 alert("Account Found");
             },

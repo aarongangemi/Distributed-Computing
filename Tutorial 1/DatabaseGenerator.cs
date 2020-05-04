@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -79,7 +80,7 @@ namespace Tutorial_1
          * *****************************************************/
         private string GetFilePath()
         {
-            return "C:/WebStuff/ProfileImage.jpg";
+            return Path.Combine(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName, "Images/ProfileImage.jpg");
         }
     }
 }

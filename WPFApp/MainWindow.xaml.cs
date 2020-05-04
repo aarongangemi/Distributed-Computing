@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.IO;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,12 +31,7 @@ namespace WPFApp
             RestRequest request = new RestRequest("api/WebApi");
             IRestResponse numOfItems = client.Get(request);
             NoOfItems.Content = numOfItems.Content;
-            if (NoOfItems.Content.Equals(""))
-            {
-                MessageBox.Show("Web Service not running, Program terminating and will not run");
-                Environment.Exit(0);
-            }
-            img.Source = new BitmapImage(new Uri("C:/WebStuff/ProfileImage.jpg"));
+            img.Source = new BitmapImage(new Uri(Path.Combine(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName, "Images/ProfileImage.jpg")));
             found = false;
             log = new LogData();
             timerEnded = false;
@@ -173,23 +169,31 @@ namespace WPFApp
                     pinField.Text = dataInter.pin.ToString("D4");
                     img.Source = new BitmapImage(new Uri(dataInter.filePath));
                     log.logSearch(dataInter);
+                    SearchBtn.IsEnabled = true;
                 }
                 else
                 {
-                    ProgBar.Value = 100;
-                    SearchLabel.Content = "Search Complete";
-                    throw new FormatException("Unable to find last name provided, try again");
+                    throw new NullReferenceException("Unable to find an entry with that lastname in the database");
                 }
-                SearchBtn.IsEnabled = true;
-
             }
-            catch(FormatException)
+            catch(FormatException x)
             {
                 MessageBox.Show("Please enter a valid last name and try again");
                 SearchLabel.Content = "Invalid last name entered, please try again";
                 ProgBar.Value = 100;
                 searchTxt.Text = "Enter Last Name";
                 SearchBtn.IsEnabled = true;
+                log.errorLogMessage(x.Message);
+            }
+            catch(NullReferenceException y)
+            {
+                MessageBox.Show("Was unable to find last name for entry, please try again");
+                SearchLabel.Content = "Invalid last name entered, please try again";
+                ProgBar.Value = 100;
+                SearchLabel.Content = "Search Complete";
+                searchTxt.Text = "Enter Last Name";
+                SearchBtn.IsEnabled = true;
+                log.errorLogMessage(y.Message);
             }
         }
 
@@ -244,9 +248,7 @@ namespace WPFApp
                     found = false;
                     break;
                 }
-               
             }
-
         }
 
         private void OnTimerEnd(Object source, System.Timers.ElapsedEventArgs e)
@@ -281,13 +283,13 @@ namespace WPFApp
                 }
                 else
                 {
-                    MessageBox.Show("Please ensure all user fields are not empty and all fields have correct data types. " +
-                        " There can also not be any spaces in text. Have fun!");
+                    throw new FormatException("invalid data entered into user fields");
                 }
             }
-            catch(FormatException)
+            catch(FormatException x)
             {
-                MessageBox.Show("Invalid data entered, please ensure index and data fields are completed successfully");
+                MessageBox.Show(x.Message);
+                log.errorLogMessage(x.Message);
             }
 
         }

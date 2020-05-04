@@ -42,7 +42,7 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
         public void DepositMoney(uint accountID, uint amount)
         {
             var regex = new Regex("/^[0-9]*$/");
-            if (!regex.IsMatch(accountID.ToString()) || !regex.IsMatch(amount.ToString()))
+            if (!regex.IsMatch(accountID.ToString()) && !regex.IsMatch(amount.ToString()))
             {
                 client = new RestClient(URL);
                 RestRequest request = new RestRequest("api/Account/Deposit/" + accountID.ToString() + "/" + amount.ToString());
@@ -63,7 +63,7 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
         public void WithdrawMoney(uint accountID, uint amount)
         {
             var regex = new Regex("/^[0-9]*$/");
-            if (!regex.IsMatch(accountID.ToString()) || !regex.IsMatch(amount.ToString()))
+            if (!regex.IsMatch(accountID.ToString()) && !regex.IsMatch(amount.ToString()))
             {
                 client = new RestClient(URL);
                 RestRequest request = new RestRequest("api/Account/Withdraw/" + accountID.ToString() + "/" + amount.ToString());
@@ -85,7 +85,7 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
         {
             //Set user fields
             var regex = new Regex("/[!@#$%^\"&*(),.?:{}|<>]/g");
-            if (!regex.IsMatch(fname) || !regex.IsMatch(lname))
+            if (!regex.IsMatch(fname) && !regex.IsMatch(lname))
             {
                 client = new RestClient(URL);
                 RestRequest userRequest = new RestRequest("api/User/Create/" + fname + "/" + lname);
@@ -130,7 +130,7 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
         public void createTransaction(uint amount, uint senderID, uint receiverID)
         {
             var regex = new Regex("/^[0-9]*$/");
-            if (!regex.IsMatch(amount.ToString()) || !regex.IsMatch(senderID.ToString()) || !regex.IsMatch(receiverID.ToString()))
+            if (!regex.IsMatch(amount.ToString()) && !regex.IsMatch(senderID.ToString()) && !regex.IsMatch(receiverID.ToString()))
             {
                 client = new RestClient(URL);
                 RestRequest restRequest = new RestRequest("api/Transactions/Create/" + amount + "/" + senderID + "/" + receiverID);
@@ -138,6 +138,7 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
                 RestRequest transactionRequest = new RestRequest("api/ProcessTransactions");
                 client.Post(transactionRequest);
                 RestRequest saveRequest = new RestRequest("api/Save");
+                client.Post(saveRequest);
             }
             else
             {
