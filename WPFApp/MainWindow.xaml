@@ -44,6 +44,10 @@
         <Label Content="PIN:" HorizontalAlignment="Left" Margin="458,139,0,0" VerticalAlignment="Top" Width="85" RenderTransformOrigin="0.494,1.769"/>
         <Label Content="Balance:" HorizontalAlignment="Left" Margin="458,165,0,0" VerticalAlignment="Top" Width="85" RenderTransformOrigin="0.494,1.769"/>
         <Label Name ="AccountStatusLabel" Content="" HorizontalAlignment="Left" Margin="548,201,0,0" VerticalAlignment="Top" Width="214" RenderTransformOrigin="0.494,1.769"/>
+        <Label Content="Specify URL: " HorizontalAlignment="Left" Margin="43,51,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <TextBox Name ="UrlText" HorizontalAlignment="Left" Height="23" Margin="126,55,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="274"/>
+        <Button Content="Use URL" HorizontalAlignment="Left" Margin="405,57,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Click="Click_Url_Btn"/>
+        <Label Name ="URLStatus" Content="" HorizontalAlignment="Left" Margin="43,82,0,0" Grid.Row="1" VerticalAlignment="Top" Width="437"/>
 
     </Grid>
 </Window>

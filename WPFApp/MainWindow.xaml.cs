@@ -77,9 +77,9 @@ namespace WPFApp
                 acntNoField.Text = "Account Number";
                 pinField.Text = "PIN";
             }
-            catch (HttpException)
+            catch (JsonReaderException)
             {
-                MessageBox.Show("Http Exception raised, please try again");
+                MessageBox.Show("Please check that you have specified a valid URL for client and try again");
             }
 
 
@@ -126,6 +126,10 @@ namespace WPFApp
             catch(FormatException)
             {
                 MessageBox.Show("Invalid index entered, please try again");
+            }
+            catch(JsonReaderException)
+            {
+                MessageBox.Show("Please check that you have specified a valid URL for client and try again");
             }
 
         }
@@ -193,6 +197,12 @@ namespace WPFApp
                 searchTxt.Text = "Enter Last Name";
                 SearchBtn.IsEnabled = true;
                 log.errorLogMessage(y.Message);
+            }
+            catch(JsonReaderException)
+            {
+                MessageBox.Show("Please check that you have specified a valid URL for client and try again");
+                found = true;
+                SearchBtn.IsEnabled = true;
             }
         }
 
@@ -290,6 +300,10 @@ namespace WPFApp
                 MessageBox.Show(x.Message);
                 log.errorLogMessage(x.Message);
             }
+            catch(JsonReaderException)
+            {
+                MessageBox.Show("Please check that you have specified a valid URL for client and try again");
+            }
 
         }
 
@@ -325,6 +339,21 @@ namespace WPFApp
                 fieldsTrue = false;
             }
             return fieldsTrue;
+        }
+
+        private void Click_Url_Btn(object sender, RoutedEventArgs e)
+        {
+            if(Uri.IsWellFormedUriString(UrlText.Text, UriKind.Absolute))
+            {
+                URL = UrlText.Text;
+                client = new RestClient(URL);
+                URLStatus.Content = "URL Successfully changed";
+            }
+            else
+            {
+                URLStatus.Content = "Please enter a valid URL";
+                MessageBox.Show("Invalid URL used, please try again");
+            }
         }
     }
 }
