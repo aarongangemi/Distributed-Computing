@@ -70,16 +70,22 @@ namespace WPFApp
             catch (FormatException)
             {
                 MessageBox.Show("Invalid Data was found, please try again");
-                fnameField.Text = "First Name";
-                lnameField.Text = "Last Name";
-                balanceField.Text = "Balance";
+                fnameField.Text = "";
+                lnameField.Text = "";
+                balanceField.Text = "";
                 IndexVal.Text = "Enter Index";
-                acntNoField.Text = "Account Number";
-                pinField.Text = "PIN";
+                acntNoField.Text = "";
+                pinField.Text = "";
             }
             catch (JsonReaderException)
             {
                 MessageBox.Show("Please check that you have specified a valid URL for client and try again");
+                fnameField.Text = "";
+                lnameField.Text = "";
+                balanceField.Text = "";
+                IndexVal.Text = "Enter Index";
+                acntNoField.Text = "";
+                pinField.Text = "";
             }
 
 
