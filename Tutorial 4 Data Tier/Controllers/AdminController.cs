@@ -22,7 +22,14 @@ namespace Tutorial_4_Data_Tier.Controllers
         [HttpPost]
         public void processTransactions()
         {
-             Bank.bankData.ProcessAllTransactions();
+            try
+            {
+                Bank.bankData.ProcessAllTransactions();
+            }
+            catch
+            {
+                Console.WriteLine("Unable to process transactions");
+            }
         }
     }
 }

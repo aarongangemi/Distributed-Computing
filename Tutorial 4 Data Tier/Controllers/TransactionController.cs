@@ -18,30 +18,51 @@ namespace Tutorial_4_Data_Tier.Controllers
         [HttpPost]
         public void CreateTransaction(uint amount, uint senderID, uint receiverID)
         {
-            TransactionDetailsStruct tran = new TransactionDetailsStruct();
-            tran.transactionId = transactionAccess.CreateTransaction();
-            tran.amount = amount;
-            tran.senderId = senderID;
-            tran.receiverId = receiverID;
-            transactionAccess.SelectTransaction(tran.transactionId);
-            transactionAccess.SetAmount(tran.amount);
-            transactionAccess.SetSendr(tran.senderId);
-            transactionAccess.SetRecvr(tran.receiverId);
+            try
+            {
+                TransactionDetailsStruct tran = new TransactionDetailsStruct();
+                tran.transactionId = transactionAccess.CreateTransaction();
+                tran.amount = amount;
+                tran.senderId = senderID;
+                tran.receiverId = receiverID;
+                transactionAccess.SelectTransaction(tran.transactionId);
+                transactionAccess.SetAmount(tran.amount);
+                transactionAccess.SetSendr(tran.senderId);
+                transactionAccess.SetRecvr(tran.receiverId);
+            }
+            catch(Exception)
+            {
+                Console.WriteLine("Unable to create transaction");
+            }
         }
 
         // POST api/<controller>
-        [Route("api/Transactions")]
+        [Route("api/Transactions/{transactionId}")]
         [HttpGet]
-        public TransactionDetailsStruct GetTransactions()
+        public TransactionDetailsStruct GetTransactions(uint transactionId)
         {
-            List<uint> transactionList = transactionAccess.GetTransactions();
-            TransactionDetailsStruct transaction = new TransactionDetailsStruct();
-            transactionAccess.SelectTransaction(transactionList.ElementAt(transactionList.Count() - 1));
-            transaction.transactionId = transactionList.ElementAt(transactionList.Count() - 1);
-            transaction.senderId = transactionAccess.GetSendrAcct();
-            transaction.receiverId = transactionAccess.GetRecvrAcct();
-            transaction.amount = transactionAccess.GetAmount();
-            return transaction;
+            try
+            {
+                TransactionDetailsStruct transaction = new TransactionDetailsStruct();
+                transactionAccess.SelectTransaction(transactionId);
+                transaction.transactionId = transactionId;
+                transaction.senderId = transactionAccess.GetSendrAcct();
+                transaction.receiverId = transactionAccess.GetRecvrAcct();
+                transaction.amount = transactionAccess.GetAmount();
+                return transaction;
+            }
+            catch(Exception)
+            {
+                Console.WriteLine("Transaction doesn't exist");
+                return null;
+            }
+        }
+
+        [Route("api/TransactionList")]
+        [HttpGet]
+        public List<uint> getList()
+        {
+            return transactionAccess.GetTransactions();
         }
     }
     

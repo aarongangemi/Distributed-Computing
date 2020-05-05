@@ -33,15 +33,19 @@
             contentType: 'application/json',
             processData: false,
             success: function (data, textStatus, jQxhr) {
-                var obj = data;
-                $("#bal").val(obj.acntBal);
-                $("#acntId").val(obj.acntId);
-                alert("Account Found");
+                if (data == null) {
+                    alert("Unable to find account, please enter valid account number");
+                }
+                else {
+                    var obj = data;
+                    $("#bal").val(obj.acntBal);
+                    $("#acntId").val(obj.acntId);
+                    alert("Account Found");
+                }
             },
             error: function (jqXhr, textStatus, errorThrown) {
                 console.log(errorThrown);
                 alert("invalid data found");
-                $("#acntId").val("Account ID");
             }
         })
     }
@@ -54,14 +58,16 @@
             contentType: 'application/json',
             processData: false,
             success: function (data, textStatus, jQxhr) {
-                console.log(textStatus);
-                alert("Deposit Successful");
+                if (data == 0) {
+                    alert("Unable to deposit " + $("#amount").val() + " to account. Please enter a valid ID and amount and try again");
+                }
+                else {
+                    alert("Deposit Successful");
+                }
             },
             error: function (jqXhr, textStatus, errorThrown) {
                 console.log(errorThrown);
                 alert("invalid data found, please try again");
-                $("#acntIdDeposit").val("Enter Account ID");
-                $("#amount").val("Deposit Amount");
             }
         })
     }
@@ -74,14 +80,18 @@
             contentType: 'application/json',
             processData: false,
             success: function (data, textStatus, jQxhr) {
-                console.log(textStatus);
-                alert("Withdrawal successful");
+                if (data == 0) {
+                    alert("Unable to withdraw " + $("#amountWithdraw").val() + " to account. Please enter a valid ID and amount and try again")
+                }
+                else {
+                    console.log(textStatus);
+                    alert("Withdrawal successful");
+                }
             },
             error: function (jqXhr, textStatus, errorThrown) {
                 console.log(errorThrown);
                 alert("invalid data found");
-                $("#acntIdWithdraw").val("Enter Account ID");
-                $("#amountWithdraw").val("Withdraw Amount");
+
             }
         })
     }

@@ -3,7 +3,7 @@
 }
 
 <form>
-    <label>Search my Account</label><br />
+    <label>Create Transaction</label><br />
     <input type="text" id="amount" name="amount" placeholder="Amount" /><br /><br />
     <input type="text" id="senderID" name="senderID" placeholder="Sender ID" /><br /><br />
     <input type="text" id="receiverID" name="receiverID" placeholder="Receiver ID" /><br /><br />
@@ -20,7 +20,7 @@
             contentType: 'application/json',
             processData: false,
             success: function (data, textStatus, jQxhr) {
-                alert("Transaction from: " + $("#senderID").val() + " to " + $("#receiverID").val() + " was successful");
+                    alert("Processing transaction from: " + $("#senderID").val() + " to " + $("#receiverID").val());
             },
             error: function (jqXhr, textStatus, errorThrown) {
                 console.log(errorThrown)
@@ -32,4 +32,47 @@
             }
         })
     }
-    </script>
+</script>
+
+<form>
+    <label>Get Transaction</label><br />
+    <input type="text" id="transactionID" name="transactionID" placeholder="Transaction ID" />
+    <input type="text" id="transactionGetAmount" name="transactionGetAmount" placeholder="Amount" readonly /><br /><br />
+    <input type="text" id="transactionGetSender" name="transactionGetSender" placeholder="Sender ID" readonly /><br /><br />
+    <input type="text" id="transactionGetReceiver" name="transactionGetReceiver" placeholder="Receiver ID" readonly /><br /><br />
+</form>
+<button id="submitBtn" onclick="GetTransaction()">Get Transaction</button>
+<br />
+
+<script>
+
+    function GetTransaction() {
+        console.log("Retrieve Transaction");
+        $.ajax({
+            url: "api/BankApi/GetTransaction/" + $("#transactionID").val(),
+            type: 'get',
+            contentType: 'application/json',
+            processData: false,
+            success: function (data, textStatus, jQxhr) {
+                if (data == null) {
+                    alert("Transaction doesn't exist");
+                }
+                else {
+                    $("#transactionGetAmount").val(data.amount);
+                    $("#transactionGetSender").val(data.senderId);
+                    $("#transactionGetReceiver").val(data.receiverId);
+                }
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log(errorThrown)
+                alert("Invalid data entered for transaction, please try again");
+                $("#amount").val("Amount");
+                $("#senderID").val("Sender ID");
+                $("#receiverID").val("Receiver ID");
+
+            }
+        })
+    }
+</script>
+
+

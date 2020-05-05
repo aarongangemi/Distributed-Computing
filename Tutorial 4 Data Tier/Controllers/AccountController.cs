@@ -19,13 +19,20 @@ namespace Tutorial_4_Data_Tier.Controllers
         [HttpGet]
         public AccountDetailsStruct GetAccountDetails(uint accountID)
         {
-            AccountDetailsStruct ads = new AccountDetailsStruct();
-            BankDB.AccountAccessInterface acct = Bank.bankData.GetAccountInterface();
-            acct.SelectAccount(accountID);
-            ads.userId = acct.GetOwner();
-            ads.acntBal = acct.GetBalance();
-            ads.acntId = accountID;
-            return ads;
+            try
+            {
+                AccountDetailsStruct ads = new AccountDetailsStruct();
+                BankDB.AccountAccessInterface acct = Bank.bankData.GetAccountInterface();
+                acct.SelectAccount(accountID);
+                ads.userId = acct.GetOwner();
+                ads.acntBal = acct.GetBalance();
+                ads.acntId = accountID;
+                return ads;
+            }
+            catch(Exception)
+            {
+                return null;
+            }
         }
 
         [Route("api/Account/Create/{userID}")]
@@ -45,18 +52,34 @@ namespace Tutorial_4_Data_Tier.Controllers
         [HttpPost]
         public uint DepositValue(uint accountID, uint amount)
         {
-            acntAccess.SelectAccount(accountID);
-            acntAccess.Deposit(amount);
-            return acntAccess.GetBalance();
+            try
+            {
+                acntAccess.SelectAccount(accountID);
+                acntAccess.Deposit(amount);
+                acntAccess.GetBalance();
+                return amount;
+            }
+            catch(Exception)
+            {
+                return 0;
+            }
         }
 
         [Route("api/Account/Withdraw/{accountID}/{amount}")]
         [HttpPost]
         public uint WithdrawValue(uint accountID, uint amount)
         {
-            acntAccess.SelectAccount(accountID);
-            acntAccess.Withdraw(amount);
-            return acntAccess.GetBalance();
+            try
+            {
+                acntAccess.SelectAccount(accountID);
+                acntAccess.Withdraw(amount);
+                acntAccess.GetBalance();
+                return amount;
+            }
+            catch(Exception)
+            {
+                return 0;
+            }
         }
     }
 }
