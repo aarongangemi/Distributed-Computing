@@ -1,4 +1,5 @@
-﻿using Bis_GUI;
+﻿
+using Bis_GUI;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Web.Http;
 using Tutorial_3_Web_Service.Models;
@@ -12,60 +13,30 @@ namespace Tutorial_3_Web_Service.Controllers
         DataModel model = new DataModel();
         public int Get()
         {
+            LogData log = new LogData();
+            log.logNumEntries(model.getNumEntries());
             return model.getNumEntries();
         }
 
-        //GET api/<controller>/5
-        public DataIntermed Get(int id)
-        {
-            DataModel model = new DataModel();
-            DataIntermed dataIm = new DataIntermed();
-            uint acntNo, pin;
-            int balance;
-            string fname, lname, filePath;
-            model.GetValuesForEntry(id, out acntNo, out pin, out balance, out fname, out lname, out filePath);
-            dataIm.acct = acntNo;
-            dataIm.pin = pin;
-            dataIm.bal = balance;
-            dataIm.fname = fname;
-            dataIm.lname = lname;
-            dataIm.filePath = filePath;
-            return dataIm;
-        }
-
-        //POST api/<controller>
-        public DataIntermed Post(string value)
-        {
-            DataIntermed dataInter = new DataIntermed();
-            DataModel model = new DataModel();
-            int i;
-            for (i = 0; i < model.getNumEntries(); i++)
-            {
-                model.GetValuesForEntry(i, out dataInter.acct, out dataInter.pin, out dataInter.bal, out dataInter.fname, out dataInter.lname, out dataInter.filePath);
-                if (dataInter.lname.Equals(value)) {
-                    break;
-                }
-            }
-            return dataInter;
-        }
-
-
         public DataIntermed Post([FromBody] FilePathData fileValue)
         {
+            LogData log = new LogData();
             DataIntermed dataInter = new DataIntermed();
             DataModel model = new DataModel();
             model.UpdateFilePath(fileValue.filePath, fileValue.indexToUpdate);
             model.GetValuesForEntry(fileValue.indexToUpdate, out dataInter.acct, out dataInter.pin, out dataInter.bal, out dataInter.fname, out dataInter.lname, out dataInter.filePath);
+            log.logImageUpload(fileValue.filePath);
             return dataInter;
         }
 
-        public DataIntermed Put([FromBody] UpdatedUser user)
+        public DataIntermed Put([FromBody] DataIntermed dataIm)
         {
-            DataIntermed dataInter = new DataIntermed();
+            LogData log = new LogData();
             DataModel model = new DataModel();
-            model.updateUserEntry(user.index, user.fname, user.lname, user.acct, user.pin, user.bal);
-            model.GetValuesForEntry(user.index, out dataInter.acct, out dataInter.pin, out dataInter.bal, out dataInter.fname, out dataInter.lname, out dataInter.filePath);
-            return dataInter; 
+            model.updateUserEntry(dataIm.index, dataIm.fname, dataIm.lname, dataIm.acct, dataIm.pin, dataIm.bal);
+            model.GetValuesForEntry(dataIm.index, out dataIm.acct, out dataIm.pin, out dataIm.bal, out dataIm.fname, out dataIm.lname, out dataIm.filePath);
+            log.updateAccount(dataIm);
+            return dataIm; 
         }
     }
     

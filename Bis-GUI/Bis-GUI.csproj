@@ -47,7 +47,6 @@
     <Compile Include="LogData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchData.cs" />
-    <Compile Include="UpdatedUser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

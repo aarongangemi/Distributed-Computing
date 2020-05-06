@@ -6,7 +6,6 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using MessageBox = System.Windows.Forms.MessageBox;
@@ -19,11 +18,12 @@ namespace WPFApp
         private string URL;
         private RestClient client;
         private bool found;
-        private LogData log;
         private static System.Timers.Timer timer;
         private bool timerEnded;
+        private LogData log;
         public MainWindow()
         {
+            log = new LogData();
             InitializeComponent();
             URL = "https://localhost:44383/";
             client = new RestClient(URL);
@@ -32,7 +32,6 @@ namespace WPFApp
             NoOfItems.Content = numOfItems.Content;
             img.Source = new BitmapImage(new Uri(Path.Combine(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName, "Images/ProfileImage.jpg")));
             found = false;
-            log = new LogData();
             timerEnded = false;
             timer = new System.Timers.Timer();
         }
@@ -46,7 +45,7 @@ namespace WPFApp
                 if (idx >= 0  && idx < Int32.Parse(NoOfItems.Content.ToString()))
                 {
                     AccountStatusLabel.Content = "";
-                    RestRequest request = new RestRequest("api/webapi/" + idx.ToString());
+                    RestRequest request = new RestRequest("api/GetValues/" + idx.ToString());
                     IRestResponse response = await client.ExecuteGetAsync(request);
                     DataIntermed dataInter = JsonConvert.DeserializeObject<DataIntermed>(response.Content);
                     fnameField.Text = dataInter.fname;
@@ -56,26 +55,22 @@ namespace WPFApp
                     pinField.Text = dataInter.pin.ToString("D4");
                     BitmapImage image = new BitmapImage(new Uri(dataInter.filePath));
                     img.Source = image;
-                    log.logIndexSearch(dataInter);
-
                 }
                 else
                 {
-                    log.errorLogMessage("Index could not be passed successfully, " +
-                        "please ensure index is > 0 and < 100,000, and is a valid integer. " +
-                        "Fields will be cleared");
                     throw new FormatException("Index out of range");
                 }
             }
             catch (FormatException)
             {
-                MessageBox.Show("Invalid Data was found, please try again");
+                MessageBox.Show("Invalid Index was found, please try again");
                 fnameField.Text = "";
                 lnameField.Text = "";
                 balanceField.Text = "";
                 IndexVal.Text = "Enter Index";
                 acntNoField.Text = "";
                 pinField.Text = "";
+                log.errorLogMessage("Invalid Index was entered, please try again");
             }
             catch (JsonReaderException)
             {
@@ -86,6 +81,7 @@ namespace WPFApp
                 IndexVal.Text = "Enter Index";
                 acntNoField.Text = "";
                 pinField.Text = "";
+                log.errorLogMessage("User attempted to search index using an invalid client URL");
             }
 
 
@@ -118,13 +114,9 @@ namespace WPFApp
                         pinField.Text = dataInter.pin.ToString("D4");
                         BitmapImage image = new BitmapImage(new Uri(dataInter.filePath));
                         img.Source = image;
-                        log.logImageUpload(filePath);
                     }
                     else
                     {
-                        log.errorLogMessage("Index could not be passed successfully, " +
-                        "please ensure index is > 0 and < 100,000, and is a valid integer. " +
-                        "Fields will be cleared");
                         throw new FormatException("Index out of range, please try again");
                     }
                 }
@@ -132,10 +124,12 @@ namespace WPFApp
             catch(FormatException)
             {
                 MessageBox.Show("Invalid index entered, please try again");
+                log.errorLogMessage("User has entered an invalid index on image upload");
             }
             catch(JsonReaderException)
             {
                 MessageBox.Show("Please check that you have specified a valid URL for client and try again");
+                log.errorLogMessage("User attempted to upload image using an invalid client URL");
             }
 
         }
@@ -149,14 +143,11 @@ namespace WPFApp
                 SearchLabel.Content = "Searching results for Last name";
                 if (searchTxt.Text.Length == 0)
                 {
-                    log.errorLogMessage("Last name cannot be empty, user must enter valid last name");
                     throw new FormatException("Cannot allow empty string as last name, try again");
                 }
                 var regex = new Regex("^[a-zA-Z]*$");
                 if(!regex.IsMatch(searchTxt.Text))
                 {
-                    log.errorLogMessage("Invalid last name was entered, last name consists of invalid characters. " +
-                        "Ensure last name is only letters from the alphabet");
                     throw new FormatException("Cannot allow illegal characters");
                 }
                 progressProcessingAsync();
@@ -177,7 +168,6 @@ namespace WPFApp
                     acntNoField.Text = dataInter.acct.ToString();
                     pinField.Text = dataInter.pin.ToString("D4");
                     img.Source = new BitmapImage(new Uri(dataInter.filePath));
-                    log.logSearch(dataInter);
                     SearchBtn.IsEnabled = true;
                 }
                 else
@@ -185,27 +175,28 @@ namespace WPFApp
                     throw new NullReferenceException("Unable to find an entry with that lastname in the database");
                 }
             }
-            catch(FormatException x)
+            catch(FormatException)
             {
+                log.errorLogMessage("Invalid last name was entered for search");
                 MessageBox.Show("Please enter a valid last name and try again");
                 SearchLabel.Content = "Invalid last name entered, please try again";
                 ProgBar.Value = 100;
                 searchTxt.Text = "Enter Last Name";
                 SearchBtn.IsEnabled = true;
-                log.errorLogMessage(x.Message);
             }
-            catch(NullReferenceException y)
+            catch(NullReferenceException)
             {
+                log.errorLogMessage("No last name was found for entry: " + searchTxt.Text);
                 MessageBox.Show("Was unable to find last name for entry, please try again");
                 SearchLabel.Content = "Invalid last name entered, please try again";
                 ProgBar.Value = 100;
                 SearchLabel.Content = "Search Complete";
                 searchTxt.Text = "Enter Last Name";
                 SearchBtn.IsEnabled = true;
-                log.errorLogMessage(y.Message);
             }
             catch(JsonReaderException)
             {
+                log.errorLogMessage("User attempted to search for last name with invalid URL as client");
                 MessageBox.Show("Please check that you have specified a valid URL for client and try again");
                 found = true;
                 SearchBtn.IsEnabled = true;
@@ -269,6 +260,7 @@ namespace WPFApp
         private void OnTimerEnd(Object source, System.Timers.ElapsedEventArgs e)
         {
             timerEnded = true;
+            log.logTimerEnd();
         }
 
         private void Click_Update_User(object sender, RoutedEventArgs e)
@@ -276,16 +268,16 @@ namespace WPFApp
             try
             {
                 RestRequest request = new RestRequest("api/webapi/");
-                UpdatedUser user = new UpdatedUser();
-                user.index = Int32.Parse(IndexVal.Text);
+                DataIntermed dataIm = new DataIntermed();
+                dataIm.index = Int32.Parse(IndexVal.Text);
                 if (validateTextFields() && validateRegex())
                 {
-                    user.fname = fnameField.Text;
-                    user.lname = lnameField.Text;
-                    user.acct = Convert.ToUInt32(acntNoField.Text);
-                    user.bal = Convert.ToInt32(balanceField.Text);
-                    user.pin = Convert.ToUInt32(pinField.Text);
-                    request.AddJsonBody(user);
+                    dataIm.fname = fnameField.Text;
+                    dataIm.lname = lnameField.Text;
+                    dataIm.acct = Convert.ToUInt32(acntNoField.Text);
+                    dataIm.bal = Convert.ToInt32(balanceField.Text);
+                    dataIm.pin = Convert.ToUInt32(pinField.Text);
+                    request.AddJsonBody(dataIm);
                     IRestResponse response = client.Put(request);
                     DataIntermed dataInter = JsonConvert.DeserializeObject<DataIntermed>(response.Content);
                     fnameField.Text = dataInter.fname;
@@ -294,7 +286,6 @@ namespace WPFApp
                     balanceField.Text = dataInter.bal.ToString();
                     pinField.Text = dataInter.pin.ToString();
                     AccountStatusLabel.Content = "Account Updated Successfully";
-                    log.updateAccount(user);
                 }
                 else
                 {
@@ -304,11 +295,12 @@ namespace WPFApp
             catch(FormatException x)
             {
                 MessageBox.Show(x.Message);
-                log.errorLogMessage(x.Message);
+                log.errorLogMessage("Invalid data was entered in fields for update user");
             }
             catch(JsonReaderException)
             {
                 MessageBox.Show("Please check that you have specified a valid URL for client and try again");
+                log.errorLogMessage("User attempted to update user with invalid Base URL");
             }
 
         }
@@ -317,9 +309,15 @@ namespace WPFApp
         {
             if (Int32.Parse(IndexVal.Text) >= 0 && Int32.Parse(IndexVal.Text) < Int32.Parse(NoOfItems.Content.ToString())
                 && !fnameField.Text.Equals("") && !lnameField.Text.Equals("") && !pinField.Text.Equals("") &&
-                !balanceField.Text.Equals("") && !acntNoField.Text.Equals(""))
+                !balanceField.Text.Equals("") && !acntNoField.Text.Equals("") && pinField.Text.Length == 4
+                && Convert.ToUInt32(balanceField.Text) > 0)
             {
                 return true;
+            }
+            if(pinField.Text.Length != 4)
+            {
+                MessageBox.Show("Pin must be 4 digits to proceed");
+                log.errorLogMessage("invalid pin was entered by user");
             }
             return false;
         }
@@ -337,12 +335,14 @@ namespace WPFApp
                 }
                 else
                 {
+                    log.errorLogMessage("Invalid data was entered in fields account number, pin or balance");
                     fieldsTrue = false;
                 }
             }
             else
             {
                 fieldsTrue = false;
+                log.errorLogMessage("Invalid data was entered in first name or last name field");
             }
             return fieldsTrue;
         }
@@ -354,11 +354,13 @@ namespace WPFApp
                 URL = UrlText.Text;
                 client = new RestClient(URL);
                 URLStatus.Content = "URL Successfully changed";
+                log.logUrlChange(UrlText.Text);
             }
             else
             {
                 URLStatus.Content = "Please enter a valid URL";
                 MessageBox.Show("Invalid URL used, please try again");
+                log.errorLogMessage("Invalid URL was entered by user");
             }
         }
     }

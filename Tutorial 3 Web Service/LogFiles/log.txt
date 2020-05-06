@@ -1,0 +1,18 @@
+Log file function: retrieve number of entries
+100000are in the database
+Log file function: Starting application
+100000 results are in the database
+Log file function: Starting application
+100000 results are in the database
+Log file function: Starting application
+100000 results are in the database
+Log file function: Starting application
+100000 results are in the database
+Log file function: Retrieve user
+Account: 13826573 has searched for last name: Walker and found a result for: Steven Walker
+Log file function: Search by lastname. 
+Account: 86333985 has searched for last name: Martin and found a result for: Daniel Martin
+Log file function: Retrieve user
+User Aaron gangemi at index: 70 has been updated.
+Log File Function: Upload profile image
+Image upload from File Path: C:\Users\61459\OneDrive\Desktop\BHP\BHP photo.JPG

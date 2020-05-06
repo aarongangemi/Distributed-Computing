@@ -35,12 +35,18 @@ namespace Remoting_Server
 
         public void SetFilePath(string filePath, int index)
         {
-            database.setFilePath(index, filePath);
+            if(filePath != null && filePath != "" && index > 0 && index < GetNumEntries())
+            {
+                database.setFilePath(index, filePath);
+            }
         }
 
         public void updateUser(int idx, string fname, string lname, uint acntNo, uint pin, int balance)
         {
-            database.updateUser(idx, fname,lname,acntNo,pin,balance);
+            if(idx > 0 && idx < GetNumEntries() && fname.Length > 0 && lname.Length > 0 && acntNo > 0 && pin.ToString().Length == 4 && balance > 0)
+            {
+                database.updateUser(idx, fname, lname, acntNo, pin, balance);
+            }
         }
     }
 }
