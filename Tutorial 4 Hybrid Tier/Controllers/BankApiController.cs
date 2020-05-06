@@ -44,6 +44,7 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
         }
 
         [Route("api/BankApi/Deposit/{accountID}/{amount}")]
+        [HttpPost]
         public uint DepositMoney(uint accountID, uint amount)
         {
             var regex = new Regex("/^[0-9]*$/");
