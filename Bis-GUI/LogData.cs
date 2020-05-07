@@ -9,7 +9,7 @@ namespace Bis_GUI
 {
     public class LogData
     {
-        private string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "LogFiles/log.txt");
+        private string path = Path.Combine(Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.FullName, "WPFApp/LogFiles/log.txt");
         private StreamWriter writer;
 
         public void logNumEntries(int noOfEntries)
@@ -81,6 +81,10 @@ namespace Bis_GUI
             writer.Close();
         }
 
+        public void setPath(string inPath)
+        {
+            path = inPath;
+        }
         public void logTimerEnd()
         {
             writer = new StreamWriter(path, append: true);

@@ -23,7 +23,6 @@ namespace WPFApp
         private LogData log;
         public MainWindow()
         {
-            log = new LogData();
             InitializeComponent();
             URL = "https://localhost:44383/";
             client = new RestClient(URL);
@@ -34,6 +33,8 @@ namespace WPFApp
             found = false;
             timerEnded = false;
             timer = new System.Timers.Timer();
+            log = new LogData();
+            log.setPath(Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, "LogFiles/log.txt"));
         }
 
         private async void Click_Go(object sender, RoutedEventArgs e)
@@ -75,6 +76,17 @@ namespace WPFApp
             catch (JsonReaderException)
             {
                 MessageBox.Show("Please check that you have specified a valid URL for client and try again");
+                fnameField.Text = "";
+                lnameField.Text = "";
+                balanceField.Text = "";
+                IndexVal.Text = "Enter Index";
+                acntNoField.Text = "";
+                pinField.Text = "";
+                log.errorLogMessage("User attempted to search index using an invalid client URL");
+            }
+            catch(NullReferenceException)
+            {
+                MessageBox.Show("Received invalid JSON Object response, please check the URL entered and the data entered.");
                 fnameField.Text = "";
                 lnameField.Text = "";
                 balanceField.Text = "";
@@ -150,6 +162,7 @@ namespace WPFApp
                 {
                     throw new FormatException("Cannot allow illegal characters");
                 }
+                found = false;
                 progressProcessingAsync();
                 SearchData mySearch = new SearchData();
                 mySearch.searchStr = searchTxt.Text;
@@ -186,13 +199,14 @@ namespace WPFApp
             }
             catch(NullReferenceException)
             {
-                log.errorLogMessage("No last name was found for entry: " + searchTxt.Text);
+                found = true;
+                ProgBar.Value = 100;
                 MessageBox.Show("Was unable to find last name for entry, please try again");
                 SearchLabel.Content = "Invalid last name entered, please try again";
-                ProgBar.Value = 100;
                 SearchLabel.Content = "Search Complete";
                 searchTxt.Text = "Enter Last Name";
                 SearchBtn.IsEnabled = true;
+                log.errorLogMessage("No last name was found for entry: " + searchTxt.Text);
             }
             catch(JsonReaderException)
             {
@@ -229,14 +243,14 @@ namespace WPFApp
          * ***************************************************************/
         public void processProgress(IProgress<int> progress)
         {
-            timer.Interval = 120000;
+            timer.Interval = 30000;
             timer.Elapsed += OnTimerEnd;
             timer.AutoReset = true;
             timer.Enabled = true;
             progress.Report(0);
             for (int i = 0; i != 100; i++)
             {
-                Thread.Sleep(120000/100);
+                Thread.Sleep(30000/100);
                 if (progress != null)
                 {
                     progress.Report(i);
@@ -292,34 +306,52 @@ namespace WPFApp
                     throw new FormatException("invalid data entered into user fields");
                 }
             }
-            catch(FormatException x)
+            catch(FormatException)
             {
-                MessageBox.Show(x.Message);
-                log.errorLogMessage("Invalid data was entered in fields for update user");
+                MessageBox.Show("Invalid data was entered into fields, please check user fields and index");
+                log.errorLogMessage("Invalid data was entered in fields or index for update user");
             }
             catch(JsonReaderException)
             {
                 MessageBox.Show("Please check that you have specified a valid URL for client and try again");
                 log.errorLogMessage("User attempted to update user with invalid Base URL");
             }
-
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Received invalid JSON Object response, please check the URL entered and the data entered.");
+                fnameField.Text = "";
+                lnameField.Text = "";
+                balanceField.Text = "";
+                IndexVal.Text = "Enter Index";
+                acntNoField.Text = "";
+                pinField.Text = "";
+                log.errorLogMessage("User attempted to search index using an invalid client URL");
+            }
         }
 
         private bool validateTextFields()
         {
-            if (Int32.Parse(IndexVal.Text) >= 0 && Int32.Parse(IndexVal.Text) < Int32.Parse(NoOfItems.Content.ToString())
-                && !fnameField.Text.Equals("") && !lnameField.Text.Equals("") && !pinField.Text.Equals("") &&
-                !balanceField.Text.Equals("") && !acntNoField.Text.Equals("") && pinField.Text.Length == 4
-                && Convert.ToUInt32(balanceField.Text) > 0)
+            try
             {
-                return true;
+                if (Int32.Parse(IndexVal.Text) >= 0 && Int32.Parse(IndexVal.Text) < Int32.Parse(NoOfItems.Content.ToString())
+                    && !fnameField.Text.Equals("") && !lnameField.Text.Equals("") && !pinField.Text.Equals("") &&
+                    !balanceField.Text.Equals("") && !acntNoField.Text.Equals("") && pinField.Text.Length == 4
+                    && Convert.ToUInt32(balanceField.Text) > 0)
+                {
+                    return true;
+                }
+                if (pinField.Text.Length != 4)
+                {
+                    MessageBox.Show("Pin must be 4 digits to proceed");
+                    log.errorLogMessage("invalid pin was entered by user");
+                }
+                return false;
             }
-            if(pinField.Text.Length != 4)
+            catch(OverflowException)
             {
-                MessageBox.Show("Pin must be 4 digits to proceed");
-                log.errorLogMessage("invalid pin was entered by user");
+                log.errorLogMessage("User entered negative value and could not be processed");
+                return false;
             }
-            return false;
         }
 
         private bool validateRegex()
