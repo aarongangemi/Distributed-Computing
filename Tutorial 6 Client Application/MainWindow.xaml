@@ -1,0 +1,14 @@
+﻿<Window x:Class="Tutorial_6_Client_Application.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Tutorial_6_Client_Application"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Button Content="Upload Python file" HorizontalAlignment="Left" Margin="307,115,0,0" VerticalAlignment="Top" Width="149" Height="34" Click="Upload_Python_File"/>
+        <Label Content="Job Count:" HorizontalAlignment="Left" Margin="274,270,0,0" VerticalAlignment="Top" Width="70"/>
+        <TextBox Name ="JobCountField" HorizontalAlignment="Left" Height="26" Margin="361,274,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="175" />
+    </Grid>
+</Window>

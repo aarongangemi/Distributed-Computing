@@ -30,6 +30,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IDataServerInterface", "Rem
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorial 6 Web Server", "Tutorial 6 Web Server\Tutorial 6 Web Server.csproj", "{051DF998-DCD6-4FC2-BD0D-BC673DAD6A1A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorial 6 Client Application", "Tutorial 6 Client Application\Tutorial 6 Client Application.csproj", "{A2C26098-CB13-4722-B140-D62A4A650E56}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,6 +78,10 @@ Global
 		{051DF998-DCD6-4FC2-BD0D-BC673DAD6A1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{051DF998-DCD6-4FC2-BD0D-BC673DAD6A1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{051DF998-DCD6-4FC2-BD0D-BC673DAD6A1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2C26098-CB13-4722-B140-D62A4A650E56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2C26098-CB13-4722-B140-D62A4A650E56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2C26098-CB13-4722-B140-D62A4A650E56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2C26098-CB13-4722-B140-D62A4A650E56}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
