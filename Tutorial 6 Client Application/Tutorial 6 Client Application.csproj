@@ -123,5 +123,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tutorial 6 Web Server\Tutorial 6 Web Server.csproj">
+      <Project>{051DF998-DCD6-4FC2-BD0D-BC673DAD6A1A}</Project>
+      <Name>Tutorial 6 Web Server</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

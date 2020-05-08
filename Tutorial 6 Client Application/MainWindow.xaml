@@ -7,8 +7,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="Upload Python file" HorizontalAlignment="Left" Margin="307,115,0,0" VerticalAlignment="Top" Width="149" Height="34" Click="Upload_Python_File"/>
-        <Label Content="Job Count:" HorizontalAlignment="Left" Margin="274,270,0,0" VerticalAlignment="Top" Width="70"/>
-        <TextBox Name ="JobCountField" HorizontalAlignment="Left" Height="26" Margin="361,274,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="175" />
+        <Button Content="Upload Python file" HorizontalAlignment="Left" Margin="487,365,0,0" VerticalAlignment="Top" Width="149" Height="34" Click="Upload_Python_File"/>
+        <Label Content="Job Count:" HorizontalAlignment="Left" Margin="170,369,0,0" VerticalAlignment="Top" Width="70"/>
+        <TextBox Name ="JobCountField" HorizontalAlignment="Left" Height="26" Margin="283,369,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="175" />
+        <TextBox Name ="PythonScriptText" HorizontalAlignment="Left" Height="300" Margin="30,56,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="725"/>
+        <Label Content="Enter Python Script:" HorizontalAlignment="Left" Margin="273,10,0,0" VerticalAlignment="Top" Width="185"/>
     </Grid>
 </Window>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -10,7 +11,7 @@ namespace Tutorial_6_Web_Server.Controllers
 {
     public class ClientController : ApiController
     {
-        [Route("api/GetClientList")]
+        [Route("api/Client/GetClientList")]
         [HttpGet]
         public List<Client> GetClientList()
         {
@@ -24,5 +25,6 @@ namespace Tutorial_6_Web_Server.Controllers
             //Register client here
             ClientBase.clientList.Add(client);
         }
+
     }
 }
