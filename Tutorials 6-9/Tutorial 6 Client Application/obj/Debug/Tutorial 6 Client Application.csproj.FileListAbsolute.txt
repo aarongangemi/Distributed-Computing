@@ -1,0 +1,33 @@
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\bin\Debug\Tutorial 6 Client Application.exe.config
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\bin\Debug\Tutorial 6 Client Application.exe
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\bin\Debug\Tutorial 6 Client Application.pdb
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\bin\Debug\IronPython.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\bin\Debug\IronPython.Modules.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\bin\Debug\IronPython.SQLite.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\bin\Debug\IronPython.Wpf.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\bin\Debug\Microsoft.Dynamic.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\bin\Debug\Microsoft.Scripting.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\bin\Debug\Microsoft.Scripting.Metadata.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\bin\Debug\Newtonsoft.Json.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\bin\Debug\RestSharp.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\bin\Debug\IronPython.xml
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\bin\Debug\IronPython.Modules.xml
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\bin\Debug\IronPython.SQLite.xml
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\bin\Debug\IronPython.Wpf.xml
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\bin\Debug\Microsoft.Dynamic.xml
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\bin\Debug\Microsoft.Scripting.xml
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\bin\Debug\Microsoft.Scripting.Metadata.xml
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\bin\Debug\Newtonsoft.Json.xml
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\bin\Debug\RestSharp.xml
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\obj\Debug\Tutorial 6 Client Application.csprojAssemblyReference.cache
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\obj\Debug\MainWindow.g.cs
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\obj\Debug\App.g.cs
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\obj\Debug\Tutorial 6 Client Application_MarkupCompile.cache
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\obj\Debug\Tutorial 6 Client Application_MarkupCompile.lref
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\obj\Debug\MainWindow.baml
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\obj\Debug\Tutorial 6 Client Application.g.resources
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\obj\Debug\Tutorial_6_Client_Application.Properties.Resources.resources
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\obj\Debug\Tutorial 6 Client Application.csproj.GenerateResource.cache
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\obj\Debug\Tutorial 6 Client Application.csproj.CopyComplete
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\obj\Debug\Tutorial 6 Client Application.exe
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Client Application\obj\Debug\Tutorial 6 Client Application.pdb

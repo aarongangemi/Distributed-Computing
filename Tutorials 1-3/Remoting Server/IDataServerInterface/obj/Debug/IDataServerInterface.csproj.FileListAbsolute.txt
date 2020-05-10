@@ -1,0 +1,9 @@
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\IDataServerInterface\bin\Debug\IDataServerInterface.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\IDataServerInterface\bin\Debug\IDataServerInterface.pdb
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\IDataServerInterface\obj\Debug\IDataServerInterface.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\IDataServerInterface\obj\Debug\IDataServerInterface.pdb
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Remoting Server\IDataServerInterface\bin\Debug\IDataServerInterface.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Remoting Server\IDataServerInterface\bin\Debug\IDataServerInterface.pdb
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Remoting Server\IDataServerInterface\obj\Debug\IDataServerInterface.csprojAssemblyReference.cache
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Remoting Server\IDataServerInterface\obj\Debug\IDataServerInterface.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Remoting Server\IDataServerInterface\obj\Debug\IDataServerInterface.pdb
