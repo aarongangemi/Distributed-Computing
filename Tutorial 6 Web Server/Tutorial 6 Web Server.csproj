@@ -141,7 +141,6 @@
     </Compile>
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\ClientBase.cs" />
-    <Compile Include="Models\ClientModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -196,12 +195,6 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ClientServer\ClientServer.csproj">
-      <Project>{5452377B-811C-48E2-8A8F-68161B8A6A8E}</Project>
-      <Name>ClientServer</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -6,17 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Tutorial_6_Web_Server.Models;
 using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
+using System.Threading;
+using System.ServiceModel;
+using Tutorial_6_Client_Application.ClientGUIClass;
+using Newtonsoft.Json;
 
 namespace Tutorial_6_Client_Application
 {
@@ -25,6 +21,8 @@ namespace Tutorial_6_Client_Application
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        public delegate void ClientDel();
         private RestClient client;
         private string URL;
         public MainWindow()
@@ -32,7 +30,46 @@ namespace Tutorial_6_Client_Application
             InitializeComponent();
             URL = "https://localhost:44369/";
             client = new RestClient(URL);
+            Thread ServerThread = new Thread(new ThreadStart(ServerThreadFunction));
+            ServerThread.Start();
+            Thread NetworkingThread = new Thread(new ThreadStart(NetworkingThreadFunction));
+            NetworkingThread.Start();
         }
 
+        private void ServerThreadFunction()
+        {
+            Console.WriteLine("Server Thread is running now...");
+            ServiceHost host; //Service host in OS
+            NetTcpBinding tcp = new NetTcpBinding();  //Create .NET TCP port
+            host = new ServiceHost(typeof(ClientHost));  //Host Implementation class
+            host.AddServiceEndpoint(typeof(IClient), tcp, "net.tcp://0.0.0.0:8100/ServerThread");
+            host.Open();
+            Console.WriteLine("System online");
+            Console.ReadLine();
+            host.Close();
+        }
+
+        private void NetworkingThreadFunction()
+        {
+            RestRequest request = new RestRequest("api/Client/GetClientList");
+            IRestResponse clientList = client.Get(request);
+            List<Client> listOfClients = JsonConvert.DeserializeObject<List<Client>>(clientList.Content);
+            NetTcpBinding tcp = new NetTcpBinding();
+            string URL;
+            ChannelFactory<IClient> foobFactory;
+            IClient foob;
+            for(int i = 0; i < listOfClients.Count; i++)
+            {
+                URL = "net.tcp://" + listOfClients.ElementAt(i).IpAddress + ":" + listOfClients.ElementAt(i).port + "/NetworkingThread";
+                foobFactory = new ChannelFactory<IClient>(tcp, URL);
+                foob = foobFactory.CreateChannel();
+                foob.RequestJob();
+                foob.DownloadJob();
+            }
+        }
+
+        private void Upload_Python_File(object sender, RoutedEventArgs e)
+        {
+        } 
     }
 }
