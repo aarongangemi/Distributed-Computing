@@ -1,0 +1,5 @@
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\ClientLibrary\bin\Debug\ClientLibrary.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\ClientLibrary\bin\Debug\ClientLibrary.pdb
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\ClientLibrary\obj\Debug\ClientLibrary.csprojAssemblyReference.cache
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\ClientLibrary\obj\Debug\ClientLibrary.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\ClientLibrary\obj\Debug\ClientLibrary.pdb

@@ -20,15 +20,17 @@ namespace Tutorial_4_Data_Tier.Controllers
 
         [Route("api/ProcessTransactions")]
         [HttpPost]
-        public void processTransactions()
+        public bool processTransactions()
         {
             try
             {
                 Bank.bankData.ProcessAllTransactions();
+                return true;
             }
             catch
             {
                 Console.WriteLine("Unable to process transactions");
+                return false;
             }
         }
     }

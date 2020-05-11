@@ -1,11 +1,11 @@
-﻿using System;
+﻿using ClientLibrary;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Tutorial_6_Web_Server.Models;
 
 namespace Tutorial_6_Web_Server.Controllers
 {
@@ -15,7 +15,7 @@ namespace Tutorial_6_Web_Server.Controllers
         [HttpGet]
         public List<Client> GetClientList()
         {
-            return ClientBase.clientList;
+            return ClientList.clientList;
         }
 
         [Route("api/Client/Register/")]
@@ -23,7 +23,7 @@ namespace Tutorial_6_Web_Server.Controllers
         public void RegisterClient([FromBody] Client client)
         {
             //Register client here
-            ClientBase.clientList.Add(client);
+            ClientList.clientList.Add(client);
         }
 
     }

@@ -1,21 +1,15 @@
 ﻿using Newtonsoft.Json;
 using RestSharp;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Web.Http;
-using Tutorial_4_Business_Tier.Models;
 using Tutorial_4_Data_Tier.Models;
 
 namespace Tutorial_4_Hybrid_Tier.Controllers
 {
     public class BankApiController : ApiController
     {
-        private static System.Timers.Timer timer;
         private string URL = "https://localhost:44312/";
         private RestClient client;
         [Route("api/BankApi/Account/{accountID}")]
@@ -136,30 +130,38 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
 
         [Route("api/BankApi/CreateTransaction/{amount}/{senderID}/{receiverID}")]
         [HttpPost]
-        public void createTransaction(uint amount, uint senderID, uint receiverID)
+        public async Task<bool> CreateTransaction(uint amount, uint senderID, uint receiverID)
         {
-
+            bool processed = false;
             var regex = new Regex("/^[0-9]*$/");
             if (!regex.IsMatch(amount.ToString()) && !regex.IsMatch(senderID.ToString()) && !regex.IsMatch(receiverID.ToString()))
             {
                 client = new RestClient(URL);
                 RestRequest restRequest = new RestRequest("api/Transactions/Create/" + amount + "/" + senderID + "/" + receiverID);
                 client.Post(restRequest);
-                timer = new System.Timers.Timer();
-                timer.Interval = 120000;
-                timer.Elapsed += OnTimerEnd;
-                timer.AutoReset = true;
-                timer.Enabled = true;
-                RestRequest saveRequest = new RestRequest("api/Save");
-                client.Post(saveRequest);
+                processed = await OnDelayEnd();
+                if(processed)
+                {
+                    RestRequest saveRequest = new RestRequest("api/Save");
+                    client.Post(saveRequest);
+                }
             }
-            
+            return processed;
         }
 
-        private void OnTimerEnd(Object source, System.Timers.ElapsedEventArgs e)
+        private async Task<bool> OnDelayEnd()
+        {
+            await Task.Delay(120000);
+            bool processed = await Task.Run(() => processTransactions());
+            return processed;
+        }
+
+        private bool processTransactions()
         {
             RestRequest request = new RestRequest("api/ProcessTransactions");
-            client.Post(request);
+            IRestResponse response = client.Post(request);
+            bool processed = JsonConvert.DeserializeObject<bool>(response.Content);
+            return processed;
         }
 
         [Route("api/BankApi/GetTransaction/{transactionId}")]
@@ -179,7 +181,5 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
                 return null;
             }
         }
-
-
     }
 }
