@@ -12,9 +12,9 @@ namespace ClientLibrary
         public bool JobAssigned;
         public string PythonResult;
         public int JobId;
-        public Job(string jobSrc)
+        public Job(string PythonSrc)
         {
-            PythonSrc = jobSrc;
+            this.PythonSrc = PythonSrc;
         }
     }
 }

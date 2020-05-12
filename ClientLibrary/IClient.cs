@@ -11,7 +11,7 @@ namespace ClientLibrary
     public interface IClient
     {
         [OperationContract]
-        void RequestJob();
+        void RequestJob(out string text, out int idx);
 
         [OperationContract]
         void UploadJobSolution();

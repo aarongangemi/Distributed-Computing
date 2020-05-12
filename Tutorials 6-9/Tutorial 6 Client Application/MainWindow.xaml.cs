@@ -13,6 +13,8 @@ using System.ServiceModel;
 using Newtonsoft.Json;
 using ClientLibrary;
 using System.Security.Cryptography;
+using System.Diagnostics;
+using Microsoft.Scripting;
 
 namespace Tutorial_6_Client_Application
 {
@@ -25,6 +27,8 @@ namespace Tutorial_6_Client_Application
         public delegate void NetworkDel();
         private RestClient client;
         private string URL;
+        private int portNumber;
+        public bool IsClosed { get; private set; }
         public MainWindow()
         {
             InitializeComponent();
@@ -32,23 +36,33 @@ namespace Tutorial_6_Client_Application
             client = new RestClient(URL);
             ServerDel serverDelegate;
             NetworkDel networkDelegate;
+         
             serverDelegate = RunServer;
             networkDelegate = NetworkingThreadFunction;
             serverDelegate.BeginInvoke(null, null);
             networkDelegate.BeginInvoke(null, null);
-            RegisterClient();
+            
+            JobCountField.Text = JobList.ListOfJobs.Count.ToString();
+            
         }
         private void RunServer()
         {
-            Console.WriteLine("Server Thread is running now...");
-            ServiceHost host; //Service host in OS
-            NetTcpBinding tcp = new NetTcpBinding();  //Create .NET TCP port
-            host = new ServiceHost(typeof(ClientHost));  //Host Implementation class
-            host.AddServiceEndpoint(typeof(IClient), tcp, "net.tcp://0.0.0.0:8100/ServerThread");
-            host.Open();
-            Console.WriteLine("System online");
-            Console.ReadLine();
-            host.Close();
+                    Random rand = new Random();
+                    int port = rand.Next(8100, 9000);
+                    ServiceHost host;
+                    host = new ServiceHost(typeof(ClientHost)); ; //Service host in OS
+                    NetTcpBinding tcp = new NetTcpBinding();  //Create .NET TCP port
+                    portNumber = port;
+                    host.AddServiceEndpoint(typeof(IClient), tcp, "net.tcp://127.0.0.1:" + port + "/JobServer");
+                    Console.WriteLine("Server Thread is running on port: " + port.ToString());
+                    host.Open();
+                    RegisterClient();
+                    while (!IsClosed)
+                    {
+
+                    }
+                    host.Close();
+            
         }
 
         private void NetworkingThreadFunction()
@@ -58,52 +72,100 @@ namespace Tutorial_6_Client_Application
             string URL;
             ChannelFactory<IClient> foobFactory;
             IClient foob;
-            for(int i = 0; i < listOfClients.Count; i++)
+            string src;
+            int idx;
+            Console.WriteLine("............................");
+            Console.WriteLine(listOfClients.Count);
+            while (true)
             {
-                URL = "net.tcp://" + listOfClients.ElementAt(i).IpAddress + ":" + listOfClients.ElementAt(i).port + "/NetworkingThread";
-                foobFactory = new ChannelFactory<IClient>(tcp, URL);
-                foob = foobFactory.CreateChannel();
-                foob.RequestJob(); //Get number of items
-                ScriptEngine engine = Python.CreateEngine();
-                ScriptScope scope = engine.CreateScope();
-                engine.Execute(PythonScriptText.Text, scope);
-                foob.UploadJobSolution(); //Return the result of the script
+                for (int i = 0; i < listOfClients.Count; i++)
+                {
+                    if(portNumber.ToString() != listOfClients.ElementAt(i).ToString())
+                    {
+                        URL = "net.tcp://" + listOfClients.ElementAt(i).IpAddress.ToString() + ":" + listOfClients.ElementAt(i).port.ToString() + "/JobServer";
+                        foobFactory = new ChannelFactory<IClient>(tcp, URL);
+                        foob = foobFactory.CreateChannel();
+                        if (JobList.ListOfJobs.Count > 0)
+                        {
+
+                            foob.RequestJob(out src, out idx); //Get number of items
+                            RunPythonCode();
+                            updateCount();
+                            //foob.UploadJobSolution(); //Return the result of the script
+                        }
+                    }
+                }
+                
             }
         }
 
+        private void RunPythonCode()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                var py = Python.CreateEngine();
+                var result = py.Execute("print('HIIIII')");
+                Console.WriteLine(result);
+            });
+
+        }
+        private void updateCount()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                JobCountField.Text = JobList.ListOfJobs.Count.ToString();
+            });
+
+        }
         private void Upload_Python_File(object sender, RoutedEventArgs e)
         {
-            if(String.IsNullOrEmpty(PythonScriptText.Text))
+            if(!String.IsNullOrEmpty(PythonScriptText.Text))
             {
-                Console.WriteLine("No python code entered");
                 byte[] textBytes = Encoding.UTF8.GetBytes(PythonScriptText.Text);
-                SHA256 hash = SHA256.Create();
-                byte[] hashedText = hash.ComputeHash(textBytes);
-                string encodedText = Convert.ToBase64String(hashedText);
+               // SHA256 hash = SHA256.Create();
+               // byte[] hashedText = hash.ComputeHash(textBytes);
+                string encodedText = Convert.ToBase64String(textBytes);
+                addJob(encodedText);
+                JobCountField.Text = JobList.ListOfJobs.Count.ToString();
             }
-            //addJob();
         } 
 
-        private void addJob(string inJob)
+        private void addJob(string PythonSrc)
         {
-            JobList.ListOfJobs.Add(new Job(inJob));     
+            JobList.ListOfJobs.Add(new Job(PythonSrc));     
         }
 
         private List<Client> getClientList()
         {
-            RestRequest request = new RestRequest("api/Client/GetClientList");
-            IRestResponse clientList = client.Get(request);
-            List<Client> listOfClients = JsonConvert.DeserializeObject<List<Client>>(clientList.Content);
-            return listOfClients;
+            bool isSerialized = false;
+            while(!isSerialized)
+            { 
+                try
+                {
+                    RestRequest request = new RestRequest("api/Client/GetClientList");
+                    IRestResponse clientList = client.Get(request);
+                    List<Client> listOfClients = JsonConvert.DeserializeObject<List<Client>>(clientList.Content);
+                    isSerialized = true;
+                    return listOfClients;
+                }
+                catch(Exception)
+                {
+
+                }
+            }
+            return null;
         }
 
         private void RegisterClient()
         {
-            Random rand = new Random();
-            string port = rand.Next(8101, 9000).ToString();
             RestRequest request = new RestRequest("api/Client/Register/");
-            request.AddJsonBody(new Client("127.0.0.1", port));
+            request.AddJsonBody(new Client("127.0.0.1", portNumber.ToString()));
             client.Post(request);
+        }
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            IsClosed = true;
         }
     }
 }

@@ -82,8 +82,6 @@ C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Web Se
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Web Server\obj\Debug\Tutorial 6 Web Server.csproj.CopyComplete
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Web Server\obj\Debug\Tutorial 6 Web Server.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 6 Web Server\obj\Debug\Tutorial 6 Web Server.pdb
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Web Server\obj\Debug\Tutorial 6 Web Server.dll
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Web Server\obj\Debug\Tutorial 6 Web Server.pdb
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Web Server\bin\Tutorial 6 Web Server.dll.config
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Web Server\bin\Tutorial 6 Web Server.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Web Server\bin\Tutorial 6 Web Server.pdb
@@ -137,6 +135,7 @@ C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tut
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Web Server\bin\roslyn\VBCSCompiler.exe
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Web Server\bin\roslyn\VBCSCompiler.exe.config
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Web Server\bin\Antlr3.Runtime.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Web Server\bin\ClientLibrary.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Web Server\bin\IronPython.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Web Server\bin\IronPython.Modules.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Web Server\bin\IronPython.SQLite.dll
@@ -158,6 +157,7 @@ C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tut
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Web Server\bin\System.Web.WebPages.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Web Server\bin\System.Web.WebPages.Razor.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Web Server\bin\WebGrease.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Web Server\bin\ClientLibrary.pdb
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Web Server\bin\IronPython.xml
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Web Server\bin\IronPython.Modules.xml
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Web Server\bin\IronPython.SQLite.xml
@@ -180,5 +180,5 @@ C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tut
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Web Server\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Web Server\obj\Debug\Tutorial 6 Web Server.csprojAssemblyReference.cache
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Web Server\obj\Debug\Tutorial 6 Web Server.csproj.CopyComplete
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Web Server\bin\ClientLibrary.dll
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Web Server\bin\ClientLibrary.pdb
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Web Server\obj\Debug\Tutorial 6 Web Server.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Web Server\obj\Debug\Tutorial 6 Web Server.pdb

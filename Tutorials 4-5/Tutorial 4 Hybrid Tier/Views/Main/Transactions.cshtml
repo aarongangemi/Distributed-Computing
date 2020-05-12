@@ -22,6 +22,7 @@
             success: function (data, textStatus, jQxhr) {
                 if (data == false) {
                     alert("Unable to process transaction. Please try again");
+                    Console.log("Unable to create transaction, invalid data entered");
                 }
                 else {
                     alert("Processing transaction from: " + $("#senderID").val() + " to " + $("#receiverID").val());
