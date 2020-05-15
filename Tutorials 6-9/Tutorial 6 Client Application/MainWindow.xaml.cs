@@ -28,6 +28,7 @@ namespace Tutorial_6_Client_Application
         private RestClient client;
         private string URL;
         private int portNumber;
+        private int JobsCompletedCount = 0;
         public bool IsClosed { get; private set; }
         public MainWindow()
         {
@@ -42,6 +43,7 @@ namespace Tutorial_6_Client_Application
             serverDelegate.BeginInvoke(null, null);
             networkDelegate.BeginInvoke(null, null);
             JobCountField.Text = JobList.ListOfJobs.Count.ToString();
+            JobsCompleted.Text = JobsCompletedCount.ToString();
         }
         private void RunServer()
         {
@@ -64,7 +66,6 @@ namespace Tutorial_6_Client_Application
         private void NetworkingThreadFunction()
         {
             SHA256 hashObj = SHA256.Create();
-            List<Client> listOfClients = getClientList();
             NetTcpBinding tcp = new NetTcpBinding();
             string URL;
             ChannelFactory<IClient> foobFactory;
@@ -72,6 +73,7 @@ namespace Tutorial_6_Client_Application
             int idx, val = 0;
             while (true)
             {
+                List<Client> listOfClients = getClientList();
                 for (int i = 0; i < listOfClients.Count; i++)
                 {
                     try
@@ -95,6 +97,7 @@ namespace Tutorial_6_Client_Application
                                 {
                                     RunPythonCode(PythonSrc);
                                     updateCount();
+                                    UpdateTally(listOfClients);
                                     foob.UploadJobSolution(PythonSrc, idx, JobList.ListOfJobs); //Return the result of the script
                                     JobList.ListOfJobs.RemoveAt(idx);
                                 }
@@ -119,7 +122,8 @@ namespace Tutorial_6_Client_Application
                 engine.Execute(PythonSrc, scope);
                 dynamic PyFunc = scope.GetVariable("main");
                 var result = PyFunc();
-                Console.WriteLine("The result of the python script was: " + result);
+                PyResult.Content = result;
+                JobsCompletedCount++;
             });
 
         }
@@ -168,6 +172,19 @@ namespace Tutorial_6_Client_Application
             return listOfClients;
         }
 
+        private void UpdateTally(List<Client> listOfClients)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                TallyField.Text = "";
+                for(int i = 0; i < listOfClients.Count; i++)
+                {
+                    TallyField.Text = TallyField.Text + "\n" + "Client " + i + ": " + listOfClients.ElementAt(i).jobsCompleted.ToString();
+                }
+                JobsCompleted.Text = JobsCompletedCount.ToString();
+                
+            });
+        }
         private void RegisterClient()
         {
             RestRequest request = new RestRequest("api/Client/Register/");
