@@ -22,8 +22,7 @@ namespace Tutorial_6_Web_Server.Controllers
         [HttpPost]
         public void RegisterClient([FromBody] Client client)
         {
-            //Register client here
-            ClientList.clientList.Add(client);
+             ClientList.clientList.Add(client);
         }
 
     }

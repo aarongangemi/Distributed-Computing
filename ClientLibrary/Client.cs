@@ -10,7 +10,6 @@ namespace ClientLibrary
     {
         public string IpAddress;
         public string port;
-        public Job JobAssigned;
 
         public Client(string IpAddress, string port)
         {

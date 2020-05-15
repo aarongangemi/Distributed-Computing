@@ -7,25 +7,20 @@ using System.Threading.Tasks;
 
 namespace ClientLibrary
 {
-    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = false, InstanceContextMode = InstanceContextMode.Single)]
+    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = true)]
     public class ClientHost : IClient
     {
-        public void RequestJob(out string text, out int idx)
+        public void RequestJob(out int idx, List<Job> jobList)
         {
-            int val;
-            text = "";
             idx = -1;
-            if (JobList.ListOfJobs.Count() != 0)
+            if (jobList.Count > 0)
             {
-                for (int i = 0; i < JobList.ListOfJobs.Count; i++)
+                for (int i = 0; i < jobList.Count; i++)
                 {
-                    if (!JobList.ListOfJobs.ElementAt(i).JobAssigned)
+                    if (!jobList.ElementAt(i).JobAssigned && !jobList.ElementAt(i).JobComplete)
                     {
-                        val = i;
-                        JobList.ListOfJobs.ElementAt(i).JobAssigned = true;
-                        byte[] data = Convert.FromBase64String(JobList.ListOfJobs.ElementAt(val).PythonSrc);
-                        text = Encoding.UTF8.GetString(data);
-                        idx = val;
+                        jobList.ElementAt(i).JobAssigned = true;
+                        idx = i;
                         break;
                     }
                 }
@@ -33,9 +28,10 @@ namespace ClientLibrary
             
         }
 
-        public void UploadJobSolution()
+        public void UploadJobSolution(string pyResult, int idx, List<Job> jobList)
         {
-            //Return solution
+            jobList.ElementAt(idx).PythonResult = pyResult;
+            jobList.ElementAt(idx).JobComplete = true;
         }
     }
 }

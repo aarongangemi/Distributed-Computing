@@ -17,10 +17,12 @@ C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tut
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\bin\Debug\System.Web.Http.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\bin\Debug\System.Web.Http.WebHost.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\bin\Debug\System.Net.Http.Formatting.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\bin\Debug\WebGrease.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\bin\Debug\Microsoft.Web.Infrastructure.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\bin\Debug\System.Web.WebPages.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\bin\Debug\System.Web.WebPages.Razor.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\bin\Debug\System.Web.Razor.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\bin\Debug\Antlr3.Runtime.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\bin\Debug\System.Web.WebPages.Deployment.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\bin\Debug\ClientLibrary.pdb
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\bin\Debug\Tutorial 6 Web Server.pdb
@@ -42,9 +44,9 @@ C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tut
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\bin\Debug\System.Web.WebPages.xml
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\bin\Debug\System.Web.WebPages.Razor.xml
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\bin\Debug\System.Web.Razor.xml
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\bin\Debug\Antlr3.Runtime.pdb
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\bin\Debug\System.Web.WebPages.Deployment.xml
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\obj\Debug\Tutorial 6 Client Application.csprojAssemblyReference.cache
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\obj\Debug\Tutorial 6 Client Application.exe.config
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\obj\Debug\MainWindow.g.cs
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\obj\Debug\App.g.cs
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\obj\Debug\Tutorial 6 Client Application_MarkupCompile.cache

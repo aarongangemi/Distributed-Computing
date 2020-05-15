@@ -11,9 +11,9 @@ namespace ClientLibrary
     public interface IClient
     {
         [OperationContract]
-        void RequestJob(out string text, out int idx);
+        void RequestJob(out int idx, List<Job> jobList);
 
         [OperationContract]
-        void UploadJobSolution();
+        void UploadJobSolution(string pyResult, int idx, List<Job> jobList);
     }
 }
