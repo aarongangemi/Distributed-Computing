@@ -15,5 +15,6 @@ namespace ClientLibrary
 
         [OperationContract]
         void UploadJobSolution(string pyResult, int idx, List<Job> jobList);
+
     }
 }

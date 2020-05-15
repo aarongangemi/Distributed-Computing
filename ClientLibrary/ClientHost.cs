@@ -27,7 +27,6 @@ namespace ClientLibrary
             }
             
         }
-
         public void UploadJobSolution(string pyResult, int idx, List<Job> jobList)
         {
             jobList.ElementAt(idx).PythonResult = pyResult;

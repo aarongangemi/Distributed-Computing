@@ -69,10 +69,7 @@ namespace Tutorial_6_Client_Application
             string URL;
             ChannelFactory<IClient> foobFactory;
             IClient foob;
-            string src;
             int idx;
-            Console.WriteLine("//////////////////////////////////////");
-            Console.WriteLine(listOfClients.Count);
             while (true)
             {
                 for (int i = 0; i < listOfClients.Count; i++)
@@ -84,21 +81,21 @@ namespace Tutorial_6_Client_Application
                         foob = foobFactory.CreateChannel();
                         if (JobList.ListOfJobs.Count > 0)
                         {
-                            Console.WriteLine("PRESENT HERE");
                             foob.RequestJob(out idx, JobList.ListOfJobs); //Get number of items
-                                byte[] decodedBytes = Convert.FromBase64String(JobList.ListOfJobs.ElementAt(idx).PythonSrc);
-                                string PythonSrc = Encoding.UTF8.GetString(decodedBytes);
-                                byte[] hashArray = JobList.ListOfJobs.ElementAt(idx).hash;
-                                byte[] RecievedHash = hashObj.ComputeHash(Encoding.UTF8.GetBytes(JobList.ListOfJobs.ElementAt(idx).PythonSrc));
-                                if(RecievedHash.SequenceEqual(hashArray))
-                                {
-                                    RunPythonCode(PythonSrc);
-                                    updateCount();
-                                    foob.UploadJobSolution(PythonSrc, idx, JobList.ListOfJobs); //Return the result of the script
-                                    JobList.ListOfJobs.RemoveAt(idx);
-                                }
-
-                            
+                            Random rand = new Random();
+                            int val = rand.Next(0, listOfClients.Count);
+                            listOfClients.ElementAt(val).jobAssigned = JobList.ListOfJobs.ElementAt(idx);
+                            byte[] decodedBytes = Convert.FromBase64String(listOfClients.ElementAt(val).jobAssigned.PythonSrc);
+                            string PythonSrc = Encoding.UTF8.GetString(decodedBytes);
+                            byte[] hashArray = listOfClients.ElementAt(val).jobAssigned.hash;
+                            byte[] RecievedHash = hashObj.ComputeHash(Encoding.UTF8.GetBytes(listOfClients.ElementAt(val).jobAssigned.PythonSrc));
+                            if(RecievedHash.SequenceEqual(hashArray))
+                            {
+                                RunPythonCode(PythonSrc);
+                                updateCount();
+                                foob.UploadJobSolution(PythonSrc, idx, JobList.ListOfJobs); //Return the result of the script
+                                JobList.ListOfJobs.RemoveAt(idx);
+                            }
                         }
                     }
                 }
