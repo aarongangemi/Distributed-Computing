@@ -69,37 +69,44 @@ namespace Tutorial_6_Client_Application
             string URL;
             ChannelFactory<IClient> foobFactory;
             IClient foob;
-            int idx;
+            int idx, val = 0;
             while (true)
             {
                 for (int i = 0; i < listOfClients.Count; i++)
                 {
-                    if(portNumber.ToString() != listOfClients.ElementAt(i).ToString())
+                    try
                     {
-                        URL = "net.tcp://" + listOfClients.ElementAt(i).IpAddress.ToString() + ":" + listOfClients.ElementAt(i).port.ToString() + "/JobServer";
-                        foobFactory = new ChannelFactory<IClient>(tcp, URL);
-                        foob = foobFactory.CreateChannel();
-                        if (JobList.ListOfJobs.Count > 0)
+                        if (portNumber.ToString() != listOfClients.ElementAt(i).ToString())
                         {
-                            foob.RequestJob(out idx, JobList.ListOfJobs); //Get number of items
-                            Random rand = new Random();
-                            int val = rand.Next(0, listOfClients.Count);
-                            listOfClients.ElementAt(val).jobAssigned = JobList.ListOfJobs.ElementAt(idx);
-                            byte[] decodedBytes = Convert.FromBase64String(listOfClients.ElementAt(val).jobAssigned.PythonSrc);
-                            string PythonSrc = Encoding.UTF8.GetString(decodedBytes);
-                            byte[] hashArray = listOfClients.ElementAt(val).jobAssigned.hash;
-                            byte[] RecievedHash = hashObj.ComputeHash(Encoding.UTF8.GetBytes(listOfClients.ElementAt(val).jobAssigned.PythonSrc));
-                            if(RecievedHash.SequenceEqual(hashArray))
+                            URL = "net.tcp://" + listOfClients.ElementAt(i).IpAddress.ToString() + ":" + listOfClients.ElementAt(i).port.ToString() + "/JobServer";
+                            foobFactory = new ChannelFactory<IClient>(tcp, URL);
+                            foob = foobFactory.CreateChannel();
+                            if (JobList.ListOfJobs.Count > 0)
                             {
-                                RunPythonCode(PythonSrc);
-                                updateCount();
-                                foob.UploadJobSolution(PythonSrc, idx, JobList.ListOfJobs); //Return the result of the script
-                                JobList.ListOfJobs.RemoveAt(idx);
+                                foob.RequestJob(out idx, JobList.ListOfJobs); //Get number of items
+                                Random rand = new Random();
+                                val = rand.Next(0, listOfClients.Count);
+                                listOfClients.ElementAt(val).jobAssigned = JobList.ListOfJobs.ElementAt(idx);
+                                byte[] decodedBytes = Convert.FromBase64String(listOfClients.ElementAt(val).jobAssigned.PythonSrc);
+                                string PythonSrc = Encoding.UTF8.GetString(decodedBytes);
+                                byte[] hashArray = listOfClients.ElementAt(val).jobAssigned.hash;
+                                byte[] RecievedHash = hashObj.ComputeHash(Encoding.UTF8.GetBytes(listOfClients.ElementAt(val).jobAssigned.PythonSrc));
+                                if (RecievedHash.SequenceEqual(hashArray))
+                                {
+                                    RunPythonCode(PythonSrc);
+                                    updateCount();
+                                    foob.UploadJobSolution(PythonSrc, idx, JobList.ListOfJobs); //Return the result of the script
+                                    JobList.ListOfJobs.RemoveAt(idx);
+                                }
                             }
                         }
                     }
+                    catch (EndpointNotFoundException)
+                    {
+                        MessageBox.Show("Client has been disconncted. Client " + i + "will be removed");
+                        listOfClients.RemoveAt(i);
+                    }
                 }
-                
             }
         }
 

@@ -18,3 +18,14 @@ C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Remoting Server\o
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Remoting Server\obj\Debug\Remoting Server.pdb
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Remoting Server\bin\Debug\IDataServerInterface.pdb
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Remoting Server\bin\Debug\IDataServerInterface.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Remoting Server\bin\Debug\Remoting Server.exe.config
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Remoting Server\bin\Debug\Remoting Server.exe
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Remoting Server\bin\Debug\Remoting Server.pdb
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Remoting Server\bin\Debug\IDataServerInterface.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Remoting Server\bin\Debug\Tutorial 1.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Remoting Server\bin\Debug\Tutorial 1.pdb
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Remoting Server\bin\Debug\IDataServerInterface.pdb
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Remoting Server\obj\Debug\Remoting Server.csprojAssemblyReference.cache
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Remoting Server\obj\Debug\Remoting Server.csproj.CopyComplete
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Remoting Server\obj\Debug\Remoting Server.exe
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Remoting Server\obj\Debug\Remoting Server.pdb
