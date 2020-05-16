@@ -36,7 +36,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorial 6 Web Server", "Tu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFApp", "Tutorials 1-3\WPFApp\WPFApp.csproj", "{7DE5E92F-4713-4C04-83EC-EFD128890F8D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientLibrary", "ClientLibrary\ClientLibrary.csproj", "{7E383B22-5BC2-4BE3-A0B1-2AA29D0799E0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientLibrary", "Tutorials 6-9\ClientLibrary\ClientLibrary.csproj", "{7E383B22-5BC2-4BE3-A0B1-2AA29D0799E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

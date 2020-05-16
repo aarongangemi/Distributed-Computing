@@ -224,7 +224,7 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ClientLibrary\ClientLibrary.csproj">
+    <ProjectReference Include="..\ClientLibrary\ClientLibrary.csproj">
       <Project>{7E383B22-5BC2-4BE3-A0B1-2AA29D0799E0}</Project>
       <Name>ClientLibrary</Name>
     </ProjectReference>
