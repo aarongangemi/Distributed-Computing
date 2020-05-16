@@ -8,6 +8,6 @@ namespace ClientLibrary
 {
     public static class JobList
     {
-        public static List<Job> ListOfJobs;
+        public static List<Job> ListOfJobs = new List<Job>();
     }
 }

@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace ClientLibrary
 {
-    public class ScriptFunction
+    public static class JobCounter
     {
-        public ScriptFunction()
-        {
-
-        }
+        public static int JobsCompletedCount = 0;
     }
 }

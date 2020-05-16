@@ -28,12 +28,11 @@ namespace Tutorial_6_Client_Application
         private RestClient client;
         private string URL;
         private int portNumber;
-        private int JobsCompletedCount = 0;
+        private List<Client> listOfClients;
         public bool IsClosed { get; private set; }
         public MainWindow()
         {
             InitializeComponent();
-            JobList.ListOfJobs = new List<Job>();
             URL = "https://localhost:44369/";
             client = new RestClient(URL);
             ServerDel serverDelegate;
@@ -42,8 +41,7 @@ namespace Tutorial_6_Client_Application
             networkDelegate = NetworkingThreadFunction;
             serverDelegate.BeginInvoke(null, null);
             networkDelegate.BeginInvoke(null, null);
-            JobCountField.Text = JobList.ListOfJobs.Count.ToString();
-            JobsCompleted.Text = JobsCompletedCount.ToString();
+            JobsCompleted.Text = JobCounter.JobsCompletedCount.ToString();
         }
         private void RunServer()
         {
@@ -70,16 +68,22 @@ namespace Tutorial_6_Client_Application
             string URL;
             ChannelFactory<IClient> foobFactory;
             IClient foob;
-            int idx, val = 0;
+            int idx, val;
+            listOfClients = getClientList();
             while (true)
             {
-                List<Client> listOfClients = getClientList();
+                if (listOfClients.Count != getClientList().Count)
+                {
+                    listOfClients = getClientList();
+                    UpdateTally();
+                }
                 for (int i = 0; i < listOfClients.Count; i++)
                 {
                     try
                     {
                         if (portNumber.ToString() != listOfClients.ElementAt(i).ToString())
                         {
+                            
                             URL = "net.tcp://" + listOfClients.ElementAt(i).IpAddress.ToString() + ":" + listOfClients.ElementAt(i).port.ToString() + "/JobServer";
                             foobFactory = new ChannelFactory<IClient>(tcp, URL);
                             foob = foobFactory.CreateChannel();
@@ -95,13 +99,17 @@ namespace Tutorial_6_Client_Application
                                 byte[] RecievedHash = hashObj.ComputeHash(Encoding.UTF8.GetBytes(listOfClients.ElementAt(val).jobAssigned.PythonSrc));
                                 if (RecievedHash.SequenceEqual(hashArray))
                                 {
+                                    updateStatusRunning();
                                     RunPythonCode(PythonSrc);
-                                    updateCount();
-                                    UpdateTally(listOfClients);
+                                    JobCounter.JobsCompletedCount++;
+                                    listOfClients.ElementAt(i).incrementJobsCompleted();
+                                    UpdateTally();
                                     foob.UploadJobSolution(PythonSrc, idx, JobList.ListOfJobs); //Return the result of the script
+                                    updateStatusComplete();
                                     JobList.ListOfJobs.RemoveAt(idx);
                                 }
                             }
+
                         }
                     }
                     catch (EndpointNotFoundException)
@@ -123,26 +131,29 @@ namespace Tutorial_6_Client_Application
                 dynamic PyFunc = scope.GetVariable("main");
                 var result = PyFunc();
                 PyResult.Content = result;
-                JobsCompletedCount++;
             });
 
         }
-        private void updateCount()
+
+        private void updateStatusRunning()
         {
             Dispatcher.Invoke(() =>
             {
-                int count = 0;
-                for(int i = 0; i < JobList.ListOfJobs.Count; i++)
-                {
-                    if(JobList.ListOfJobs.ElementAt(i).JobComplete)
-                    {
-                        count++;
-                    }
-                }
-                JobCountField.Text = count.ToString();
-            });
-
+                JobStatusLabel.Content = "Running Python Job";
+            }
+            );
         }
+
+        private void updateStatusComplete()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                Thread.Sleep(500);
+                JobStatusLabel.Content = "Python Job Complete";
+            }
+            );
+        }
+
         private void Upload_Python_File(object sender, RoutedEventArgs e)
         {
             if(!String.IsNullOrEmpty(PythonScriptText.Text))
@@ -150,12 +161,9 @@ namespace Tutorial_6_Client_Application
                 SHA256 hash = SHA256.Create();
                 byte[] textBytes = Encoding.UTF8.GetBytes(PythonScriptText.Text);
                 string base64String = Convert.ToBase64String(textBytes);
-                Console.WriteLine(base64String);
                 byte[] hashBytes = Encoding.UTF8.GetBytes(base64String);
-                Console.WriteLine(hashBytes);
                 byte[] hashedData = hash.ComputeHash(hashBytes);
                 addJob(base64String, hashedData);
-                JobCountField.Text = JobList.ListOfJobs.Count.ToString();
             }
         } 
 
@@ -172,7 +180,7 @@ namespace Tutorial_6_Client_Application
             return listOfClients;
         }
 
-        private void UpdateTally(List<Client> listOfClients)
+        private void UpdateTally()
         {
             Dispatcher.Invoke(() =>
             {
@@ -181,7 +189,7 @@ namespace Tutorial_6_Client_Application
                 {
                     TallyField.Text = TallyField.Text + "\n" + "Client " + i + ": " + listOfClients.ElementAt(i).jobsCompleted.ToString();
                 }
-                JobsCompleted.Text = JobsCompletedCount.ToString();
+                JobsCompleted.Text = JobCounter.JobsCompletedCount.ToString();
                 
             });
         }

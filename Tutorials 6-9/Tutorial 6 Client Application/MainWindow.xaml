@@ -8,8 +8,6 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Button Content="Upload Python file" HorizontalAlignment="Left" Margin="487,365,0,0" VerticalAlignment="Top" Width="149" Height="34" Click="Upload_Python_File"/>
-        <Label Content="Job To do Count:" HorizontalAlignment="Left" Margin="136,369,0,0" VerticalAlignment="Top" Width="104"/>
-        <TextBox Name ="JobCountField" HorizontalAlignment="Left" Height="26" Margin="252,369,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="51" />
         <TextBox Name ="PythonScriptText" HorizontalAlignment="Left" Height="203" Margin="30,56,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="470"/>
         <Label Content="Enter Python Script:" HorizontalAlignment="Left" Margin="164,18,0,0" VerticalAlignment="Top" Width="185"/>
         <Label Content="Jobs Completed:" HorizontalAlignment="Left" Margin="136,338,0,0" VerticalAlignment="Top" Width="104"/>
@@ -18,5 +16,7 @@
         <Label Name="PyResult" Content="" HorizontalAlignment="Left" Margin="277,282,0,0" VerticalAlignment="Top" Width="152" Height="51"/>
         <TextBox Name="TallyField" HorizontalAlignment="Left" Height="203" Margin="547,56,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="229"/>
         <Label Content="Client Tally:" HorizontalAlignment="Left" Margin="539,18,0,0" VerticalAlignment="Top" Width="185"/>
+        <Label Content="Job Status:" HorizontalAlignment="Left" Margin="131,381,0,0" VerticalAlignment="Top" Width="71"/>
+        <Label Name="JobStatusLabel" Content="" HorizontalAlignment="Left" Margin="202,381,0,0" VerticalAlignment="Top" Width="202"/>
     </Grid>
 </Window>

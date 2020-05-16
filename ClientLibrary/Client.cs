@@ -17,7 +17,11 @@ namespace ClientLibrary
         {
             this.IpAddress = IpAddress;
             this.port = port;
-            jobsCompleted = 0;
+        }
+
+        public void incrementJobsCompleted()
+        {
+            jobsCompleted++;
         }
     }
 }
