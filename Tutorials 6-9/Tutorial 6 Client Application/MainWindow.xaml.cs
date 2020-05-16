@@ -75,7 +75,6 @@ namespace Tutorial_6_Client_Application
                 if (listOfClients.Count != getClientList().Count)
                 {
                     listOfClients = getClientList();
-                    UpdateTally();
                 }
                 for (int i = 0; i < listOfClients.Count; i++)
                 {
@@ -102,7 +101,7 @@ namespace Tutorial_6_Client_Application
                                     updateStatusRunning();
                                     RunPythonCode(PythonSrc);
                                     JobCounter.JobsCompletedCount++;
-                                    listOfClients.ElementAt(i).incrementJobsCompleted();
+                                    listOfClients.ElementAt(val).incrementJobsCompleted();
                                     UpdateTally();
                                     foob.UploadJobSolution(PythonSrc, idx, JobList.ListOfJobs); //Return the result of the script
                                     updateStatusComplete();

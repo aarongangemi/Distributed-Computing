@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ClientLibrary
 {
-    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = true)]
+    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = false, InstanceContextMode = InstanceContextMode.Single)]
     public class ClientHost : IClient
     {
         public void RequestJob(out int idx, List<Job> jobList)
