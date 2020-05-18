@@ -45,7 +45,6 @@ namespace Tutorial_6_Client_Application
             JobsCompletedCount = 0;
             JobsCompleted.Text = JobsCompletedCount.ToString();
             portNumber = 8100;
-            prepopulate();
         }
         private void RunServer()
         {
@@ -82,6 +81,7 @@ namespace Tutorial_6_Client_Application
             while (true)
             {
                 listOfClients = getClientList();
+                
                 for (int i = 0; i < listOfClients.Count; i++)
                 {
                     try
@@ -92,8 +92,6 @@ namespace Tutorial_6_Client_Application
                             URL = "net.tcp://" + listOfClients.ElementAt(i).IpAddress.ToString() + ":" + listOfClients.ElementAt(i).port.ToString() + "/JobServer";
                             foobFactory = new ChannelFactory<IClient>(tcp, URL);
                             foob = foobFactory.CreateChannel();
-                            if (JobList.ListOfJobs.Count > 0)
-                            {
                                 Job job = foob.RequestJob();
                                 if (!String.IsNullOrEmpty(job.PythonSrc))
                                 {
@@ -130,7 +128,7 @@ namespace Tutorial_6_Client_Application
                                     }
 
                                 }
-                            }
+                            
                         }
                     }
                     catch (EndpointNotFoundException)
@@ -139,24 +137,6 @@ namespace Tutorial_6_Client_Application
                         listOfClients.RemoveAt(i);
                     }
                 }
-            }
-        }
-
-        private void prepopulate()
-        {
-            if (JobList.ListOfJobs.Count < 1)
-            {
-                string script = "def main(): return ''";
-                SHA256 hash = SHA256.Create();
-                byte[] textBytes = Encoding.UTF8.GetBytes(script);
-                string base64String = Convert.ToBase64String(textBytes);
-                byte[] hashBytes = Encoding.UTF8.GetBytes(base64String);
-                byte[] hashedData = hash.ComputeHash(hashBytes);
-                Job job = new Job();
-                job.setHash(hashedData);
-                job.setPythonSrc(base64String);
-                job.setJobNumber(JobList.ListOfJobs.Count + 1);
-                JobList.ListOfJobs.Add(job);
             }
         }
 
