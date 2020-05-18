@@ -31,5 +31,15 @@ namespace Tutorial_6_Web_Server.Controllers
         {
             ClientList.clientList.ElementAt(idx).jobsCompleted++;
         }
+
+        [Route("api/Client/Remove/{idx}")]
+        [HttpPost]
+        public void RemoveCLient(int idx)
+        {
+            if(idx <= ClientList.clientList.Count)
+            {
+                ClientList.clientList.RemoveAt(idx);
+            }
+        }
     }
 }

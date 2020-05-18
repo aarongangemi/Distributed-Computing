@@ -81,14 +81,12 @@ namespace Tutorial_6_Client_Application
             while (true)
             {
                 listOfClients = getClientList();
-                
                 for (int i = 0; i < listOfClients.Count; i++)
                 {
                     try
                     {
                         if (portNumber.ToString() != listOfClients.ElementAt(i).port.ToString())
                         {
-
                             URL = "net.tcp://" + listOfClients.ElementAt(i).IpAddress.ToString() + ":" + listOfClients.ElementAt(i).port.ToString() + "/JobServer";
                             foobFactory = new ChannelFactory<IClient>(tcp, URL);
                             foob = foobFactory.CreateChannel();
@@ -133,8 +131,15 @@ namespace Tutorial_6_Client_Application
                     }
                     catch (EndpointNotFoundException)
                     {
-                        MessageBox.Show("Client has been disconncted. Client " + i + "will be removed");
-                        listOfClients.RemoveAt(i);
+                        MessageBox.Show("Client has been disconncted. Client " + i + " will be removed");
+                        RestRequest request = new RestRequest("api/Client/Remove/" + i.ToString());
+                        client.Post(request);
+                        listOfClients = getClientList();
+                        i = 0;
+                    }
+                    catch(FaultException)
+                    {
+                        MessageBox.Show("Closing client");
                     }
                 }
             }
