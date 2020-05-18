@@ -44,7 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
-    <Compile Include="ClientHost.cs" />
+    <Compile Include="JobHost.cs" />
     <Compile Include="ClientList.cs" />
     <Compile Include="IClient.cs" />
     <Compile Include="Job.cs" />

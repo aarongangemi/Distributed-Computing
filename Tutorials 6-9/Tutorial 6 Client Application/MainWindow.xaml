@@ -14,8 +14,7 @@
         <TextBox Name="JobsCompleted" HorizontalAlignment="Left" Height="26" Margin="252,338,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="51" />
         <Label Content="Python Script Result:" HorizontalAlignment="Left" Margin="131,282,0,0" VerticalAlignment="Top" Width="141"/>
         <Label Name="PyResult" Content="" HorizontalAlignment="Left" Margin="277,282,0,0" VerticalAlignment="Top" Width="152" Height="51"/>
-        <TextBox Name="TallyField" HorizontalAlignment="Left" Height="203" Margin="547,56,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="229"/>
-        <Label Content="Client Tally:" HorizontalAlignment="Left" Margin="539,18,0,0" VerticalAlignment="Top" Width="185"/>
+        <Label Content="Output" HorizontalAlignment="Left" Margin="539,18,0,0" VerticalAlignment="Top" Width="185"/>
         <Label Content="Job Status:" HorizontalAlignment="Left" Margin="131,381,0,0" VerticalAlignment="Top" Width="71"/>
         <Label Name="JobStatusLabel" Content="" HorizontalAlignment="Left" Margin="202,381,0,0" VerticalAlignment="Top" Width="202"/>
     </Grid>

@@ -25,5 +25,11 @@ namespace Tutorial_6_Web_Server.Controllers
              ClientList.clientList.Add(client);
         }
 
+        [Route("api/Client/UpdateCount/{idx}")]
+        [HttpPut]
+        public void UpdateCount(int idx)
+        {
+            ClientList.clientList.ElementAt(idx).jobsCompleted++;
+        }
     }
 }

@@ -11,10 +11,10 @@ namespace ClientLibrary
     public interface IClient
     {
         [OperationContract]
-        void RequestJob(out int idx, List<Job> jobList);
+        Job RequestJob();
 
         [OperationContract]
-        void UploadJobSolution(string pyResult, int idx, List<Job> jobList);
+        void UploadJobSolution(string pyResult, int idx);
 
     }
 }

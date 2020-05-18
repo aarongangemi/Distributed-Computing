@@ -7,20 +7,32 @@ using System.Threading.Tasks;
 
 namespace ClientLibrary
 {
-    [DataContract]
     public class Job
     {
         public string PythonSrc;
-        public bool JobAssigned;
         public string PythonResult;
-        public bool JobComplete;
+        public bool JobRequested;
         public byte[] hash;
-        public Job(string src, byte[] hash)
+        public int jobNumber;
+
+        public Job() 
         {
-            PythonSrc = src;            
+            JobRequested = false;
+        }
+
+        public void setHash(byte[] hash)
+        {
             this.hash = hash;
-            JobAssigned = false;
-            JobComplete = false;
+        }
+
+        public void setPythonSrc(string src)
+        {
+            PythonSrc = src;
+        }
+
+        public void setJobNumber(int num)
+        {
+            jobNumber = num;
         }
     }
 }

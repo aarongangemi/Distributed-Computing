@@ -24,3 +24,17 @@ C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 2\obj\De
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 2\obj\Debug\Tutorial 2.exe
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 2\obj\Debug\Tutorial 2.pdb
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 2\bin\Debug\IDataServerInterface.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Tutorial 2\bin\Debug\Tutorial 2.exe.config
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Tutorial 2\bin\Debug\Tutorial 2.exe
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Tutorial 2\bin\Debug\Tutorial 2.pdb
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Tutorial 2\bin\Debug\IDataServerInterface.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Tutorial 2\bin\Debug\Remoting Server.exe
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Tutorial 2\bin\Debug\Tutorial 1.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Tutorial 2\bin\Debug\Remoting Server.pdb
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Tutorial 2\bin\Debug\Remoting Server.exe.config
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Tutorial 2\bin\Debug\IDataServerInterface.pdb
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Tutorial 2\bin\Debug\Tutorial 1.pdb
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Tutorial 2\obj\Debug\Tutorial 2.csprojAssemblyReference.cache
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Tutorial 2\obj\Debug\Tutorial 2.csproj.CopyComplete
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Tutorial 2\obj\Debug\Tutorial 2.exe
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Tutorial 2\obj\Debug\Tutorial 2.pdb
