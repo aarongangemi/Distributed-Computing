@@ -24,6 +24,9 @@ namespace Tutorial_7_Transaction_Generator
         {
             InitializeComponent();
         }
+        private void Submit_Transaction(object sender, RoutedEventArgs e)
+        {
 
+        }
     }
 }

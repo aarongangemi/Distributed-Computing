@@ -1,5 +1,0 @@
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Blockchain Library\bin\Debug\Blockchain Library.dll
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Blockchain Library\bin\Debug\Blockchain Library.pdb
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Blockchain Library\obj\Debug\Blockchain Library.csprojAssemblyReference.cache
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Blockchain Library\obj\Debug\Blockchain Library.dll
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Blockchain Library\obj\Debug\Blockchain Library.pdb

@@ -20,6 +20,7 @@
         <TextBox Name="IdFrom" HorizontalAlignment="Left" Height="23" Margin="480,91,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged"/>
         <TextBox Name="Amount" HorizontalAlignment="Left" Height="23" Margin="445,180,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.526,0.286"/>
         <TextBox Name="IdTo" HorizontalAlignment="Left" Height="23" Margin="464,140,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Submit Transaction" HorizontalAlignment="Left" Margin="464,231,0,0" VerticalAlignment="Top" Width="136" Height="27" Click="Submit_Transaction"/>
 
     </Grid>
 </Window>
