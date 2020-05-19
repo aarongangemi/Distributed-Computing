@@ -21,7 +21,7 @@
             processData: false,
             success: function (data, textStatus, jQxhr) {
                 if (data == false) {
-                    alert("Unable to process transaction. Please try again");
+                    alert("Unable to process transaction. Please check account also has sufficient funds");
                     console.log("Unable to create transaction, invalid data entered");
                 }
                 else {

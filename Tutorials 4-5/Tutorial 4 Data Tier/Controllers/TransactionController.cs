@@ -17,24 +17,32 @@ namespace Tutorial_4_Data_Tier.Controllers
         // GET api/<controller>/5
         [Route("api/Transactions/Create/{amount}/{senderID}/{receiverID}")]
         [HttpPost]
-        public void CreateTransaction(uint amount, uint senderID, uint receiverID)
+        public bool CreateTransaction(uint amount, uint senderID, uint receiverID)
         {
             try
             {
-                TransactionDetailsStruct tran = new TransactionDetailsStruct();
-                tran.transactionId = transactionAccess.CreateTransaction();
-                tran.amount = amount;
-                tran.senderId = senderID;
-                tran.receiverId = receiverID;
-                transactionAccess.SelectTransaction(tran.transactionId);
-                transactionAccess.SetAmount(tran.amount);
-                transactionAccess.SetSendr(tran.senderId);
-                transactionAccess.SetRecvr(tran.receiverId);
+                BankDB.AccountAccessInterface acct = Bank.bankData.GetAccountInterface();
+                acct.SelectAccount(senderID);
+                uint balance = acct.GetBalance();
+                if (amount < balance)
+                {
+                    TransactionDetailsStruct tran = new TransactionDetailsStruct();
+                    tran.transactionId = transactionAccess.CreateTransaction();
+                    tran.amount = amount;
+                    tran.senderId = senderID;
+                    tran.receiverId = receiverID;
+                    transactionAccess.SelectTransaction(tran.transactionId);
+                    transactionAccess.SetAmount(tran.amount);
+                    transactionAccess.SetSendr(tran.senderId);
+                    transactionAccess.SetRecvr(tran.receiverId);
+                    return true;
+                }
             }
             catch(Exception)
             {
-                log.errorLogMessage("Unable to create transaction");
+                log.errorLogMessage("Unable to create transaction - invalid account may be entered");
             }
+            return false;
         }
 
         // POST api/<controller>

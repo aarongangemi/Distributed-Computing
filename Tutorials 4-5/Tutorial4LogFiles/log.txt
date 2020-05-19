@@ -45,3 +45,20 @@ Transaction process called
 Log file function:
 Transaction trying to be created - you will know in 60 seconds
 Error Occurred: Something went wrong with transaction
+Log file function:
+Transaction process called
+Log file function:
+Transaction trying to be created - you will know in 60 seconds
+Log file function:
+Transaction for 100000 from: 491414249 to 661965674 was successful
+Log file function:
+Transaction successfully saved
+Log file function:
+Transaction process called
+Log file function:
+Transaction trying to be created - you will know in 60 seconds
+Log file function:
+Transaction for 9 from: 997560527 to 661965674 was successful
+Log file function:
+Transaction successfully saved
+Error Occurred: Unable to create transaction - invalid account may be entered

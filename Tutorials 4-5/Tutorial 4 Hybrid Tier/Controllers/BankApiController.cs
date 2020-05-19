@@ -148,19 +148,26 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
             {
                 client = new RestClient(URL);
                 RestRequest restRequest = new RestRequest("api/Transactions/Create/" + amount + "/" + senderID + "/" + receiverID);
-                client.Post(restRequest);
-                processed = await OnDelayEnd();
-                log.logMessage("Transaction trying to be created - you will know in 60 seconds");
-                if(processed)
+                IRestResponse response = client.Post(restRequest);
+                bool transactionCreated = JsonConvert.DeserializeObject<bool>(response.Content);
+                if (transactionCreated == true)
                 {
-                    RestRequest saveRequest = new RestRequest("api/Save");
-                    client.Post(saveRequest);
-                    log.logMessage("Transaction for " + amount.ToString() + " from: " + senderID + " to " + receiverID + " was successful");
-                    log.logMessage("Transaction successfully saved");
+                    processed = await OnDelayEnd();
+                    log.logMessage("Transaction trying to be created - you will know in 30 seconds");
+                    if (processed)
+                    {
+                        RestRequest saveRequest = new RestRequest("api/Save");
+                        client.Post(saveRequest);
+                        log.logMessage("Transaction successfully saved");
+                    }
+                    if (!processed)
+                    {
+                        log.errorLogMessage("Something went wrong with transaction");
+                    }
                 }
-                if(!processed)
+                else
                 {
-                    log.errorLogMessage("Something went wrong with transaction");
+                    return false;
                 }
             }
             return processed;
@@ -168,7 +175,7 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
 
         private async Task<bool> OnDelayEnd()
         {
-            await Task.Delay(60000);
+            await Task.Delay(30000);
             bool processed = await Task.Run(() => processTransactions());
             return processed;
         }
