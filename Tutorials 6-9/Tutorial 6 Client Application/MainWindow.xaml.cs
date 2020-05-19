@@ -1,10 +1,8 @@
-﻿using Microsoft.Win32;
-using RestSharp;
+﻿using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
@@ -13,8 +11,11 @@ using System.ServiceModel;
 using Newtonsoft.Json;
 using ClientLibrary;
 using System.Security.Cryptography;
-using System.Diagnostics;
+
+using JobLibrary;
 using Microsoft.Scripting;
+using IronPython.Runtime;
+using System.Text.RegularExpressions;
 
 namespace Tutorial_6_Client_Application
 {
@@ -23,13 +24,13 @@ namespace Tutorial_6_Client_Application
     /// </summary>
     public partial class MainWindow : Window
     {
-        public delegate void ServerDel();
-        public delegate void NetworkDel();
+        private delegate void ServerDel();
+        private delegate void NetworkDel();
         private RestClient client;
         private string URL;
         private int portNumber;
         private List<Client> listOfClients;
-        public static int JobsCompletedCount;
+        private static int JobsCompletedCount;
         public bool IsClosed { get; private set; }
         public MainWindow()
         {
@@ -45,6 +46,8 @@ namespace Tutorial_6_Client_Application
             JobsCompletedCount = 0;
             JobsCompleted.Text = JobsCompletedCount.ToString();
             portNumber = 8100;
+            PythonScriptText.AcceptsReturn = true;
+            PythonScriptText.AcceptsTab = true;
         }
         private void RunServer()
         {
@@ -106,15 +109,30 @@ namespace Tutorial_6_Client_Application
                                         });
                                         Dispatcher.Invoke(() =>
                                         {
-                                            ScriptEngine engine = Python.CreateEngine();
-                                            ScriptScope scope = engine.CreateScope();
-                                            engine.Execute(job.PythonSrc, scope);
-                                            dynamic PyFunc = scope.GetVariable("main");
-                                            var result = PyFunc();
-                                            PyResult.Content = result;
-                                            job.PythonResult = PyResult.Content.ToString();
-                                            JobsCompletedCount++;
-                                            JobsCompleted.Text = JobsCompletedCount.ToString();
+                                            try
+                                            {
+                                                ScriptEngine engine = Python.CreateEngine();
+                                                ScriptScope scope = engine.CreateScope();
+                                                engine.Execute(job.PythonSrc, scope);
+                                                dynamic PyFunc = scope.GetVariable("main");
+                                                var result = PyFunc();
+                                                PyResult.Content = result;
+                                                job.PythonResult = PyResult.Content.ToString();
+                                                JobsCompletedCount++;
+                                                JobsCompleted.Text = JobsCompletedCount.ToString();
+                                            }
+                                            catch (SyntaxErrorException)
+                                            {
+                                                MessageBox.Show("Invalid Python script, please ensure python body is valid and proper indentation is used");
+                                            }
+                                            catch(UnboundNameException)
+                                            {
+                                                MessageBox.Show("Invalid variables found in python body, please try again");
+                                            }
+                                            catch(NullReferenceException)
+                                            {
+                                                MessageBox.Show("No return type found in python script, please return something");
+                                            }
                                         });
                                         UpdateCount(i);
                                         foob.UploadJobSolution(job.PythonResult, job.jobNumber); //Return the result of the script
@@ -147,7 +165,7 @@ namespace Tutorial_6_Client_Application
 
         private void Upload_Python_File(object sender, RoutedEventArgs e)
         {
-            if(!String.IsNullOrEmpty(PythonScriptText.Text))
+            if(!String.IsNullOrEmpty(PythonScriptText.Text) && PythonScriptText.Text.StartsWith("def main():"))
             {
                 SHA256 hash = SHA256.Create();
                 byte[] textBytes = Encoding.UTF8.GetBytes(PythonScriptText.Text);
@@ -159,6 +177,10 @@ namespace Tutorial_6_Client_Application
                 job.setPythonSrc(base64String);
                 job.setJobNumber(JobList.ListOfJobs.Count + 1);
                 JobList.ListOfJobs.Add(job);
+            }
+            else
+            {
+                MessageBox.Show("Python string must start with 'def main():' ");
             }
         } 
 

@@ -6,6 +6,7 @@ C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tut
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\bin\Debug\IronPython.Modules.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\bin\Debug\IronPython.SQLite.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\bin\Debug\IronPython.Wpf.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\bin\Debug\JobLibrary.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\bin\Debug\Microsoft.Dynamic.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\bin\Debug\Microsoft.Scripting.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\bin\Debug\Microsoft.Scripting.Metadata.dll
@@ -24,6 +25,7 @@ C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tut
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\bin\Debug\System.Web.Razor.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\bin\Debug\Antlr3.Runtime.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\bin\Debug\System.Web.WebPages.Deployment.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\bin\Debug\JobLibrary.pdb
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\bin\Debug\ClientLibrary.pdb
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\bin\Debug\Tutorial 6 Web Server.pdb
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\bin\Debug\Tutorial 6 Web Server.dll.config

@@ -125,6 +125,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\JobLibrary\JobLibrary.csproj">
+      <Project>{2810E576-F739-42EE-BAFD-28374EF9A2DC}</Project>
+      <Name>JobLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ClientLibrary\ClientLibrary.csproj">
       <Project>{7E383B22-5BC2-4BE3-A0B1-2AA29D0799E0}</Project>
       <Name>ClientLibrary</Name>
