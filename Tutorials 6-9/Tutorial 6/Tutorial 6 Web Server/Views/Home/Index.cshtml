@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Tally Page";
+}
+<body onload="LoadClients()">
+    <br/>
+    <br/>
+    <h1>Web Client Tally: 127.0.0.1</h1>
+    <br/>
+    <div id="Content">
+    </div>
+</body>
+<script>
+    function LoadClients() {
+        $.ajax({
+            url: "api/Client/GetClientList",
+            type: 'get',
+            processData: false,
+            success: function (data, t, j) {
+                for (var i in data) {
+                    $('#Content').append("Port Number: " + data[i].port + " = " + "Number of Jobs Completed: " + data[i].jobsCompleted + "<br/><br/>");
+                    $('#Content').append("-------------------------------------------------------------------------------" + "<br/><br/>");
+                }
+            },
+            error: function (j, t, e) {
+                console.log("Error occured: Unable to load clients");
+            }
+        });
+    }
+</script>

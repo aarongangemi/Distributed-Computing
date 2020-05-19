@@ -1,6 +1,0 @@
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\ClientServer\bin\Debug\ClientServer.exe.config
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\ClientServer\bin\Debug\ClientServer.exe
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\ClientServer\bin\Debug\ClientServer.pdb
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\ClientServer\obj\Debug\ClientServer.csprojAssemblyReference.cache
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\ClientServer\obj\Debug\ClientServer.exe
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\ClientServer\obj\Debug\ClientServer.pdb
