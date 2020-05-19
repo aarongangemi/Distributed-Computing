@@ -38,7 +38,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFApp", "Tutorials 1-3\WPF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientLibrary", "Tutorials 6-9\ClientLibrary\ClientLibrary.csproj", "{7E383B22-5BC2-4BE3-A0B1-2AA29D0799E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobLibrary", "JobLibrary\JobLibrary.csproj", "{2810E576-F739-42EE-BAFD-28374EF9A2DC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobLibrary", "Tutorials 6-9\JobLibrary\JobLibrary.csproj", "{2810E576-F739-42EE-BAFD-28374EF9A2DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

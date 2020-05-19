@@ -13,7 +13,7 @@ namespace Tutorial_4_Data_Tier.Controllers
         // GET api/<controller>
         // GET api/<controller>
         BankDB.AccountAccessInterface acntAccess = Bank.bankData.GetAccountInterface();
-
+        private LogClass log = new LogClass();
         // GET api/<controller>/5
         [Route("api/Account/{accountID}")]
         [HttpGet]
@@ -27,10 +27,12 @@ namespace Tutorial_4_Data_Tier.Controllers
                 ads.userId = acct.GetOwner();
                 ads.acntBal = acct.GetBalance();
                 ads.acntId = accountID;
+                log.logMessage("Account successfully retrieved");
                 return ads;
             }
             catch(Exception)
             {
+                log.errorLogMessage("Invalid account entered");
                 return null;
             }
         }
@@ -45,6 +47,7 @@ namespace Tutorial_4_Data_Tier.Controllers
             ads.userId = userID;
             ads.acntBal = 0;
             ads.acntId = acntID;
+            log.logMessage("Account was successfully created for " + userID.ToString());
             return ads;
         }
 
@@ -57,10 +60,12 @@ namespace Tutorial_4_Data_Tier.Controllers
                 acntAccess.SelectAccount(accountID);
                 acntAccess.Deposit(amount);
                 acntAccess.GetBalance();
+                log.logMessage(amount.ToString() + " was successfully deposited");
                 return amount;
             }
             catch(Exception)
             {
+                log.errorLogMessage("Unable to make deposit - invalid data was entered");
                 return 0;
             }
         }
@@ -74,10 +79,12 @@ namespace Tutorial_4_Data_Tier.Controllers
                 acntAccess.SelectAccount(accountID);
                 acntAccess.Withdraw(amount);
                 acntAccess.GetBalance();
+                log.logMessage(amount.ToString() + " was successfully withdrawn");
                 return amount;
             }
             catch(Exception)
             {
+                log.errorLogMessage("Unable to make withdrawal - invalid data was entered");
                 return 0;
             }
         }

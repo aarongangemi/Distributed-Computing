@@ -1,0 +1,47 @@
+Log file function:
+user 876 was successfully retrieved
+Log file function:
+User: Aasas asas was succesfully created
+Log file function:
+Account was successfully created for 901291249
+Log file function:
+Account and user saved succesfully
+Log file function:
+user 901291249 was successfully retrieved
+Error Occurred: No user was found
+Error Occurred: No user was found
+Error Occurred: Invalid account entered
+Error Occurred: Unable to make deposit - invalid data was entered
+Error Occurred: Invalid account entered
+Error Occurred: Unable to make withdrawal - invalid data was entered
+Error Occurred: Invalid fname was entered - no first name found
+Log file function:
+Transaction created successfully
+Log file function:
+Transaction 222222222 was successfully retrieved
+Log file function:
+Transaction process called
+Log file function:
+Transaction trying to be created - you will know in 120 seconds
+Error Occurred: Something went wrong with transaction
+Error Occurred: No user was found
+Error Occurred: No user was found
+Error Occurred: No user was found
+Error Occurred: No user was found
+Error Occurred: No user was found
+Error Occurred: No user was found
+Error Occurred: No user was found
+Error Occurred: No user was found
+Error Occurred: Invalid account entered
+Error Occurred: Unable to make deposit - invalid data was entered
+Error Occurred: Unable to make withdrawal - invalid data was entered
+Error Occurred: No user was found
+Error Occurred: Invalid fname was entered - no first name found
+Error Occurred: Invalid lname was entered - no last name found
+Log file function:
+Transaction 876 was successfully retrieved
+Log file function:
+Transaction process called
+Log file function:
+Transaction trying to be created - you will know in 60 seconds
+Error Occurred: Something went wrong with transaction

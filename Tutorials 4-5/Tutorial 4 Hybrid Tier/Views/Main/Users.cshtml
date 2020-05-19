@@ -18,8 +18,9 @@
             contentType: 'application/json',
             processData: false,
             success: function (data, textStatus, jQxhr) {
+                alert(data);
                 if (data == null) {
-                    Console.log("Invalid user id was entered, please try again");
+                    console.log("Invalid user id was entered, please try again");
                     alert("Invalid user id was entered, please try again");
                 }
                 else {
@@ -32,7 +33,7 @@
             },
             error: function (jqXhr, textStatus, errorThrown) {
                 alert("Invalid data entered for user, please try again");
-                Console.log("Invalid data entered for user, please try again")
+                console.log("Invalid data entered for user, please try again")
             }
         })
     }

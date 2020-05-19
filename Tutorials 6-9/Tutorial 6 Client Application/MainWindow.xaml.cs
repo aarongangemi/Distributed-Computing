@@ -31,10 +31,13 @@ namespace Tutorial_6_Client_Application
         private int portNumber;
         private List<Client> listOfClients;
         private static int JobsCompletedCount;
+        private Log log;
         public bool IsClosed { get; private set; }
         public MainWindow()
         {
             InitializeComponent();
+            log = new Log();
+            log.logMessage("Client started");
             URL = "https://localhost:44369/";
             client = new RestClient(URL);
             ServerDel serverDelegate;
@@ -61,7 +64,7 @@ namespace Tutorial_6_Client_Application
                 host.AddServiceEndpoint(typeof(IClient), tcp, "net.tcp://127.0.0.1:" + portNumber + "/JobServer");
                 host.Open();
                 RegisterClient();
-                Console.WriteLine("Server Thread is running on port: " + portNumber.ToString());
+                log.logMessage("Server Thread is running on port: " + portNumber.ToString());
                 ServerStarted = true;
                 while (!IsClosed)
                 { }
@@ -93,53 +96,60 @@ namespace Tutorial_6_Client_Application
                             URL = "net.tcp://" + listOfClients.ElementAt(i).IpAddress.ToString() + ":" + listOfClients.ElementAt(i).port.ToString() + "/JobServer";
                             foobFactory = new ChannelFactory<IClient>(tcp, URL);
                             foob = foobFactory.CreateChannel();
-                                Job job = foob.RequestJob();
-                                if (!String.IsNullOrEmpty(job.PythonSrc))
+                            Job job = foob.RequestJob();
+                            if (!String.IsNullOrEmpty(job.PythonSrc))
+                            {
+                                log.logMessage("Connected to client: " + listOfClients.ElementAt(i).port.ToString());
+                                byte[] decodedBytes = Convert.FromBase64String(job.PythonSrc);
+                                string pySource = Encoding.UTF8.GetString(decodedBytes);
+                                byte[] hashArray = job.hash;
+                                byte[] RecievedHash = hashObj.ComputeHash(Encoding.UTF8.GetBytes(job.PythonSrc));
+                                if (RecievedHash.SequenceEqual(hashArray))
                                 {
-                                    byte[] decodedBytes = Convert.FromBase64String(job.PythonSrc);
-                                    string pySource = Encoding.UTF8.GetString(decodedBytes);
-                                    byte[] hashArray = job.hash;
-                                    byte[] RecievedHash = hashObj.ComputeHash(Encoding.UTF8.GetBytes(job.PythonSrc));
-                                    if (RecievedHash.SequenceEqual(hashArray))
+                                    job.PythonSrc = pySource;
+                                    Dispatcher.Invoke(() =>
                                     {
-                                        job.PythonSrc = pySource;
-                                        Dispatcher.Invoke(() =>
+                                        JobStatusLabel.Content = "Running Python Job";
+                                    });
+                                    Dispatcher.Invoke(() =>
+                                    {
+                                        try
                                         {
-                                            JobStatusLabel.Content = "Running Python Job";
-                                        });
-                                        Dispatcher.Invoke(() =>
+                                            log.logMessage("Attempting to execute python script");
+                                            ScriptEngine engine = Python.CreateEngine();
+                                            ScriptScope scope = engine.CreateScope();
+                                            engine.Execute(job.PythonSrc, scope);
+                                            dynamic PyFunc = scope.GetVariable("main");
+                                            var result = PyFunc();
+                                            PyResult.Content = result;
+                                            job.PythonResult = PyResult.Content.ToString();
+                                            JobsCompletedCount++;
+                                            JobsCompleted.Text = JobsCompletedCount.ToString();
+                                            log.logMessage("Python script executed successfully: result is: " + PyResult.Content);
+                                        }
+                                        catch (SyntaxErrorException)
                                         {
-                                            try
-                                            {
-                                                ScriptEngine engine = Python.CreateEngine();
-                                                ScriptScope scope = engine.CreateScope();
-                                                engine.Execute(job.PythonSrc, scope);
-                                                dynamic PyFunc = scope.GetVariable("main");
-                                                var result = PyFunc();
-                                                PyResult.Content = result;
-                                                job.PythonResult = PyResult.Content.ToString();
-                                                JobsCompletedCount++;
-                                                JobsCompleted.Text = JobsCompletedCount.ToString();
-                                            }
-                                            catch (SyntaxErrorException)
-                                            {
-                                                MessageBox.Show("Invalid Python script, please ensure python body is valid and proper indentation is used");
-                                            }
-                                            catch(UnboundNameException)
-                                            {
-                                                MessageBox.Show("Invalid variables found in python body, please try again");
-                                            }
-                                            catch(NullReferenceException)
-                                            {
-                                                MessageBox.Show("No return type found in python script, please return something");
-                                            }
-                                        });
+                                            MessageBox.Show("Invalid Python script, please ensure python body is valid and proper indentation is used for variables");
+                                            log.logError("Invalid Python script - invalid body");
+                                        }
+                                        catch(UnboundNameException)
+                                        {
+                                            MessageBox.Show("Invalid variables found in python body, please try again");
+                                            log.logError("Invalid variables in python script");
+                                        }
+                                        catch(NullReferenceException)
+                                        {
+                                            MessageBox.Show("No return type found in python script, please return something");
+                                            log.logError("no return found");
+                                        }});
                                         UpdateCount(i);
                                         foob.UploadJobSolution(job.PythonResult, job.jobNumber); //Return the result of the script
+
                                         Dispatcher.Invoke(() =>
                                         {
                                             Thread.Sleep(500);
                                             JobStatusLabel.Content = "Python Job Complete";
+                                            log.logMessage("Python result: " + job.PythonResult + " was successfully uploaded");
                                         });
                                     }
 
@@ -151,6 +161,7 @@ namespace Tutorial_6_Client_Application
                     {
                         MessageBox.Show("Client has been disconncted. Client " + i + " will be removed");
                         RestRequest request = new RestRequest("api/Client/Remove/" + i.ToString());
+                        log.logError("Client " + i.ToString() + " has successfully been disconnected");
                         client.Post(request);
                         listOfClients = getClientList();
                         i = 0;
@@ -158,6 +169,7 @@ namespace Tutorial_6_Client_Application
                     catch(FaultException)
                     {
                         MessageBox.Show("Closing client");
+                        log.logError("Client successfully closed");
                     }
                 }
             }
@@ -177,10 +189,12 @@ namespace Tutorial_6_Client_Application
                 job.setPythonSrc(base64String);
                 job.setJobNumber(JobList.ListOfJobs.Count + 1);
                 JobList.ListOfJobs.Add(job);
+                log.logMessage("Job " + job.jobNumber + " was added");
             }
             else
             {
                 MessageBox.Show("Python string must start with 'def main():' ");
+                log.logError("Invalid python script with no main function");
             }
         } 
 
@@ -196,6 +210,7 @@ namespace Tutorial_6_Client_Application
         {
             RestRequest request = new RestRequest("api/Client/UpdateCount/" + idx.ToString());
             client.Put(request);
+            log.logMessage("Count updated");
         }
 
         private void RegisterClient()
@@ -203,6 +218,7 @@ namespace Tutorial_6_Client_Application
             RestRequest request = new RestRequest("api/Client/Register/");
             request.AddJsonBody(new Client("127.0.0.1", portNumber.ToString()));
             client.Post(request);
+            log.logMessage("Client with port " + portNumber.ToString() + " was successfully updated");
         }
         protected override void OnClosed(EventArgs e)
         {

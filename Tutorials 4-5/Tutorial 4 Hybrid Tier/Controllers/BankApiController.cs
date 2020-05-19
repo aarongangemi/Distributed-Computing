@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Tutorial_4_Data_Tier.Models;
+using Tutorial_4_Hybrid_Tier.Models;
 
 namespace Tutorial_4_Hybrid_Tier.Controllers
 {
@@ -12,6 +13,7 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
     {
         private string URL = "https://localhost:44312/";
         private RestClient client;
+        private BusinessLogger log = new BusinessLogger();
         [Route("api/BankApi/Account/{accountID}")]
         [HttpGet]
         public AccountDetailsStruct GetAccount(uint accountID)
@@ -28,11 +30,13 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
                 }
                 else
                 {
+                    log.errorLogMessage("Invalid data entered to retrieve account");
                     return null;
                 }
             }
             catch(NullReferenceException)
             {
+                log.errorLogMessage("Exception occured - invalid account found");
                 return null;
             }
         }
@@ -53,6 +57,7 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
             }
             else
             {
+                log.errorLogMessage("Invalid data entered for deposit");
                 return 0;
             }
 
@@ -74,6 +79,7 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
             }
             else
             {
+                log.errorLogMessage("Invalid data entered for withdrawal");
                 return 0;
             }
         }
@@ -86,6 +92,7 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
             {
                 if (!char.IsLetter(c))
                 {
+                    log.errorLogMessage("Invalid fname was entered - no first name found");
                     return null;
                 }
             }
@@ -93,6 +100,7 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
             {
                 if (!char.IsLetter(x))
                 {
+                    log.errorLogMessage("Invalid lname was entered - no last name found");
                     return null;
 
                 }
@@ -105,6 +113,7 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
             client.Post(acntRequest);
             RestRequest saveRequest = new RestRequest("api/Save");
             client.Post(saveRequest);
+            log.logMessage("Account and user saved succesfully");
             return user;
         }
 
@@ -122,6 +131,7 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
             }
             else
             {
+                log.errorLogMessage("Invalid data entered, unable to retreive a user");
                 return null;
             }
         }
@@ -140,10 +150,17 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
                 RestRequest restRequest = new RestRequest("api/Transactions/Create/" + amount + "/" + senderID + "/" + receiverID);
                 client.Post(restRequest);
                 processed = await OnDelayEnd();
+                log.logMessage("Transaction trying to be created - you will know in 60 seconds");
                 if(processed)
                 {
                     RestRequest saveRequest = new RestRequest("api/Save");
                     client.Post(saveRequest);
+                    log.logMessage("Transaction for " + amount.ToString() + " from: " + senderID + " to " + receiverID + " was successful");
+                    log.logMessage("Transaction successfully saved");
+                }
+                if(!processed)
+                {
+                    log.errorLogMessage("Something went wrong with transaction");
                 }
             }
             return processed;
@@ -151,7 +168,7 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
 
         private async Task<bool> OnDelayEnd()
         {
-            await Task.Delay(120000);
+            await Task.Delay(60000);
             bool processed = await Task.Run(() => processTransactions());
             return processed;
         }
@@ -161,6 +178,7 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
             RestRequest request = new RestRequest("api/ProcessTransactions");
             IRestResponse response = client.Post(request);
             bool processed = JsonConvert.DeserializeObject<bool>(response.Content);
+            log.logMessage("Transaction process called");
             return processed;
         }
 
@@ -178,6 +196,7 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
             }
             catch(NullReferenceException)
             {
+                log.errorLogMessage("Unable to retrieve transaction");
                 return null;
             }
         }

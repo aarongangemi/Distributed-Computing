@@ -7,7 +7,7 @@ namespace Tutorial_4_Data_Tier.Controllers
 {
     public class UserController : ApiController
     {
-
+        private LogClass log = new LogClass();
         BankDB.UserAccessInterface userAccess = Bank.bankData.GetUserAccess();
 
 
@@ -23,6 +23,7 @@ namespace Tutorial_4_Data_Tier.Controllers
              uds.lastName = lname;
              userAccess.SetUserName(uds.firstName, uds.lastName);
              userAccess.GetUserName(out uds.firstName, out uds.lastName);
+             log.logMessage("User: " + fname + " " + lname + " was succesfully created");
              return uds;  
         }
 
@@ -39,11 +40,12 @@ namespace Tutorial_4_Data_Tier.Controllers
                 userData.firstName = FirstName;
                 userData.lastName = LastName;
                 userData.userId = userId;
+                log.logMessage("user " + userId.ToString() + " was successfully retrieved");
                 return userData;
             }
             catch(Exception)
             {
-                Console.WriteLine("Invalid user ID entered");
+                log.errorLogMessage("No user was found");
                 return null;
             }
         }

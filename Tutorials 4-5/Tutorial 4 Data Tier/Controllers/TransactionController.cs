@@ -12,6 +12,7 @@ namespace Tutorial_4_Data_Tier.Controllers
     {
         // GET api/<controller>
         BankDB.TransactionAccessInterface transactionAccess = Bank.bankData.GetTransactionInterface();
+        private LogClass log = new LogClass();
 
         // GET api/<controller>/5
         [Route("api/Transactions/Create/{amount}/{senderID}/{receiverID}")]
@@ -32,7 +33,7 @@ namespace Tutorial_4_Data_Tier.Controllers
             }
             catch(Exception)
             {
-                Console.WriteLine("Unable to create transaction");
+                log.errorLogMessage("Unable to create transaction");
             }
         }
 
@@ -53,7 +54,7 @@ namespace Tutorial_4_Data_Tier.Controllers
             }
             catch(Exception)
             {
-                Console.WriteLine("Transaction doesn't exist");
+                log.logMessage("Transaction " + transactionId + " count not be retrieved");
                 return null;
             }
         }

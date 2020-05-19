@@ -16,6 +16,6 @@
         <Label Name="PyResult" Content="" HorizontalAlignment="Left" Margin="449,56,0,0" VerticalAlignment="Top" Width="307" Height="85"/>
         <Label Content="Job Status:" HorizontalAlignment="Left" Margin="449,233,0,0" VerticalAlignment="Top" Width="71" RenderTransformOrigin="-0.57,0.596"/>
         <Label Name="JobStatusLabel" Content="" HorizontalAlignment="Left" Margin="554,233,0,0" VerticalAlignment="Top" Width="202"/>
-        <Label Content="Python script must start with &quot;def() main:&quot; and contain a return value " HorizontalAlignment="Left" Margin="30,363,0,0" VerticalAlignment="Top" Width="390"/>
+        <Label Content="Python script must start with &quot;def() main:&quot; and contain a return value.&#xD;&#xA;Python script must also use proper indentation. &#xD;&#xA;" HorizontalAlignment="Left" Margin="30,363,0,0" VerticalAlignment="Top" Width="390" Height="46"/>
     </Grid>
 </Window>

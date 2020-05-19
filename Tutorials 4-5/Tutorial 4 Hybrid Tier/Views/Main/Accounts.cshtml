@@ -35,7 +35,7 @@
             success: function (data, textStatus, jQxhr) {
                 if (data == null) {
                     alert("Unable to find account, please enter valid account number");
-                    Console.log("Unable to find account number");
+                    console.log("Unable to find account number");
                 }
                 else {
                     var obj = data;
@@ -45,8 +45,8 @@
                 }
             },
             error: function (jqXhr, textStatus, errorThrown) {
-                console.log(errorThrown);
                 alert("invalid data found");
+                console.log(errorThrown);
             }
         })
     }
@@ -61,7 +61,7 @@
             success: function (data, textStatus, jQxhr) {
                 if (data == 0) {
                     alert("Unable to deposit " + $("#amount").val() + " to account. Please enter a valid ID and amount and try again");
-                    Console.log("Unable to deposit money, invalid ID entered");
+                    console.log("Unable to deposit money, invalid ID entered");
                 }
                 else {
                     alert("Deposit Successful");
