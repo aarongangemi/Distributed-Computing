@@ -11,11 +11,9 @@ using System.ServiceModel;
 using Newtonsoft.Json;
 using ClientLibrary;
 using System.Security.Cryptography;
-
 using JobLibrary;
 using Microsoft.Scripting;
 using IronPython.Runtime;
-using System.Text.RegularExpressions;
 
 namespace Tutorial_6_Client_Application
 {
