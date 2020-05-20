@@ -82,3 +82,5 @@ C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Blockc
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Blockchain Server\obj\Debug\Tutorial 7 Blockchain Server.csproj.CopyComplete
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Blockchain Server\obj\Debug\Tutorial 7 Blockchain Server.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Blockchain Server\obj\Debug\Tutorial 7 Blockchain Server.pdb
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Blockchain Server\bin\BlockchainIntermed.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Blockchain Server\bin\BlockchainIntermed.pdb

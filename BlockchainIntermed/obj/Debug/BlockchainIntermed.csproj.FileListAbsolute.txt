@@ -1,0 +1,5 @@
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\BlockchainIntermed\bin\Debug\BlockchainIntermed.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\BlockchainIntermed\bin\Debug\BlockchainIntermed.pdb
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\BlockchainIntermed\obj\Debug\BlockchainIntermed.csprojAssemblyReference.cache
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\BlockchainIntermed\obj\Debug\BlockchainIntermed.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\BlockchainIntermed\obj\Debug\BlockchainIntermed.pdb

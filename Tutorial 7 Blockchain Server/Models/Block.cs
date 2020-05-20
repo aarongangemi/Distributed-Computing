@@ -9,7 +9,8 @@ namespace Tutorial_7_Blockchain_Server.Models
 {
     public class Block
     {
-        public static uint blockID;
+        public static uint blockCounter = 0;
+        public uint blockID;
         public uint walletIdFrom;
         public uint walletIdTo;
         public float amount;
@@ -19,7 +20,8 @@ namespace Tutorial_7_Blockchain_Server.Models
 
         public Block(uint walletIdFrom, uint walletIdTo, float amount, uint blockOffset, string prevBlockHash, string blockHash)
         {
-            blockID = blockID + 1;
+            blockCounter++;
+            blockID = blockCounter;
             this.walletIdFrom = walletIdFrom;
             this.walletIdTo = walletIdTo;
             this.amount = amount;
