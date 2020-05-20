@@ -161,7 +161,6 @@ namespace Tutorial_6_Client_Application
                     }
                     catch (EndpointNotFoundException)
                     {
-                        MessageBox.Show("Client has been disconncted. Client " + i + " will be removed");
                         RestRequest request = new RestRequest("api/Client/Remove/" + i.ToString());
                         log.logError("Client " + i.ToString() + " has successfully been disconnected");
                         client.Post(request);

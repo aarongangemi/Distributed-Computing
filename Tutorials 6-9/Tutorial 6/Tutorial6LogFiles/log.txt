@@ -1758,3 +1758,149 @@ Log file function:
 Count updated
 Log file function:
 Python result: 21 was successfully uploaded
+Log file function:
+Client started
+Log file function:
+Client with port 8100 was successfully updated
+Log file function:
+Server Thread is running on port: 8100
+Log file function:
+Client started
+Log file function:
+Client with port 8101 was successfully updated
+Log file function:
+Server Thread is running on port: 8101
+Log file function:
+Client started
+Log file function:
+Client with port 8102 was successfully updated
+Log file function:
+Server Thread is running on port: 8102
+Log file function:
+Job 1 was added
+Log file function:
+Job 1 was successfully requested
+Log file function:
+Connected to client: 8101
+Log file function:
+Attempting to execute python script
+Error occured: 
+Invalid Python script - invalid body
+Log file function:
+Count updated
+Log file function:
+Python result:  was successfully uploaded
+Log file function:
+Job 2 was added
+Log file function:
+Job 2 was successfully requested
+Log file function:
+Connected to client: 8101
+Log file function:
+Attempting to execute python script
+Log file function:
+Python script executed successfully: result is: 82
+Log file function:
+Count updated
+Log file function:
+Python result: 82 was successfully uploaded
+Log file function:
+Job 1 was added
+Log file function:
+Job 1 was successfully requested
+Log file function:
+Connected to client: 8102
+Log file function:
+Attempting to execute python script
+Log file function:
+Python script executed successfully: result is: 2
+Log file function:
+Count updated
+Log file function:
+Python result: 2 was successfully uploaded
+Log file function:
+Job 1 was added
+Log file function:
+Job 1 was successfully requested
+Log file function:
+Connected to client: 8100
+Log file function:
+Attempting to execute python script
+Log file function:
+Python script executed successfully: result is: 1234
+Log file function:
+Count updated
+Log file function:
+Python result: 1234 was successfully uploaded
+Log file function:
+Job 2 was added
+Log file function:
+Job 2 was successfully requested
+Log file function:
+Connected to client: 8102
+Log file function:
+Attempting to execute python script
+Log file function:
+Python script executed successfully: result is: 2
+Log file function:
+Count updated
+Log file function:
+Python result: 2 was successfully uploaded
+Log file function:
+Client started
+Log file function:
+Client with port 8100 was successfully updated
+Log file function:
+Server Thread is running on port: 8100
+Log file function:
+Client started
+Log file function:
+Client with port 8101 was successfully updated
+Log file function:
+Server Thread is running on port: 8101
+Log file function:
+Client started
+Log file function:
+Client with port 8102 was successfully updated
+Log file function:
+Server Thread is running on port: 8102
+Error occured: 
+Client 0 has successfully been disconnected
+Error occured: 
+Client 0 has successfully been disconnected
+Error occured: 
+Client successfully closed
+Error occured: 
+Client 0 has successfully been disconnected
+Log file function:
+Client started
+Log file function:
+Client with port 8100 was successfully updated
+Log file function:
+Server Thread is running on port: 8100
+Log file function:
+Client started
+Log file function:
+Client with port 8101 was successfully updated
+Log file function:
+Server Thread is running on port: 8101
+Log file function:
+Client started
+Log file function:
+Client with port 8102 was successfully updated
+Log file function:
+Server Thread is running on port: 8102
+Error occured: 
+Client successfully closed
+Error occured: 
+Client 1 has successfully been disconnected
+Error occured: 
+Client 1 has successfully been disconnected
+Error occured: 
+Client successfully closed
+Error occured: 
+Client successfully closed
+Error occured: 
+Client 0 has successfully been disconnected
+Error occured: 
+Client 0 has successfully been disconnected
