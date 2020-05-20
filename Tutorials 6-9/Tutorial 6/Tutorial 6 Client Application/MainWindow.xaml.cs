@@ -30,6 +30,7 @@ namespace Tutorial_6_Client_Application
         private List<Client> listOfClients;
         private static int JobsCompletedCount;
         private Log log;
+        private bool ClientExists;
         public bool IsClosed { get; private set; }
         public MainWindow()
         {
@@ -38,41 +39,45 @@ namespace Tutorial_6_Client_Application
             log.logMessage("Client started");
             URL = "https://localhost:44369/";
             client = new RestClient(URL);
-            ServerDel serverDelegate;
-            NetworkDel networkDelegate;
-            serverDelegate = RunServer;
-            networkDelegate = NetworkingThreadFunction;
-            serverDelegate.BeginInvoke(null, null);
-            networkDelegate.BeginInvoke(null, null);
+            Thread ServerThread = new Thread(new ThreadStart(RunServer));
+            ServerThread.Start();
+            Thread NetworkingThread = new Thread(new ThreadStart(NetworkingThreadFunction));
+            NetworkingThread.Start();
             JobsCompletedCount = 0;
             JobsCompleted.Text = JobsCompletedCount.ToString();
-            portNumber = 8100;
+            portNumber = PortCounter.CurrentPort;
             PythonScriptText.AcceptsReturn = true;
             PythonScriptText.AcceptsTab = true;
         }
         private void RunServer()
         {
             ServiceHost host;
-            bool ServerStarted = false;
-            while(!ServerStarted)
-            try
+            listOfClients = getClientList();
+            foreach(Client c in listOfClients)
             {
-                host = new ServiceHost(typeof(JobHost)); //Service host in OS
-                NetTcpBinding tcp = new NetTcpBinding();  //Create .NET TCP port
-                host.AddServiceEndpoint(typeof(IClient), tcp, "net.tcp://127.0.0.1:" + portNumber + "/JobServer");
-                host.Open();
-                RegisterClient();
-                log.logMessage("Server Thread is running on port: " + portNumber.ToString());
-                ServerStarted = true;
-                while (!IsClosed)
-                { }
-                host.Close();
+                if(portNumber.ToString() == c.port)
+                {
+                    PortCounter.CurrentPort++;
+                    portNumber = PortCounter.CurrentPort;
+                }
+                else
+                {
+                    portNumber = PortCounter.CurrentPort;
+                    break;
+                }
             }
-            catch(AddressAlreadyInUseException)
-            {
-                portNumber++;
-                host = new ServiceHost(typeof(JobHost));
-            }
+            host = new ServiceHost(typeof(JobHost)); //Service host in OS
+            NetTcpBinding tcp = new NetTcpBinding();  //Create .NET TCP port
+            host.AddServiceEndpoint(typeof(IClient), tcp, "net.tcp://127.0.0.1:" + portNumber + "/JobServer");
+            host.Open();
+            RestRequest request = new RestRequest("api/Client/Register/");
+            request.AddJsonBody(new Client("127.0.0.1", portNumber.ToString()));
+            client.Post(request);
+            log.logMessage("Client with port " + portNumber.ToString() + " was successfully updated");
+            log.logMessage("Server Thread is running on port: " + portNumber.ToString());
+            while (!IsClosed)
+            { }
+            host.Close();
         }
 
         private void NetworkingThreadFunction()
@@ -107,12 +112,9 @@ namespace Tutorial_6_Client_Application
                                     job.PythonSrc = pySource;
                                     Dispatcher.Invoke(() =>
                                     {
-                                        JobStatusLabel.Content = "Running Python Job";
-                                    });
-                                    Dispatcher.Invoke(() =>
-                                    {
                                         try
                                         {
+                                            JobStatusLabel.Content = "Running Python Job";
                                             log.logMessage("Attempting to execute python script");
                                             ScriptEngine engine = Python.CreateEngine();
                                             ScriptScope scope = engine.CreateScope();
@@ -139,19 +141,21 @@ namespace Tutorial_6_Client_Application
                                         {
                                             MessageBox.Show("No return type found in python script, please return something");
                                             log.logError("no return found");
-                                        }});
-                                        UpdateCount(i);
-                                        foob.UploadJobSolution(job.PythonResult, job.jobNumber); //Return the result of the script
-
-                                        Dispatcher.Invoke(() =>
-                                        {
-                                            Thread.Sleep(500);
-                                            JobStatusLabel.Content = "Python Job Complete";
-                                            log.logMessage("Python result: " + job.PythonResult + " was successfully uploaded");
-                                        });
-                                    }
-
+                                        }
+                                    });
+                                    RestRequest request = new RestRequest("api/Client/UpdateCount/" + i.ToString());
+                                    client.Put(request);
+                                    log.logMessage("Count updated");
+                                    foob.UploadJobSolution(job.PythonResult, job.jobNumber); //Return the result of the script
+                                    Dispatcher.Invoke(() =>
+                                    {
+                                        Thread.Sleep(500);
+                                        JobStatusLabel.Content = "Python Job Complete";
+                                        log.logMessage("Python result: " + job.PythonResult + " was successfully uploaded");
+                                    });
                                 }
+
+                            }
                             
                         }
                     }
@@ -168,6 +172,7 @@ namespace Tutorial_6_Client_Application
                     {
                         MessageBox.Show("Closing client");
                         log.logError("Client successfully closed");
+
                     }
                 }
             }
@@ -204,20 +209,6 @@ namespace Tutorial_6_Client_Application
             return listOfClients;
         }
 
-        private void UpdateCount(int idx)
-        {
-            RestRequest request = new RestRequest("api/Client/UpdateCount/" + idx.ToString());
-            client.Put(request);
-            log.logMessage("Count updated");
-        }
-
-        private void RegisterClient()
-        {
-            RestRequest request = new RestRequest("api/Client/Register/");
-            request.AddJsonBody(new Client("127.0.0.1", portNumber.ToString()));
-            client.Post(request);
-            log.logMessage("Client with port " + portNumber.ToString() + " was successfully updated");
-        }
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);

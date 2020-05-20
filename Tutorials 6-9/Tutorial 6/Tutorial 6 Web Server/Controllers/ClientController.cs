@@ -36,9 +36,16 @@ namespace Tutorial_6_Web_Server.Controllers
         [HttpPost]
         public void RemoveCLient(int idx)
         {
-            if(idx <= ClientList.clientList.Count)
+            try
             {
-                ClientList.clientList.RemoveAt(idx);
+                if (idx <= ClientList.clientList.Count)
+                {
+                    ClientList.clientList.RemoveAt(idx);
+                }
+            }
+            catch(ArgumentOutOfRangeException)
+            {
+                //No clients left
             }
         }
     }

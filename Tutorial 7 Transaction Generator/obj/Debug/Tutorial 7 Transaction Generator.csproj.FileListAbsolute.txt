@@ -1,0 +1,5 @@
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Transaction Generator\obj\Debug\Tutorial 7 Transaction Generator.csprojAssemblyReference.cache
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Transaction Generator\obj\Debug\MainWindow.g.cs
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Transaction Generator\obj\Debug\App.g.cs
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Transaction Generator\obj\Debug\Tutorial 7 Transaction Generator_MarkupCompile.cache
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Transaction Generator\obj\Debug\Tutorial 7 Transaction Generator_MarkupCompile.lref
