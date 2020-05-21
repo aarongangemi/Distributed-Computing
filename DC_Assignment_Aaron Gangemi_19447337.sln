@@ -52,6 +52,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorial 7 Miner", "Tutoria
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorial 7 Transaction Generator", "Tutorials 6-9\Tutorial 7-8\Tutorial 7 Transaction Generator\Tutorial 7 Transaction Generator.csproj", "{FA8B97CA-0F7A-4439-81B7-7EA064A07758}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XSS Application", "XSS Application", "{CB6D432A-D062-4B5A-921F-CFEBCD7897AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XSSApplication", "XSS Application\XSSApplication\XSSApplication.csproj", "{C2912C25-B86F-43B8-8BD4-7B024EABF909}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -122,6 +126,10 @@ Global
 		{FA8B97CA-0F7A-4439-81B7-7EA064A07758}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA8B97CA-0F7A-4439-81B7-7EA064A07758}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA8B97CA-0F7A-4439-81B7-7EA064A07758}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2912C25-B86F-43B8-8BD4-7B024EABF909}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2912C25-B86F-43B8-8BD4-7B024EABF909}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2912C25-B86F-43B8-8BD4-7B024EABF909}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2912C25-B86F-43B8-8BD4-7B024EABF909}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -146,6 +154,7 @@ Global
 		{F219E75A-4F56-4F7A-B875-C4D48846DA19} = {A96579AD-60B3-4FD8-A240-A4B78AED8A82}
 		{4380E0EC-6A68-49F3-9068-A53A8ECFC198} = {A96579AD-60B3-4FD8-A240-A4B78AED8A82}
 		{FA8B97CA-0F7A-4439-81B7-7EA064A07758} = {A96579AD-60B3-4FD8-A240-A4B78AED8A82}
+		{C2912C25-B86F-43B8-8BD4-7B024EABF909} = {CB6D432A-D062-4B5A-921F-CFEBCD7897AB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8812666C-8BF6-445D-B09D-9F3BE3A668CB}
