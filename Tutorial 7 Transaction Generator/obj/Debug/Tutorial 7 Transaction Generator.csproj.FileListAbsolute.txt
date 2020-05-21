@@ -6,10 +6,8 @@ C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Transa
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Transaction Generator\bin\Debug\Tutorial 7 Transaction Generator.exe.config
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Transaction Generator\bin\Debug\Tutorial 7 Transaction Generator.exe
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Transaction Generator\bin\Debug\Tutorial 7 Transaction Generator.pdb
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Transaction Generator\bin\Debug\BlockchainIntermed.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Transaction Generator\bin\Debug\Newtonsoft.Json.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Transaction Generator\bin\Debug\RestSharp.dll
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Transaction Generator\bin\Debug\BlockchainIntermed.pdb
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Transaction Generator\bin\Debug\Newtonsoft.Json.xml
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Transaction Generator\bin\Debug\RestSharp.xml
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Transaction Generator\obj\Debug\MainWindow.baml

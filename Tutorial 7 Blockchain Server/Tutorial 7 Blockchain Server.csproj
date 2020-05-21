@@ -46,6 +46,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="RestSharp">
+      <HintPath>..\Tutorials 6-9\Tutorial 6\Tutorial 6 Client Application\bin\Debug\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -138,8 +141,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountList.cs" />
-    <Compile Include="Models\Block.cs" />
     <Compile Include="Models\Blockchain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -197,9 +198,9 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BlockchainIntermed\BlockchainIntermed.csproj">
-      <Project>{E36551C0-FA0D-434E-88E6-33A9F3DA16FB}</Project>
-      <Name>BlockchainIntermed</Name>
+    <ProjectReference Include="..\Tutorials 6-9\Tutorial 7-8\BlockchainLibrary\BlockchainLibrary.csproj">
+      <Project>{EA438A87-771C-45B4-9440-C791C044E4A0}</Project>
+      <Name>BlockchainLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

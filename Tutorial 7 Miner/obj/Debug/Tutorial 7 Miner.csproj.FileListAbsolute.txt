@@ -82,3 +82,7 @@ C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Miner\
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Miner\obj\Debug\Tutorial 7 Miner.csproj.CopyComplete
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Miner\obj\Debug\Tutorial 7 Miner.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Miner\obj\Debug\Tutorial 7 Miner.pdb
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Miner\bin\BlockchainLibrary.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Miner\bin\RestSharp.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Miner\bin\BlockchainLibrary.pdb
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Miner\bin\RestSharp.xml

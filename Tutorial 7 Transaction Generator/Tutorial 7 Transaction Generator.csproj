@@ -102,11 +102,5 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BlockchainIntermed\BlockchainIntermed.csproj">
-      <Project>{E36551C0-FA0D-434E-88E6-33A9F3DA16FB}</Project>
-      <Name>BlockchainIntermed</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

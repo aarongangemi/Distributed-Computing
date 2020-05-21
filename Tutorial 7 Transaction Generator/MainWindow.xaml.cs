@@ -1,5 +1,4 @@
-﻿using BlockchainIntermed;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -24,24 +23,31 @@ namespace Tutorial_7_Transaction_Generator
     public partial class MainWindow : Window
     {
         private RestClient ServerClient;
-        private string URL;
+        private RestClient MinerClient;
+        private string ServerURL;
+        private string MinerURL;
         public MainWindow()
         {
             InitializeComponent();
-            URL = "https://localhost:44353/";
-            ServerClient = new RestClient(URL);
+            ServerURL = "https://localhost:44353/";
+            MinerURL = "https://localhost:44317/";
+            ServerClient = new RestClient(ServerURL);
+            MinerClient = new RestClient(MinerURL);
+            RestRequest TransactionRequest = new RestRequest("api/Server/GenerateGenesisBlock");
+            ServerClient.Post(TransactionRequest);
             NoOfBlocks.Content = GetNoOfBlocks().ToString();
-            RegisterAccounts();
-            List<Account> acntList = GetAccountList();
-            foreach(Account a in acntList)
-            {
-                AcntField.Text = AcntField.Text + "\n" + "Account ID: " + a.accountID + ", Amount = $" + a.accountAmount.ToString();
-            }
             
         }
         private void Submit_Transaction(object sender, RoutedEventArgs e)
         {
-
+            RestRequest TransactionRequest = new RestRequest("api/Blockchain/AddTransaction/" + IdFrom.Text + "/" + IdTo.Text + "/" + Amount.Text);
+            IRestResponse TransactionResponse = MinerClient.Post(TransactionRequest);
+            bool TransactionProcessed = JsonConvert.DeserializeObject<bool>(TransactionResponse.Content);
+            if(TransactionProcessed)
+            {
+                MessageBox.Show("Transaction was successful");
+            }
+            NoOfBlocks.Content = GetNoOfBlocks().ToString();
         }
 
         public int GetNoOfBlocks() 
@@ -51,21 +57,19 @@ namespace Tutorial_7_Transaction_Generator
             return JsonConvert.DeserializeObject<int>(NoOfBlocksResponse.Content);
         }
 
-        public List<Account> GetAccountList()
+        private void Get_Account_Balance(object sender, RoutedEventArgs e)
         {
-            RestRequest AcntRequest = new RestRequest("api/Server/GetAccounts");
-            IRestResponse AcntResponse = ServerClient.Get(AcntRequest);
-            return JsonConvert.DeserializeObject<List<Account>>(AcntResponse.Content);
-        }
-
-        public void RegisterAccounts()
-        {
-            for (int i = 0; i < 15; i++)
+            if(!string.IsNullOrEmpty(AcntNo.Text))
             {
-                RestRequest AcntRequest = new RestRequest("api/Server/AddAcnt");
-                ServerClient.Post(AcntRequest);
+                RestRequest BalanceRequest = new RestRequest("api/Server/GetBalance/" + AcntNo.Text);
+                IRestResponse BalanceRespose = ServerClient.Get(BalanceRequest);
+                float Balance = JsonConvert.DeserializeObject<float>(BalanceRespose.Content);
+                AcntBalance.Content = Balance.ToString();
+            }
+            else
+            {
+                MessageBox.Show("Account ID Field cannot be null or empty");
             }
         }
-
     }
 }

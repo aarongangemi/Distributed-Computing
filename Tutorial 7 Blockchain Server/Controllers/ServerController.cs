@@ -1,6 +1,9 @@
-﻿using BlockchainIntermed;
+﻿using BlockchainLibrary;
+using Newtonsoft.Json;
+using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -27,95 +30,83 @@ namespace Tutorial_7_Blockchain_Server.Controllers
             return Blockchain.BlockChain.Count;
         }
 
-        [Route("api/Server/GetAccounts")]
-        [HttpGet]
-        public List<Account> GetAccounts()
+        [Route("api/Server/Increment")]
+        [HttpPut]
+        public void Increment()
         {
-            return AccountList.listOfAccounts;
+            Blockchain.IncrementOffset();
+        }
+
+        [Route("api/Server/GetOffset")]
+        [HttpGet]
+        public uint GetOffset()
+        {
+            return Blockchain.hashOffset;
         }
 
         [Route("api/Server/GetBalance/{acntID}")]
         [HttpGet]
         public float GetAccountBalance(uint acntID)
         {
-            foreach(Account acnt in AccountList.listOfAccounts)
+            float balance = 0;
+            foreach(Block block in Blockchain.BlockChain)
             {
-                if(acnt.accountID == acntID)
+                if(block.walletIdFrom == acntID && Blockchain.BlockChain.Count > 1)
                 {
-                    return acnt.accountAmount;
+                    balance -= block.amount;
+                }
+                if(block.walletIdTo == acntID)
+                {
+                    balance += block.amount;
                 }
             }
-            return -1;
+            return balance;
         }
 
-        [Route("api/Server/AddAcnt/")]
+        [Route("api/Server/ValidateBlock/")]
         [HttpPost]
-        public void CreateAcnt()
+        public bool ValidateBlock([FromBody] Block block)
         {
-            Account acnt = new Account();
-            if (AccountList.listOfAccounts.Count == 0)
-            {
-                acnt.accountAmount = int.MaxValue;
-            }
-            AccountList.listOfAccounts.Add(acnt);
-        }
-
-        [Route("api/Server/SubmitBlock/{walletIDFrom}/{walletIDTo}/{amount}")]
-        [HttpPost]
-        public void SubmitBlock(uint walletIDFrom, uint walletIDTo, uint amount)
-        {
-            bool validBlock = true;
             SHA256 sha256 = SHA256.Create();
-            string prevBlockHash, blockString, hashString;
-            prevBlockHash = Blockchain.BlockChain.ElementAt(Blockchain.BlockChain.Count - 1).prevBlockHash;
-            Blockchain.IncrementOffset();
-            blockString = walletIDFrom.ToString() + walletIDTo.ToString() + amount.ToString() + Blockchain.hashOffset.ToString();
+            string blockString = block.walletIdFrom.ToString() + block.walletIdTo.ToString() + block.amount.ToString() + block.blockOffset + block.prevBlockHash;
             byte[] blockBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(blockString));
-            hashString = "12345" + Encoding.Default.GetString(blockBytes) + "54321";
-            Block block = new Block(walletIDFrom, walletIDTo, amount, Blockchain.hashOffset, prevBlockHash, hashString);
-            foreach(Block b in Blockchain.BlockChain)
+            StringBuilder builder = new StringBuilder();
+            for(int i = 0; i < blockBytes.Length; i++)
+            {
+                builder.Append(blockBytes[i].ToString("x2"));
+            }
+            string hashString = "12345" + builder.ToString() + "54321";
+            foreach (Block b in Blockchain.BlockChain)
             {
                 if(b.blockID > block.blockID)
                 {
-                    validBlock = false;
-                    break;
+                    return false;
                 }
             }
-            foreach(Account acnt in AccountList.listOfAccounts)
+
+            if(GetAccountBalance(block.walletIdFrom) < block.amount || block.amount <= 0 || block.blockOffset % 5 != 0
+                || block.prevBlockHash != Blockchain.BlockChain.Last().blockHash
+                || !block.blockHash.StartsWith("12345") || !block.blockHash.EndsWith("54321")
+                || block.amount < 0 || block.walletIdFrom < 0 || block.walletIdTo < 0 || GetAccountBalance(block.walletIdFrom) < 0
+                || block.blockHash != hashString)
             {
-                if(acnt.accountID == walletIDFrom)
-                {
-                    if(acnt.accountAmount < block.amount)
-                    {
-                        validBlock = false;
-                        break;
-                    }
-                }
+                return false;
             }
-            if(amount <= 0)
-            {
-                validBlock = false;
-            }
-            if(block.blockOffset % 5 != 0)
-            {
-                validBlock = false;
-            }
-            if(block.prevBlockHash != Blockchain.BlockChain.ElementAt(Blockchain.BlockChain.Count).blockHash)
-            {
-                validBlock = false;
-            }
-            if(!(block.blockHash.StartsWith("12345") && block.blockHash.EndsWith("54321")))
-            {
-                validBlock = false;
-            }
-            if(amount < 0 || walletIDFrom < 0 || walletIDTo < 0)
-            {
-                validBlock = false;
-            }
-            if(validBlock)
-            {
-                Blockchain.BlockChain.Add(block);
-            }
+            return false;
+        }
+
+        [Route("api/Server/AddBlock")]
+        [HttpPost]
+        public void AddBlock([FromBody] Block block)
+        {
+            Blockchain.BlockChain.Add(block);
+        }
+
+        [Route("api/Server/GenerateGenesisBlock")]
+        [HttpPost]
+        public void GenerateGenesisBlock()
+        {
+            Blockchain.generateGenesisBlock();
         }
     }
 }
