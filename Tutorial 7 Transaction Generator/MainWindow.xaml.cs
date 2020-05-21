@@ -1,19 +1,8 @@
 ﻿using Newtonsoft.Json;
 using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace Tutorial_7_Transaction_Generator
 {
@@ -26,6 +15,7 @@ namespace Tutorial_7_Transaction_Generator
         private RestClient MinerClient;
         private string ServerURL;
         private string MinerURL;
+        private static Mutex mutex = new Mutex();
         public MainWindow()
         {
             InitializeComponent();
@@ -40,14 +30,25 @@ namespace Tutorial_7_Transaction_Generator
         }
         private void Submit_Transaction(object sender, RoutedEventArgs e)
         {
+            mutex.WaitOne();
             RestRequest TransactionRequest = new RestRequest("api/Blockchain/AddTransaction/" + IdFrom.Text + "/" + IdTo.Text + "/" + Amount.Text);
             IRestResponse TransactionResponse = MinerClient.Post(TransactionRequest);
             bool TransactionProcessed = JsonConvert.DeserializeObject<bool>(TransactionResponse.Content);
             if(TransactionProcessed)
             {
                 MessageBox.Show("Transaction was successful");
+                NoOfBlocks.Content = GetNoOfBlocks().ToString();
             }
-            NoOfBlocks.Content = GetNoOfBlocks().ToString();
+            else
+            {
+                MessageBox.Show("Transaction was unsuccessful. Please check: \n" +
+                                "1. The amount is less than or equal to the senders balance \n" +
+                                "2. The amount being sent is greater than 0 \n" +
+                                "3. The wallet ID From and wallet ID To are greater than 0 \n" +
+                                "4. The amount is greater than 0 \n" +
+                                "5. The wallet ID from is greater than 0 \n");
+            }
+            mutex.ReleaseMutex();
         }
 
         public int GetNoOfBlocks() 

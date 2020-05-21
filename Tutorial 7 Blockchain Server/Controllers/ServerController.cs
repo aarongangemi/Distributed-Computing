@@ -92,7 +92,7 @@ namespace Tutorial_7_Blockchain_Server.Controllers
             {
                 return false;
             }
-            return false;
+            return true;
         }
 
         [Route("api/Server/AddBlock")]
