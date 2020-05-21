@@ -30,7 +30,6 @@ namespace Tutorial_6_Client_Application
         private List<Client> listOfClients;
         private static int JobsCompletedCount;
         private Log log;
-        private bool ClientExists;
         public bool IsClosed { get; private set; }
         public MainWindow()
         {

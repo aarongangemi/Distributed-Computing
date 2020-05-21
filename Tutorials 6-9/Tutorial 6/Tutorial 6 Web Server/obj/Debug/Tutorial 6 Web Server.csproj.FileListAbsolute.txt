@@ -182,8 +182,6 @@ C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tut
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Web Server\obj\Debug\Tutorial 6 Web Server.csproj.CopyComplete
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Web Server\obj\Debug\Tutorial 6 Web Server.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Web Server\obj\Debug\Tutorial 6 Web Server.pdb
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Web Server\obj\Debug\Tutorial 6 Web Server.dll
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Web Server\obj\Debug\Tutorial 6 Web Server.pdb
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Web Server\bin\Tutorial 6 Web Server.dll.config
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Web Server\bin\Tutorial 6 Web Server.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Web Server\bin\Tutorial 6 Web Server.pdb
@@ -253,13 +251,6 @@ C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tut
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Web Server\bin\System.Web.WebPages.Razor.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Web Server\bin\WebGrease.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Web Server\bin\ClientLibrary.pdb
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Web Server\bin\IronPython.xml
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Web Server\bin\IronPython.Modules.xml
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Web Server\bin\IronPython.SQLite.xml
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Web Server\bin\IronPython.Wpf.xml
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Web Server\bin\Microsoft.Dynamic.xml
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Web Server\bin\Microsoft.Scripting.xml
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Web Server\bin\Microsoft.Scripting.Metadata.xml
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Web Server\bin\System.Web.Helpers.xml
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Web Server\bin\System.Web.Mvc.xml
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Web Server\bin\System.Web.Optimization.xml
@@ -275,3 +266,5 @@ C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tut
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Web Server\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Web Server\obj\Debug\Tutorial 6 Web Server.csprojAssemblyReference.cache
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Web Server\obj\Debug\Tutorial 6 Web Server.csproj.CopyComplete
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Web Server\obj\Debug\Tutorial 6 Web Server.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Web Server\obj\Debug\Tutorial 6 Web Server.pdb
