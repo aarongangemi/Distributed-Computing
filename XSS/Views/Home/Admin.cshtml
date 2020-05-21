@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+<body onload="LoadList()">
+    <br/><br/>
+    <strong><label>Select a subject: </label></strong>
+    <select name="subjects" id="subjects">
+        <option selected="selected" disabled>Choose a subject</option>
+    </select> 
+        
+    <script>
+        function LoadList() {
+            $.ajax({
+                url: "/api/Web/GetMessages",
+                type: 'get',
+                contentType: 'application/json',
+                processData: false,
+                success: function (data, textStatus, jQxhr)
+                {
+                    var dropdownList = document.getElementById("subjects");
+                    console.log("ORE");
+                    console.log(data);
+                    for (var i in data) {
+                        console.log("HEREEEEEEEEEEE");
+                        console.log(data[i]);
+                        var option = document.createElement("option");
+                        option.innerHTML = data[i].subject;
+                        option.value = data[i].subject;
+                        dropdownList.options.add(option);
+
+                    }
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    alert("unable to send message");
+                }
+            })
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "Feedback Page";
+}
+
+<head>
+    <title>Feedback form</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Feedback form</h1>
+    <br /><br />
+    <div id="Content">
+        <p>Please enter your feedback</p>
+        <input type="text" id="FeedbackForm" name="FeedbackForm">
+        <button onclick="SendComment()">Send</button>
+    </div>
+    <script>
+        function SendComment() {
+            $("#Content").html("Your feedback states: " + "<br/><br/>" + $("#FeedbackForm").val());
+        }
+    </script>
+</body>
