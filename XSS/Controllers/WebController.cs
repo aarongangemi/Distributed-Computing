@@ -15,12 +15,14 @@ namespace XSS.Controllers
         private string path = Path.Combine(Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.FullName, "/WebStuff/XSSDatabase.txt");
         private StreamWriter writer;
         // GET api/<controller>
-        [Route("api/Web/StoreMessage/{message}")]
+        [Route("api/Web/StoreMessage/")]
         [HttpPost]
-        public void StoreMessage(string message)
+        public void StoreMessage([FromBody] MessageItems mItem)
         {
             writer = new StreamWriter(path, append: true);
-            writer.WriteLine(message);
+            //subject = Uri.UnescapeDataString(subject);
+            //message = Uri.UnescapeDataString(message);
+            writer.WriteLine(mItem.subject + "," + mItem.message);
             writer.Close();
         }
 
@@ -28,8 +30,9 @@ namespace XSS.Controllers
         [HttpGet]
         public List<MessageItems> GetMessages()
         {
+
             StreamReader reader = new StreamReader(path);
-            
+            Messages messages = new Messages();
             while(!reader.EndOfStream)
             {
                 string line = reader.ReadLine();
@@ -37,9 +40,10 @@ namespace XSS.Controllers
                 MessageItems message = new MessageItems();
                 message.subject = messageData[0];
                 message.message = messageData[1];
-                Messages.messageList.Add(message);
+                messages.messageList.Add(message);
             }
-            return Messages.messageList;
+            reader.Close();
+            return messages.messageList;
         }
     }
 }

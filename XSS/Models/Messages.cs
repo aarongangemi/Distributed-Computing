@@ -5,8 +5,8 @@ using System.Web;
 
 namespace XSS.Models
 {
-    public static class Messages
+    public class Messages
     {
-        public static List<MessageItems> messageList = new List<MessageItems>();
+        public List<MessageItems> messageList = new List<MessageItems>();
     }
 }
