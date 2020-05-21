@@ -1,33 +1,35 @@
 ﻿@{
         ViewBag.Title = "Tell admin page";
 }
-<div>
-    <br/>
-    <form>
-        <strong><label>Enter Subject of text: </label></strong><br/> <input type="text" id="subject" name="subject" /><br/><br/>
-        <strong><label>Enter text to admin: </label></strong><br/> <textarea id="message" name="message" rows="8" cols="50" ></textarea><br/><br/>
-        <button onclick="SendToAdmin()">Send to Admin</button>
-    </form>
-    <script>
-        function SendToAdmin() {
-            var messageToSend = {
-                subject: $("#subject").val(),
-                message: $("#message").val()
-            }
-            $.ajax({
-                url: "/api/Web/StoreMessage/",
-                type: 'post',
-                contentType: "application/json",
-                processData: false,
-                data: JSON.stringify(messageToSend),
-                processData: false,
-                success: function (data, textStatus, jQxhr) {
-                    alert("Your message was sent");
-                },
-                error: function (jqXhr, textStatus, errorThrown) {
-                    alert("unable to send message");
+    <body>
+        <div>
+            <br />
+            <form>
+                <strong><label>Enter Subject of text: </label></strong><br /> <input type="text" id="subject" name="subject" /><br /><br />
+                <strong><label>Enter text to admin: </label></strong><br /> <textarea id="message" name="message" rows="8" cols="50"></textarea><br /><br />
+                <button onclick="SendToAdmin()">Send to Admin</button>
+            </form>
+            <script>
+                function SendToAdmin() {
+                    var messageToSend = {
+                        subject: $("#subject").val(),
+                        message: $("#message").val()
+                    }
+                    $.ajax({
+                        url: "/api/Web/StoreMessage/",
+                        type: 'post',
+                        contentType: "application/json",
+                        processData: false,
+                        data: JSON.stringify(messageToSend),
+                        processData: false,
+                        success: function (data, textStatus, jQxhr) {
+                            alert("Your message was sent");
+                        },
+                        error: function (jqXhr, textStatus, errorThrown) {
+                            alert("unable to send message");
+                        }
+                    })
                 }
-            })
-        }
-    </script>
-</div>
+            </script>
+        </div>
+    </body>
