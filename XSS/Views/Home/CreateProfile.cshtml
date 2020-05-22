@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "Create Profile";
+}
+
+<html>
+<body>
+    <br/>
+        <strong><label>Enter profile name: </label></strong>
+        <br /><input type="text" id="profileName" onkeyup="DisplayName()" /><br /><br />
+    <div>
+        <p id="ProfileText"></p>
+    </div>
+
+    <script>
+        function DisplayName() {
+            var profileValue = document.getElementById("profileName").value;
+            document.getElementById("ProfileText").innerHTML = "<strong>" + "Your profile name is: " + "</strong>" + "<br/><br/>" + profileValue;
+        }
+    </script>
+</body>
+</html>

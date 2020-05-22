@@ -8,7 +8,7 @@ namespace XSS.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult CreateProfile()
         {
             return View();
         }
@@ -21,8 +21,6 @@ namespace XSS.Controllers
 
         public ActionResult Feedback()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
 
