@@ -1,0 +1,42 @@
+﻿@{
+        ViewBag.Title = "Tell admin page";
+}
+    <body>
+        <div>
+            <br />
+            <form>
+                <strong><label>Enter Subject of text*: </label></strong><br /> <input type="text" id="subject" name="subject" required/><br /><br />
+                <strong><label>Enter text to admin*: </label></strong><br /> <textarea id="message" name="message" rows="8" cols="50" required></textarea><br /><br />
+            </form>
+            <button onclick="SendToAdmin()">Send to Admin</button>
+            <script>
+                function SendToAdmin() {
+                    var messageToSend = {
+                        subject: $("#subject").val(),
+                        message: $("#message").val()
+                    }
+                    $.ajax({
+                        url: "/api/Web/StoreMessage/",
+                        type: 'post',
+                        contentType: "application/json",
+                        processData: false,
+                        data: JSON.stringify(messageToSend),
+                        processData: false,
+                        success: function (data, textStatus, jQxhr) {
+                            if (data == false) {
+                                alert("String cannot be null or empty or contain special characters");
+                            }
+                            else
+                            {
+                                alert("Your message was sent");
+                            }
+
+                        },
+                        error: function (jqXhr, textStatus, errorThrown) {
+                            alert(jqXhr.responseText);
+                        }
+                    })
+                }
+            </script>
+        </div>
+    </body>

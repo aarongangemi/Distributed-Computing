@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<body onload="LoadList()">
+    <br/><br/>
+    <strong><label>Select a subject: </label></strong>
+    <select name="subjects" id="subjects" onclick="LoadMessage()">
+        <option selected="selected" disabled>Choose a subject</option>
+    </select> 
+    <div id="MessageContent">
+
+    </div>
+    <script>
+        function LoadList() {
+            $.ajax({
+                url: "/api/Web/GetMessages",
+                type: 'get',
+                contentType: 'application/json',
+                processData: false,
+                success: function (data, textStatus, jQxhr)
+                {
+                    var dropdownList = document.getElementById("subjects");
+                    for (var i in data) {
+                        console.log(data[i]);
+                        var option = document.createElement("option");
+                        option.text = data[i].subject;
+                        option.value = data[i].message;
+                        dropdownList.options.add(option);
+                    }
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    alert("unable to send message");
+                }
+            })
+        }
+
+        function LoadMessage() {
+            var dropdownList = document.getElementById("subjects");
+            $("#MessageContent").html("The content of the message reads: " + "<br/><br/>" + dropdownList.options[dropdownList.selectedIndex].value);
+        }
+    </script>
+</body>
+</html>

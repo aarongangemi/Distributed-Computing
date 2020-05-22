@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("XSS Application (Fixed)","Feedback", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Feedback (Reflective XSS)", "Feedback", "Home")</li>
+                    <li>@Html.ActionLink("Tell Admin (Persistent XSS Pt1)", "TellAdmin", "Home")</li>
+                    <li>@Html.ActionLink("Create Profile (DOM XSS)", "CreateProfile", "Home")</li>
+                    <li>@Html.ActionLink("Go to Admin (Persistent XSS Pt2)", "Admin", "Home")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>
+                This web app was developed by Aaron Gangemi (19447337) for the Distributed Computing assignment for Curtin University.<br />
+                The application is extremely simple and is used to demonstrate a reflective, persistent and DOM XSS attacks. 
+                This version of the web app solves the XSS problems with part 1
+            </p>
+            <ul>
+                <li>1. Feedback tab demonstrates Reflective XSS</li>
+                <li>2.1. Tell Admin used to submit malicious javascript in message text box</li>
+                <li>2.2. Go to Admin page to display result of malicious javascript</li>
+                <li>3. Create profile used to display DOM XSS attack by entering profile name</li>
+            </ul>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

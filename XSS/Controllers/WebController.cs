@@ -19,11 +19,13 @@ namespace XSS.Controllers
         [HttpPost]
         public void StoreMessage([FromBody] MessageItems mItem)
         {
-            writer = new StreamWriter(path, append: true);
-            //subject = Uri.UnescapeDataString(subject);
-            //message = Uri.UnescapeDataString(message);
-            writer.WriteLine(mItem.subject + "," + mItem.message);
-            writer.Close();
+            if (!string.IsNullOrEmpty(mItem.subject) && !string.IsNullOrEmpty(mItem.message))
+            {
+                writer = new StreamWriter(path, append: true);
+                writer.WriteLine(mItem.subject + "," + mItem.message);
+                writer.Close();
+            }
+
         }
 
         [Route("api/Web/GetMessages")]

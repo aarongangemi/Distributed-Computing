@@ -5,8 +5,8 @@
         <div>
             <br />
             <form>
-                <strong><label>Enter Subject of text: </label></strong><br /> <input type="text" id="subject" name="subject" /><br /><br />
-                <strong><label>Enter text to admin: </label></strong><br /> <textarea id="message" name="message" rows="8" cols="50"></textarea><br /><br />
+                <strong><label>Enter Subject of text*: </label></strong><br /> <input type="text" id="subject" name="subject" required/><br /><br />
+                <strong><label>Enter text to admin*: </label></strong><br /> <textarea id="message" name="message" rows="8" cols="50" required></textarea><br /><br />
             </form>
             <button onclick="SendToAdmin()">Send to Admin</button>
             <script>
@@ -23,10 +23,16 @@
                         data: JSON.stringify(messageToSend),
                         processData: false,
                         success: function (data, textStatus, jQxhr) {
-                            alert("Your message was sent");
+                            if (data == null || data == "") {
+                                alert("String cannot be null or empty");
+                            }
+                            else {
+                                alert("Your message was sent");
+                            }
+
                         },
                         error: function (jqXhr, textStatus, errorThrown) {
-                            alert("unable to send message");
+                            alert(jqXhr.responseText);
                         }
                     })
                 }
