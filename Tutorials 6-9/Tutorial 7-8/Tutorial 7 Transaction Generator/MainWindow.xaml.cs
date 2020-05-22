@@ -28,11 +28,11 @@ namespace Tutorial_7_Transaction_Generator
             NoOfBlocks.Content = GetNoOfBlocks().ToString();
             
         }
-        private void Submit_Transaction(object sender, RoutedEventArgs e)
+        private async void Submit_Transaction(object sender, RoutedEventArgs e)
         {
             mutex.WaitOne();
             RestRequest TransactionRequest = new RestRequest("api/Blockchain/AddTransaction/" + IdFrom.Text + "/" + IdTo.Text + "/" + Amount.Text);
-            IRestResponse TransactionResponse = MinerClient.Post(TransactionRequest);
+            IRestResponse TransactionResponse = await MinerClient.ExecutePostAsync(TransactionRequest);
             bool TransactionProcessed = JsonConvert.DeserializeObject<bool>(TransactionResponse.Content);
             if(TransactionProcessed)
             {

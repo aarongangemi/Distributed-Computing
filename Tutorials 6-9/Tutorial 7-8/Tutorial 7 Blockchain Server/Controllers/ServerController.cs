@@ -51,7 +51,7 @@ namespace Tutorial_7_Blockchain_Server.Controllers
             float balance = 0;
             foreach(Block block in Blockchain.BlockChain)
             {
-                if(block.walletIdFrom == acntID && Blockchain.BlockChain.Count > 1)
+                if(block.walletIdFrom == acntID && acntID > 0)
                 {
                     balance -= block.amount;
                 }

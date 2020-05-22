@@ -62,3 +62,47 @@ Transaction for 9 from: 997560527 to 661965674 was successful
 Log file function:
 Transaction successfully saved
 Error Occurred: Unable to create transaction - invalid account may be entered
+Error Occurred: Invalid account entered
+Error Occurred: Invalid account entered
+Error Occurred: Unable to create transaction - invalid account may be entered
+Error Occurred: Unable to create transaction - invalid account may be entered
+Log file function:
+Transaction process called
+Log file function:
+Transaction trying to be created - you will know in 30 seconds
+Log file function:
+Transaction successfully saved
+Error Occurred: Unable to create transaction - invalid account may be entered
+Error Occurred: Unable to create transaction - invalid account may be entered
+Error Occurred: Unable to create transaction - invalid account may be entered
+Error Occurred: Unable to create transaction - invalid account may be entered
+Log file function:
+Transaction process called
+Log file function:
+Transaction trying to be created - you will know in 30 seconds
+Log file function:
+Transaction successfully saved
+Log file function:
+Transaction process called
+Log file function:
+Transaction trying to be created - you will know in 30 seconds
+Log file function:
+Transaction successfully saved
+Log file function:
+Transaction process called
+Log file function:
+Transaction trying to be created - you will know in 30 seconds
+Log file function:
+Transaction successfully saved
+Log file function:
+Transaction process called
+Log file function:
+Transaction trying to be created - you will know in 30 seconds
+Log file function:
+Transaction successfully saved
+Log file function:
+Transaction process called
+Log file function:
+Transaction trying to be created - you will know in 30 seconds
+Log file function:
+Transaction successfully saved

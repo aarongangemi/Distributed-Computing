@@ -14,6 +14,8 @@
 
     function CompleteTransaction() {
         console.log("Create Transaction");
+        alert("Processing transactions: You have 60 seconds to retrieve transaction before processed." + 
+            "Transaction ID found in visual studio console");
         $.ajax({
             url: "api/BankApi/CreateTransaction/" + $("#amount").val() + "/" + $("#senderID").val() + "/" + $("#receiverID").val(),
             type: 'post',
@@ -25,11 +27,10 @@
                     console.log("Unable to create transaction, invalid data entered");
                 }
                 else {
-                    alert("Processing transaction from: " + $("#senderID").val() + " to " + $("#receiverID").val());
+                    alert("Processed transaction from: " + $("#senderID").val() + " to " + $("#receiverID").val());
                 }
             },
             error: function (jqXhr, textStatus, errorThrown) {
-                console.log(errorThrown)
                 alert("Invalid data entered for transaction, please try again");
                 $("#amount").val("Amount");
                 $("#senderID").val("Sender ID");

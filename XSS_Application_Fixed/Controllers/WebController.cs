@@ -18,14 +18,10 @@ namespace XSS.Controllers
         // GET api/<controller>
         [Route("api/Web/StoreMessage/")]
         [HttpPost]
-        public bool StoreMessage([FromBody] MessageItems mItem)
+        public void StoreMessage([FromBody] MessageItems mItem)
         {
             bool validString = true;
-            if (string.IsNullOrEmpty(mItem.subject) || string.IsNullOrEmpty(mItem.message))
-            {
-                validString = false;
-            }
-            else
+            if(!string.IsNullOrEmpty(mItem.subject) || !string.IsNullOrEmpty(mItem.message))
             { 
                 for(int i = 0; i < mItem.subject.Length; i++)
                 {
@@ -49,9 +45,25 @@ namespace XSS.Controllers
                     writer.WriteLine(mItem.subject + "," + mItem.message);
                     writer.Close();
                 }
+                else
+                {
+                    var response = new HttpResponseMessage(HttpStatusCode.NotFound)
+                    {
+                        Content = new StringContent(string.Format("Subject and message cannot contain invalid characters")),
+                        ReasonPhrase = "subject or message contains invalid characters"
+                    };
+                    throw new HttpResponseException(response);
+                }
             }
-            return validString;
-
+            else
+            {
+                var response = new HttpResponseMessage(HttpStatusCode.NotFound)
+                {
+                    Content = new StringContent(string.Format("Subject and message cannot be null or empty")),
+                    ReasonPhrase = "subject or message is empty"
+                };
+                throw new HttpResponseException(response);
+            }
         }
 
         [Route("api/Web/GetMessages")]

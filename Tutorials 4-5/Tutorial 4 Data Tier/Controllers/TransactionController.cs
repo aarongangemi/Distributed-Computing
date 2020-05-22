@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -35,6 +36,7 @@ namespace Tutorial_4_Data_Tier.Controllers
                     transactionAccess.SetAmount(tran.amount);
                     transactionAccess.SetSendr(tran.senderId);
                     transactionAccess.SetRecvr(tran.receiverId);
+                    Debug.WriteLine(tran.transactionId);
                     return true;
                 }
             }

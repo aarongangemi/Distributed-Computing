@@ -153,7 +153,7 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
                 if (transactionCreated == true)
                 {
                     processed = await OnDelayEnd();
-                    log.logMessage("Transaction trying to be created - you will know in 30 seconds");
+                    log.logMessage("Transaction trying to be created - you will know in 60 seconds");
                     if (processed)
                     {
                         RestRequest saveRequest = new RestRequest("api/Save");
@@ -175,7 +175,7 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
 
         private async Task<bool> OnDelayEnd()
         {
-            await Task.Delay(30000);
+            await Task.Delay(60000);
             bool processed = await Task.Run(() => processTransactions());
             return processed;
         }

@@ -23,13 +23,7 @@
                         data: JSON.stringify(messageToSend),
                         processData: false,
                         success: function (data, textStatus, jQxhr) {
-                            if (data == null || data == "") {
-                                alert("String cannot be null or empty");
-                            }
-                            else {
                                 alert("Your message was sent");
-                            }
-
                         },
                         error: function (jqXhr, textStatus, errorThrown) {
                             alert(jqXhr.responseText);

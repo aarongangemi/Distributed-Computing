@@ -25,6 +25,16 @@ namespace XSS.Controllers
                 writer.WriteLine(mItem.subject + "," + mItem.message);
                 writer.Close();
             }
+            else
+            {
+                var response = new HttpResponseMessage(HttpStatusCode.NotFound)
+                {
+                    Content = new StringContent(string.Format("Subject and message cannot be null or empty")),
+                    ReasonPhrase = "subject or message is empty"
+                };
+                 throw new HttpResponseException(response);
+                
+            }
 
         }
 
