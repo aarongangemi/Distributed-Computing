@@ -7,6 +7,9 @@ using System.Windows.Media.Imaging;
 
 namespace Bis_GUI
 {
+    ///<summary> Used to obtain user account fields from front end to back end</summary>
+    /// <author>Aaron Gangemi</author>
+    /// <Date Modified>23/05/2020</Date>
     public class DataIntermed
     {
         public int index;
