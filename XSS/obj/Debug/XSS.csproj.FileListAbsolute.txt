@@ -78,7 +78,7 @@ C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\XSS\bin\System.Ne
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\XSS\bin\System.Web.Http.xml
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\XSS\bin\System.Web.Http.WebHost.xml
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\XSS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\XSS\obj\Debug\XSS.csprojAssemblyReference.cache
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\XSS\obj\Debug\XSS.csproj.CopyComplete
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\XSS\obj\Debug\XSS.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\XSS\obj\Debug\XSS.pdb
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\XSS\obj\Debug\XSS.csprojAssemblyReference.cache

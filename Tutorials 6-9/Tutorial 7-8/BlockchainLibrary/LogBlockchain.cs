@@ -14,12 +14,12 @@ namespace BlockchainLibrary
 
         public void logData(string message)
         {
-            //try
-            //{
+            try
+            {
                 writer = new StreamWriter(path, append: true);
                 writer.WriteLine(message);
                 writer.Close();
-           /* }
+            }
             catch (DirectoryNotFoundException)
             {
                 Console.WriteLine("Unable to log data");
@@ -27,7 +27,7 @@ namespace BlockchainLibrary
             catch (IOException)
             {
                 Console.WriteLine("Unable to log data");
-            }*/
+            }
         }
     }
 }

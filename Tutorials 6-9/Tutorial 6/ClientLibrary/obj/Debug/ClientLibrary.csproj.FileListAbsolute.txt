@@ -8,7 +8,3 @@ C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Cli
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\ClientLibrary\obj\Debug\ClientLibrary.csprojAssemblyReference.cache
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\ClientLibrary\obj\Debug\ClientLibrary.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\ClientLibrary\obj\Debug\ClientLibrary.pdb
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\ClientLibrary\bin\Debug\ClientLibrary.dll
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\ClientLibrary\bin\Debug\ClientLibrary.pdb
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\ClientLibrary\obj\Debug\ClientLibrary.dll
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\ClientLibrary\obj\Debug\ClientLibrary.pdb

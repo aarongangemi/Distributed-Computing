@@ -17,24 +17,3 @@ C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Transa
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Transaction Generator\obj\Debug\Tutorial 7 Transaction Generator.csproj.CopyComplete
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Transaction Generator\obj\Debug\Tutorial 7 Transaction Generator.exe
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 7 Transaction Generator\obj\Debug\Tutorial 7 Transaction Generator.pdb
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7-8\Tutorial 7 Transaction Generator\bin\Debug\Tutorial 7 Transaction Generator.exe.config
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7-8\Tutorial 7 Transaction Generator\bin\Debug\Tutorial 7 Transaction Generator.exe
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7-8\Tutorial 7 Transaction Generator\bin\Debug\Tutorial 7 Transaction Generator.pdb
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7-8\Tutorial 7 Transaction Generator\bin\Debug\Newtonsoft.Json.dll
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7-8\Tutorial 7 Transaction Generator\bin\Debug\RestSharp.dll
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7-8\Tutorial 7 Transaction Generator\bin\Debug\Newtonsoft.Json.xml
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7-8\Tutorial 7 Transaction Generator\bin\Debug\RestSharp.xml
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7-8\Tutorial 7 Transaction Generator\obj\Debug\Tutorial 7 Transaction Generator.csprojAssemblyReference.cache
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7-8\Tutorial 7 Transaction Generator\obj\Debug\MainWindow.g.cs
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7-8\Tutorial 7 Transaction Generator\obj\Debug\App.g.cs
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7-8\Tutorial 7 Transaction Generator\obj\Debug\Tutorial 7 Transaction Generator_MarkupCompile.cache
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7-8\Tutorial 7 Transaction Generator\obj\Debug\Tutorial 7 Transaction Generator_MarkupCompile.lref
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7-8\Tutorial 7 Transaction Generator\obj\Debug\MainWindow.baml
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7-8\Tutorial 7 Transaction Generator\obj\Debug\Tutorial 7 Transaction Generator.g.resources
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7-8\Tutorial 7 Transaction Generator\obj\Debug\Tutorial_7_Transaction_Generator.Properties.Resources.resources
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7-8\Tutorial 7 Transaction Generator\obj\Debug\Tutorial 7 Transaction Generator.csproj.GenerateResource.cache
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7-8\Tutorial 7 Transaction Generator\obj\Debug\Tutorial 7 Transaction Generator.csproj.CopyComplete
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7-8\Tutorial 7 Transaction Generator\obj\Debug\Tutorial 7 Transaction Generator.exe
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7-8\Tutorial 7 Transaction Generator\obj\Debug\Tutorial 7 Transaction Generator.pdb
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7-8\Tutorial 7 Transaction Generator\bin\Debug\BlockchainLibrary.dll
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7-8\Tutorial 7 Transaction Generator\bin\Debug\BlockchainLibrary.pdb

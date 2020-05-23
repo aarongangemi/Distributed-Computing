@@ -8,8 +8,3 @@ C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 1\bin\De
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 1\obj\Debug\Tutorial 1.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 1\obj\Debug\Tutorial 1.pdb
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorial 1\obj\Debug\Tutorial 1.csprojAssemblyReference.cache
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Tutorial 1\bin\Debug\Tutorial 1.dll
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Tutorial 1\bin\Debug\Tutorial 1.pdb
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Tutorial 1\obj\Debug\Tutorial 1.csprojAssemblyReference.cache
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Tutorial 1\obj\Debug\Tutorial 1.dll
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Tutorial 1\obj\Debug\Tutorial 1.pdb
