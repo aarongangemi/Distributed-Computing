@@ -13,7 +13,6 @@ namespace Tutorial_4_Data_Tier.Controllers
     {
         // GET api/<controller>
         BankDB.TransactionAccessInterface transactionAccess = Bank.bankData.GetTransactionInterface();
-        private LogClass log = new LogClass();
 
         // GET api/<controller>/5
         [Route("api/Transactions/Create/{amount}/{senderID}/{receiverID}")]
@@ -42,7 +41,7 @@ namespace Tutorial_4_Data_Tier.Controllers
             }
             catch(Exception)
             {
-                log.errorLogMessage("Unable to create transaction - invalid account may be entered");
+                return false;
             }
             return false;
         }
@@ -64,7 +63,6 @@ namespace Tutorial_4_Data_Tier.Controllers
             }
             catch(Exception)
             {
-                log.logMessage("Transaction " + transactionId + " count not be retrieved");
                 return null;
             }
         }

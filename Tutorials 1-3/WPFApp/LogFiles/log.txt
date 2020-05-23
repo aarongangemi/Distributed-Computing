@@ -382,3 +382,57 @@ Log file function: Starting application
 100000 results are in the database
 Log file function: Retrieve user
 Account: 14314844 has searched for last name: Clark and found a result for: Edward Clark
+Log file function: Starting application
+100000 results are in the database
+Log file function: Retrieve user
+Account: 10746214 has searched for last name: Wilson and found a result for: James Wilson
+Log file function: Retrieve user
+User Aaron Gangemi at index: 99999 has been updated.
+Log file function: Retrieve user
+Account: 99150578 has searched for last name: Martin and found a result for: Paul Martin
+Log file function: Bank transactions processed
+2 Minutes passed. Bank Transactions processed succesfully
+Log file function: Starting application
+100000 results are in the database
+Log file function: Retrieve user
+Account: 78404084 has searched for last name: White and found a result for: Michael White
+Log file function: Retrieve user
+User Michael Gangemi at index: 99999 has been updated.
+Log file function: Retrieve user
+Account: 39990923 has searched for last name: Davis and found a result for: Charles Davis
+Log file function: Bank transactions processed
+2 Minutes passed. Bank Transactions processed succesfully
+Log file function: Starting application
+100000 results are in the database
+Log file function: Retrieve user
+Account: 14576992 has searched for last name: White and found a result for: Kenneth White
+Log file function: Retrieve user
+User Kenneth Gangemi at index: 99999 has been updated.
+Log file function: Retrieve user
+Account: 93296146 has searched for last name: Thomas and found a result for: Michael Thomas
+Log file function: Bank transactions processed
+2 Minutes passed. Bank Transactions processed succesfully
+Log file function: Retrieve user
+Account: 14576992 has searched for last name: Gangemi and found a result for: Kenneth Gangemi
+Log file function: Search by lastname. 
+Account: 14576992 has searched for last name: Gangemi and found a result for: Kenneth Gangemi
+Log file function: Retrieve user
+Account: 97022930 has searched for last name: Lee and found a result for: Robert Lee
+Log file function: Retrieve user
+User Robert hhh at index: 3 has been updated.
+Log file function: Retrieve user
+User Robert hhh at index: 3 has been updated.
+Log file function: Retrieve user
+Account: 50031203 has searched for last name: Harris and found a result for: John Harris
+Log file function: Search by lastname. 
+Account: 97022930 has searched for last name: hhh and found a result for: Robert hhh
+Log file function: Starting application
+100000 results are in the database
+Log file function: Retrieve user
+Account: 90152263 has searched for last name: Wilson and found a result for: Anthony Wilson
+Log file function: Retrieve user
+User Anthony Gangemi at index: 99999 has been updated.
+Log file function: Retrieve user
+Account: 33158333 has searched for last name: Miller and found a result for: Mark Miller
+Log file function: Search by lastname. 
+Account: 90152263 has searched for last name: Gangemi and found a result for: Anthony Gangemi

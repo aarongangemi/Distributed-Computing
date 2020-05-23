@@ -243,14 +243,14 @@ namespace WPFApp
          * ***************************************************************/
         public void processProgress(IProgress<int> progress)
         {
-            timer.Interval = 30000;
+            timer.Interval = 150000;
             timer.Elapsed += OnTimerEnd;
             timer.AutoReset = true;
             timer.Enabled = true;
             progress.Report(0);
             for (int i = 0; i != 100; i++)
             {
-                Thread.Sleep(30000/100);
+                Thread.Sleep(150000/100);
                 if (progress != null)
                 {
                     progress.Report(i);

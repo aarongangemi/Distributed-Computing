@@ -26,6 +26,7 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
                     client = new RestClient(URL);
                     RestRequest request = new RestRequest("api/Account/" + accountID.ToString());
                     IRestResponse response = client.Get(request);
+                    log.logMessage("Attempting to retrieve: " + accountID.ToString());
                     return JsonConvert.DeserializeObject<AccountDetailsStruct>(response.Content);
                 }
                 else
@@ -51,7 +52,9 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
                 client = new RestClient(URL);
                 RestRequest request = new RestRequest("api/Account/Deposit/" + accountID.ToString() + "/" + amount.ToString());
                 IRestResponse response = client.Post(request);
+                log.logMessage("Depositing " + amount.ToString() + " into " + accountID.ToString());
                 RestRequest saveRequest = new RestRequest("api/Save");
+                log.logMessage("Saved to disk");
                 client.Post(saveRequest);
                 return Convert.ToUInt32(response.Content);
             }
@@ -73,7 +76,9 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
                 client = new RestClient(URL);
                 RestRequest request = new RestRequest("api/Account/Withdraw/" + accountID.ToString() + "/" + amount.ToString());
                 IRestResponse response = client.Post(request);
+                log.logMessage("Withdrawing " + amount.ToString() + "from " + accountID.ToString());
                 RestRequest saveRequest = new RestRequest("api/Save");
+                log.logMessage("Saved to disk");
                 client.Post(saveRequest);
                 return Convert.ToUInt32(response.Content);
             }
@@ -127,6 +132,7 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
                 client = new RestClient(URL);
                 RestRequest request = new RestRequest("api/User/" + userId.ToString());
                 IRestResponse response = client.Get(request);
+                log.logMessage("User " + userId.ToString() + " was retrieved");
                 return JsonConvert.DeserializeObject<UserDetailsStruct>(response.Content);
             }
             else
@@ -158,7 +164,7 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
                     {
                         RestRequest saveRequest = new RestRequest("api/Save");
                         client.Post(saveRequest);
-                        log.logMessage("Transaction successfully saved");
+                        log.logMessage("Transaction successfully saved and completed");
                     }
                     if (!processed)
                     {
@@ -167,6 +173,7 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
                 }
                 else
                 {
+                    log.logMessage("Unable to complete transaction");
                     return false;
                 }
             }
@@ -199,6 +206,7 @@ namespace Tutorial_4_Hybrid_Tier.Controllers
                 RestRequest restRequest = new RestRequest("api/Transactions/" + transactionId);
                 IRestResponse transResponse = client.Get(restRequest);
                 TransactionDetailsStruct tran = JsonConvert.DeserializeObject<TransactionDetailsStruct>(transResponse.Content);
+                log.logMessage("Transaction retrieved");
                 return tran;
             }
             catch(NullReferenceException)
