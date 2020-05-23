@@ -36,3 +36,5 @@ C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tut
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7-8\Tutorial 7 Transaction Generator\obj\Debug\Tutorial 7 Transaction Generator.csproj.CopyComplete
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7-8\Tutorial 7 Transaction Generator\obj\Debug\Tutorial 7 Transaction Generator.exe
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7-8\Tutorial 7 Transaction Generator\obj\Debug\Tutorial 7 Transaction Generator.pdb
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7-8\Tutorial 7 Transaction Generator\bin\Debug\BlockchainLibrary.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7-8\Tutorial 7 Transaction Generator\bin\Debug\BlockchainLibrary.pdb

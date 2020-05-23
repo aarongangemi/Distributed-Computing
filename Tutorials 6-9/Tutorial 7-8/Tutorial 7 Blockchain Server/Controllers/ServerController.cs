@@ -107,6 +107,7 @@ namespace Tutorial_7_Blockchain_Server.Controllers
         public void GenerateGenesisBlock()
         {
             Blockchain.generateGenesisBlock();
+
         }
     }
 }
