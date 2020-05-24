@@ -84,11 +84,11 @@ namespace Tutorial_7_Blockchain_Server.Controllers
                 }
             }
 
-            if(GetAccountBalance(block.walletIdFrom) < block.amount || block.amount <= 0 || block.blockOffset % 5 != 0
-                || block.prevBlockHash != Blockchain.BlockChain.Last().blockHash
-                || !block.blockHash.StartsWith("12345") || !block.blockHash.EndsWith("54321")
-                || block.amount < 0 || block.walletIdFrom < 0 || block.walletIdTo < 0 || GetAccountBalance(block.walletIdFrom) < 0
-                || block.blockHash != hashString)
+            if((GetAccountBalance(block.walletIdFrom) < block.amount) || (block.amount <= 0) || (block.blockOffset % 5 != 0)
+                || (block.prevBlockHash != Blockchain.BlockChain.Last().blockHash)
+                || (!block.blockHash.StartsWith("12345")) || (!block.blockHash.EndsWith("54321"))
+                || (block.amount < 0) || (block.walletIdFrom < 0) || (block.walletIdTo < 0) || (GetAccountBalance(block.walletIdFrom) < 0)
+                || (block.blockHash != hashString))
             {
                 return false;
             }
