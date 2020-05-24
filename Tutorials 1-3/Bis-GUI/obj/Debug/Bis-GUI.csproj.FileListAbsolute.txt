@@ -12,3 +12,4 @@ C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Bis
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Bis-GUI\bin\Debug\Bis-GUI.pdb
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Bis-GUI\obj\Debug\Bis-GUI.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Bis-GUI\obj\Debug\Bis-GUI.pdb
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 1-3\Bis-GUI\obj\Debug\Bis-GUI.csprojAssemblyReference.cache
