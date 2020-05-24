@@ -7,6 +7,9 @@ using System.Windows.Media.Imaging;
 
 namespace Tutorial_1
 {
+    /// <summary>
+    /// Purpose: Data struct to create an account
+    /// </summary>
     internal class DataStruct
     {
         public uint acctNo;
