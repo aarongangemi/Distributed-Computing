@@ -3,54 +3,68 @@
 }
 <br />
 <form>
+    <!--Form used to retrieve account balance-->
     <label>Get Account Balance</label><br />
+    <!--Contains account ID field and non-editable balance field-->
     <input type="text" id="acntId" name="acntId" placeholder="Account ID" /><br /><br />
     <input type="text" id="bal" name="bal" placeholder="Account Balance" readonly /><br /><br />
 </form>
 <button id="submitBtn" onclick="GetAccount()">Get Account</button>
+<!--Submit button calls get account method-->
 <br />
 <form>
+    <!--Form used to deposit money and contains form for account id and amount to deposit-->
     <label>Deposit Money</label><br />
     <input type="text" id="acntIdDeposit" name="acntIdDeposit" placeholder="Enter Account ID"/><br /><br />
     <input type="text" id="amount" name="amount" placeholder="Deposit Amount" /><br /><br />
 </form>
+<!--Execute Deposit() method on button click-->
 <button id="DepositBtn" onclick="Deposit()">Deposit</button>
 <br />
 <form>
+    <!--Form used to withdraw money from account, form for account id and amount included-->
     <label>Withdraw Money</label><br />
     <input type="text" id="acntIdWithdraw" name="acntIdWithdraw" placeholder="Enter Account ID" pattern="[0-9]+"/><br /><br />
     <input type="text" id="amountWithdraw" name="amountWithdraw" placeholder="Withdraw Amount" pattern="[0-9]+" /><br /><br />
 </form>
+<!--upon successful submission of button, withdraw() method is called-->
 <button id="DepositBtn" onclick="Withdraw()">Withdraw</button>
 <br/>
 <script>
+    // Purpose: To submit a get request back to the Bank Api which will retrieve an account for the associated ID
     function GetAccount() {
         console.log("Get Account");
-
         $.ajax({
             url: "api/BankApi/Account/" + $("#acntId").val(),
+            // add acntID to URL
             type: 'get',
             contentType: 'application/json',
             processData: false,
             success: function (data, textStatus, jQxhr) {
                 if (data == null) {
+                    // if returned account object is null, then no account exists for number provided
                     alert("Unable to find account, please enter valid account number");
+                    // Alert user
                     console.log("Unable to find account number");
                 }
                 else {
+                    // data is not null and successful account retrieval was made
                     var obj = data;
                     $("#bal").val(obj.acntBal);
                     $("#acntId").val(obj.acntId);
+                    // Alert user
                     alert("Account Found");
                 }
             },
             error: function (jqXhr, textStatus, errorThrown) {
-                alert("invalid data found");
+                // alert user that error occured
+                alert("error occured: invalid data found");
                 console.log(errorThrown);
             }
         })
     }
 
+    // Purpose: To allow the user to deposit money in the account by making an API call back to the web service
     function Deposit() {
         console.log("Deposit Money");
         $.ajax({
@@ -60,39 +74,47 @@
             processData: false,
             success: function (data, textStatus, jQxhr) {
                 if (data == 0) {
+                    // data is 0 if no deposit is withdrawn
                     alert("Unable to deposit " + $("#amount").val() + " to account. Please enter a valid ID and amount and try again");
                     console.log("Unable to deposit money, invalid ID entered");
                 }
                 else {
+                    // if data is not 0, then deposit was successful
                     alert("Deposit Successful");
                 }
             },
             error: function (jqXhr, textStatus, errorThrown) {
                 console.log(errorThrown);
                 alert("invalid data found, please try again");
+                //display error thrown
             }
         })
     }
 
+        // Purpose: To allow the user to withdraw funds from their account
         function Withdraw() {
-        console.log("Deposit Money");
-        $.ajax({
+        console.log("Withdraw Money");
+            $.ajax({
+  
             url: "api/BankApi/Withdraw/" + $("#acntIdWithdraw").val() + "/" + $("#amountWithdraw").val(),
             type: 'post',
             contentType: 'application/json',
             processData: false,
             success: function (data, textStatus, jQxhr) {
                 if (data == 0) {
+                    // if data = 0, then withdrawal was unsuccessful as determined by biz tier
                     alert("Unable to withdraw " + $("#amountWithdraw").val() + " to account. Please enter a valid ID and amount and try again")
                 }
                 else {
                     console.log(textStatus);
                     alert("Withdrawal successful");
+                    // if data is not 0, then withdrawal was successful
                 }
             },
             error: function (jqXhr, textStatus, errorThrown) {
                 console.log(errorThrown);
                 alert("invalid data found");
+                // display error
 
             }
         })
