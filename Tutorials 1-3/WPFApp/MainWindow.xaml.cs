@@ -64,7 +64,7 @@ namespace WPFApp
                 int idx = Int32.Parse(IndexVal.Text);
                 // Convert entered index from string to number
                 // Check if invalid is between 0 and 100000
-                if (idx >= 0  && idx < Int32.Parse(NoOfItems.Content.ToString()))
+                if ((idx >= 0)  && (idx < Int32.Parse(NoOfItems.Content.ToString())))
                 {
                     AccountStatusLabel.Content = "";
                     // Set no account label
@@ -408,8 +408,9 @@ namespace WPFApp
         {
             try
             {
-                if (validateTextFields() && validateRegex())
+                if ((validateTextFields()) && (validateRegex()))
                 {
+                    // if regex and text fields validation is passed
                     DataIntermed dataIm = new DataIntermed();
                     dataIm.index = Int32.Parse(IndexVal.Text);
                     dataIm.fname = fnameField.Text;
@@ -417,108 +418,154 @@ namespace WPFApp
                     dataIm.acct = Convert.ToUInt32(acntNoField.Text);
                     dataIm.bal = Convert.ToInt32(balanceField.Text);
                     dataIm.pin = Convert.ToUInt32(pinField.Text);
+                    // set data intermediate fields to current fields displayed
+                    // create web request to web api
                     RestRequest request = new RestRequest("api/webapi/");
+                    // Add object to request body
                     request.AddJsonBody(dataIm);
                     IRestResponse response = client.Put(request);
                     DataIntermed dataInter = JsonConvert.DeserializeObject<DataIntermed>(response.Content);
+                    //Get updated user fields from web api
+                    //Reset the text with the user fields that were obtained
                     fnameField.Text = dataInter.fname;
                     lnameField.Text = dataInter.lname;
                     acntNoField.Text = dataInter.acct.ToString();
                     balanceField.Text = dataInter.bal.ToString();
                     pinField.Text = dataInter.pin.ToString();
+                    //Change status label
                     AccountStatusLabel.Content = "Account Updated Successfully";
                 }
                 else
                 {
+                    // If validation fails, throw a format exception
                     throw new FormatException("invalid data entered into user fields");
                 }
             }
             catch(FormatException)
             {
+                // Display error message to window
                 MessageBox.Show("Invalid data was entered into fields, please check user fields and index");
+                // Log error
                 log.errorLogMessage("Invalid data was entered in fields or index for update user");
             }
             catch(JsonReaderException)
             {
+                // Invalid URL was entered by user so no response will be delivered
                 MessageBox.Show("Please check that you have specified a valid URL for client and try again");
                 log.errorLogMessage("User attempted to update user with invalid Base URL");
             }
             catch (NullReferenceException)
             {
+                // No response recieved
                 MessageBox.Show("Received invalid JSON Object response, please check the URL entered and the data entered.");
+                // Clear fields
                 fnameField.Text = "";
                 lnameField.Text = "";
                 balanceField.Text = "";
                 IndexVal.Text = "Enter Index";
                 acntNoField.Text = "";
                 pinField.Text = "";
+                // log error
                 log.errorLogMessage("User attempted to search index using an invalid client URL");
             }
         }
 
+        /// <summary>
+        /// Used to validate the text fields
+        /// </summary>
+        /// <returns> if fields are valid</returns>
         private bool validateTextFields()
         {
             try
             {
-                if (Int32.Parse(IndexVal.Text) >= 0 && Int32.Parse(IndexVal.Text) < Int32.Parse(NoOfItems.Content.ToString())
-                    && !fnameField.Text.Equals("") && !lnameField.Text.Equals("") && !pinField.Text.Equals("") &&
-                    !balanceField.Text.Equals("") && !acntNoField.Text.Equals("") && pinField.Text.Length == 4
-                    && Convert.ToUInt32(balanceField.Text) > 0)
+                if ((Int32.Parse(IndexVal.Text) >= 0) && (Int32.Parse(IndexVal.Text)) < (Int32.Parse(NoOfItems.Content.ToString()))
+                    && (!fnameField.Text.Equals("")) && (!lnameField.Text.Equals("")) && (!pinField.Text.Equals("")) &&
+                    (!balanceField.Text.Equals("")) && (!acntNoField.Text.Equals("")) && (pinField.Text.Length == 4)
+                    && (Convert.ToUInt32(balanceField.Text) > 0))
                 {
+                    // If all fields are not empty, null and index is valid and pin length is 4 digits
                     return true;
                 }
                 if (pinField.Text.Length != 4)
                 {
+                    // If pin length is not 4 digits, then display error
                     MessageBox.Show("Pin must be 4 digits to proceed");
+                    // Log error message
                     log.errorLogMessage("invalid pin was entered by user");
                 }
+                // validation failed if return false
                 return false;
             }
             catch(OverflowException)
             {
                 log.errorLogMessage("User entered negative value and could not be processed");
+                // If negative values are entered, overflow exception occurs
+                // return false
                 return false;
             }
         }
 
+        /// <summary>
+        /// Use regex to validate text fields
+        /// </summary>
+        /// <returns>if fields are valid or not</returns>
         private bool validateRegex()
         {
             bool fieldsTrue;
             var regex = new Regex("^[a-zA-Z]*$");
             var numRegex = new Regex("^[0-9]*$");
+            // check last name and first name contain only letters
             if(regex.IsMatch(fnameField.Text) && regex.IsMatch(lnameField.Text))
             {
                 if(numRegex.IsMatch(acntNoField.Text) && numRegex.IsMatch(pinField.Text) && numRegex.IsMatch(balanceField.Text))
                 {
+                    // check acnt number, pin and balance contain numbers only
+                    // all fields are valid
                     fieldsTrue = true;
                 }
                 else
                 {
                     log.errorLogMessage("Invalid data was entered in fields account number, pin or balance");
+                    // log error message
+                    // field is not a number
                     fieldsTrue = false;
                 }
             }
             else
             {
+                // first name or last name field failed
                 fieldsTrue = false;
+                // log error
                 log.errorLogMessage("Invalid data was entered in first name or last name field");
             }
             return fieldsTrue;
         }
 
+        /// <summary>
+        /// Actions to be performed if the user clicks the URL button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Click_Url_Btn(object sender, RoutedEventArgs e)
         {
             if(Uri.IsWellFormedUriString(UrlText.Text, UriKind.Absolute))
             {
+                // check is valid URL
                 URL = UrlText.Text;
+                // change rest client
                 client = new RestClient(URL);
+                // change URL status
                 URLStatus.Content = "URL Successfully changed";
+                // log change
                 log.logUrlChange(UrlText.Text);
             }
             else
             {
                 URLStatus.Content = "Please enter a valid URL";
+                // change status content
                 MessageBox.Show("Invalid URL used, please try again");
+                //display error
+                // log message
                 log.errorLogMessage("Invalid URL was entered by user");
             }
         }

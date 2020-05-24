@@ -160,9 +160,9 @@ namespace Tutorial_6_Client_Application
                     }
                     catch (EndpointNotFoundException)
                     {
-                        RestRequest request = new RestRequest("api/Client/Remove/" + i.ToString());
-                        log.logError("Client " + i.ToString() + " has successfully been disconnected");
-                        client.Post(request);
+                        RestRequest request = new RestRequest("api/Client/Remove/" + portNumber);
+                        log.logError("Client: " + portNumber + " has successfully been disconnected");
+                        client.Get(request);
                         listOfClients = getClientList();
                         i = 0;
                     }
@@ -209,6 +209,9 @@ namespace Tutorial_6_Client_Application
 
         protected override void OnClosed(EventArgs e)
         {
+            RestRequest request = new RestRequest("api/Client/Remove/" + portNumber);
+            log.logError("Client: " + portNumber + " has successfully been disconnected");
+            client.Get(request);
             base.OnClosed(e);
             IsClosed = true;
         }

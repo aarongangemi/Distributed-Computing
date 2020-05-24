@@ -32,15 +32,19 @@ namespace Tutorial_6_Web_Server.Controllers
             ClientList.clientList.ElementAt(idx).jobsCompleted++;
         }
 
-        [Route("api/Client/Remove/{idx}")]
-        [HttpPost]
-        public void RemoveCLient(int idx)
+        [Route("api/Client/Remove/{clientNo}")]
+        [HttpGet]
+        public void RemoveClient(int clientNo)
         {
             try
             {
-                if (idx <= ClientList.clientList.Count)
+                for(int i = 0; i < ClientList.clientList.Count; i++)
                 {
-                    ClientList.clientList.RemoveAt(idx);
+                    if (ClientList.clientList.ElementAt(i).port == clientNo.ToString())
+                    {
+                        ClientList.clientList.RemoveAt(i);
+                        break;
+                    }
                 }
             }
             catch(ArgumentOutOfRangeException)
