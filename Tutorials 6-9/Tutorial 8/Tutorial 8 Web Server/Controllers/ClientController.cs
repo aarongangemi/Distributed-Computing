@@ -1,5 +1,4 @@
-﻿using ClientLibrary;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -50,6 +49,17 @@ namespace Tutorial_8_Web_Server.Controllers
             catch (ArgumentOutOfRangeException)
             {
                 // No clients left
+            }
+        }
+
+        public void RemoveInactive()
+        {
+            for(int i = 0; i < ClientList.clientList.Count; i++)
+            {
+                if(ClientList.clientList.ElementAt(i).isActive == false)
+                {
+                    ClientList.clientList.RemoveAt(i);
+                }
             }
         }
     }
