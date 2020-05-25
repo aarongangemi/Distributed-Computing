@@ -30,7 +30,7 @@ namespace Tutorial_6_Client_Application
         private List<Client> listOfClients;
         private static int JobsCompletedCount;
         private Log log;
-        public bool IsClosed { get; private set; }
+        public bool IsClosed;
         public MainWindow()
         {
             InitializeComponent();
@@ -51,32 +51,32 @@ namespace Tutorial_6_Client_Application
         private void RunServer()
         {
             ServiceHost host;
-            listOfClients = getClientList();
-            foreach(Client c in listOfClients)
+            bool ServerRunning = false;
+            while(!ServerRunning)
             {
-                if(portNumber.ToString() == c.port)
+                try
+                {
+                    host = new ServiceHost(typeof(JobHost)); //Service host in OS
+                    NetTcpBinding tcp = new NetTcpBinding();  //Create .NET TCP port
+                    host.AddServiceEndpoint(typeof(IClient), tcp, "net.tcp://127.0.0.1:" + portNumber + "/JobServer");
+                    host.Open();
+                    ServerRunning = true;
+                    RestRequest request = new RestRequest("api/Client/Register/");
+                    request.AddJsonBody(new Client("127.0.0.1", portNumber.ToString()));
+                    client.Post(request);
+                    log.logMessage("Client with port " + portNumber.ToString() + " was successfully updated");
+                    log.logMessage("Server Thread is running on port: " + portNumber.ToString());
+                    while (!IsClosed)
+                    { }
+                    host.Close();
+                }
+                catch (AddressAlreadyInUseException)
                 {
                     PortCounter.CurrentPort++;
                     portNumber = PortCounter.CurrentPort;
-                }
-                else
-                {
-                    portNumber = PortCounter.CurrentPort;
-                    break;
+                    host = new ServiceHost(typeof(JobHost));
                 }
             }
-            host = new ServiceHost(typeof(JobHost)); //Service host in OS
-            NetTcpBinding tcp = new NetTcpBinding();  //Create .NET TCP port
-            host.AddServiceEndpoint(typeof(IClient), tcp, "net.tcp://127.0.0.1:" + portNumber + "/JobServer");
-            host.Open();
-            RestRequest request = new RestRequest("api/Client/Register/");
-            request.AddJsonBody(new Client("127.0.0.1", portNumber.ToString()));
-            client.Post(request);
-            log.logMessage("Client with port " + portNumber.ToString() + " was successfully updated");
-            log.logMessage("Server Thread is running on port: " + portNumber.ToString());
-            while (!IsClosed)
-            { }
-            host.Close();
         }
 
         private void NetworkingThreadFunction()
@@ -160,17 +160,15 @@ namespace Tutorial_6_Client_Application
                     }
                     catch (EndpointNotFoundException)
                     {
-                        RestRequest request = new RestRequest("api/Client/Remove/" + portNumber);
-                        log.logError("Client: " + portNumber + " has successfully been disconnected");
-                        client.Get(request);
                         listOfClients = getClientList();
                         i = 0;
+                        log.logError("Error occured - Client closed");
                     }
                     catch(FaultException)
                     {
-                        MessageBox.Show("Closing client");
                         log.logError("Client successfully closed");
-
+                        listOfClients = getClientList();
+                        i = 0;
                     }
                 }
             }
@@ -206,13 +204,11 @@ namespace Tutorial_6_Client_Application
             List<Client> listOfClients = JsonConvert.DeserializeObject<List<Client>>(clientList.Content);
             return listOfClients;
         }
-
-        protected override void OnClosed(EventArgs e)
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             RestRequest request = new RestRequest("api/Client/Remove/" + portNumber);
             log.logError("Client: " + portNumber + " has successfully been disconnected");
             client.Get(request);
-            base.OnClosed(e);
             IsClosed = true;
         }
     }

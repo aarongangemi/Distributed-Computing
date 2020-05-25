@@ -78,6 +78,7 @@ C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\XSS_Application_F
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\XSS_Application_Fixed\bin\System.Web.Http.xml
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\XSS_Application_Fixed\bin\System.Web.Http.WebHost.xml
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\XSS_Application_Fixed\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\XSS_Application_Fixed\obj\Debug\XSS_Application_Fixed.csprojAssemblyReference.cache
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\XSS_Application_Fixed\obj\Debug\XSS_Application_Fixed.csproj.CopyComplete
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\XSS_Application_Fixed\obj\Debug\XSS_Application_Fixed.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\XSS_Application_Fixed\obj\Debug\XSS_Application_Fixed.pdb

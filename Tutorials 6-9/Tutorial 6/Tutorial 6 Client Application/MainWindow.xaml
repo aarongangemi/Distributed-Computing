@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tutorial_6_Client_Application"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Closing="Window_Closing">
     <Grid>
         <Button Content="Upload Python file" HorizontalAlignment="Left" Margin="565,290,0,0" VerticalAlignment="Top" Width="149" Height="34" Click="Upload_Python_File"/>
         <TextBox Name ="PythonScriptText" HorizontalAlignment="Left" Height="268" Margin="30,56,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="390"/>

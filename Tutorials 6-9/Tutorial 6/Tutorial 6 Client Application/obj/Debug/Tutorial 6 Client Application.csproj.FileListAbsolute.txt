@@ -60,6 +60,11 @@ C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tut
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\obj\Debug\Tutorial 6 Client Application.csproj.CopyComplete
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\obj\Debug\Tutorial 6 Client Application.exe
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6 Client Application\obj\Debug\Tutorial 6 Client Application.pdb
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Client Application\obj\Debug\Tutorial 6 Client Application.csprojAssemblyReference.cache
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Client Application\obj\Debug\MainWindow.g.cs
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Client Application\obj\Debug\App.g.cs
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Client Application\obj\Debug\Tutorial 6 Client Application_MarkupCompile.cache
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Client Application\obj\Debug\Tutorial 6 Client Application_MarkupCompile.lref
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Client Application\bin\Debug\Tutorial 6 Client Application.exe.config
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Client Application\bin\Debug\Tutorial 6 Client Application.exe
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Client Application\bin\Debug\Tutorial 6 Client Application.pdb
@@ -110,11 +115,6 @@ C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tut
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Client Application\bin\Debug\System.Web.Razor.xml
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Client Application\bin\Debug\Antlr3.Runtime.pdb
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Client Application\bin\Debug\System.Web.WebPages.Deployment.xml
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Client Application\obj\Debug\Tutorial 6 Client Application.csprojAssemblyReference.cache
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Client Application\obj\Debug\MainWindow.g.cs
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Client Application\obj\Debug\App.g.cs
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Client Application\obj\Debug\Tutorial 6 Client Application_MarkupCompile.cache
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Client Application\obj\Debug\Tutorial 6 Client Application_MarkupCompile.lref
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Client Application\obj\Debug\MainWindow.baml
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Client Application\obj\Debug\Tutorial 6 Client Application.g.resources
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\Tutorial 6 Client Application\obj\Debug\Tutorial_6_Client_Application.Properties.Resources.resources

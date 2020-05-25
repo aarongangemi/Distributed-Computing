@@ -10,5 +10,6 @@ C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Job
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\JobLibrary\obj\Debug\JobLibrary.pdb
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\JobLibrary\bin\Debug\JobLibrary.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\JobLibrary\bin\Debug\JobLibrary.pdb
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\JobLibrary\obj\Debug\JobLibrary.csprojAssemblyReference.cache
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\JobLibrary\obj\Debug\JobLibrary.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 6\JobLibrary\obj\Debug\JobLibrary.pdb
