@@ -14,6 +14,7 @@ using System.Security.Cryptography;
 using JobLibrary;
 using Microsoft.Scripting;
 using IronPython.Runtime;
+using System.Threading.Tasks;
 
 namespace Tutorial_6_Client_Application
 {
@@ -28,9 +29,9 @@ namespace Tutorial_6_Client_Application
         private string URL;
         private int portNumber;
         private List<Client> listOfClients;
-        private static int JobsCompletedCount;
         private Log log;
-        public bool IsClosed;
+        private static int count = 0;
+        public bool IsClosed { get; private set; }
         public MainWindow()
         {
             InitializeComponent();
@@ -42,17 +43,16 @@ namespace Tutorial_6_Client_Application
             ServerThread.Start();
             Thread NetworkingThread = new Thread(new ThreadStart(NetworkingThreadFunction));
             NetworkingThread.Start();
-            JobsCompletedCount = 0;
-            JobsCompleted.Text = JobsCompletedCount.ToString();
             portNumber = PortCounter.CurrentPort;
             PythonScriptText.AcceptsReturn = true;
             PythonScriptText.AcceptsTab = true;
         }
         private void RunServer()
         {
+            bool ServerCreated = false;
             ServiceHost host;
-            bool ServerRunning = false;
-            while(!ServerRunning)
+            listOfClients = getClientList();
+            while(!ServerCreated)
             {
                 try
                 {
@@ -60,17 +60,20 @@ namespace Tutorial_6_Client_Application
                     NetTcpBinding tcp = new NetTcpBinding();  //Create .NET TCP port
                     host.AddServiceEndpoint(typeof(IClient), tcp, "net.tcp://127.0.0.1:" + portNumber + "/JobServer");
                     host.Open();
-                    ServerRunning = true;
                     RestRequest request = new RestRequest("api/Client/Register/");
                     request.AddJsonBody(new Client("127.0.0.1", portNumber.ToString()));
                     client.Post(request);
+                    ServerCreated = true;
                     log.logMessage("Client with port " + portNumber.ToString() + " was successfully updated");
                     log.logMessage("Server Thread is running on port: " + portNumber.ToString());
                     while (!IsClosed)
                     { }
                     host.Close();
+                    RestRequest closeRequest = new RestRequest("api/Client/Remove/" + portNumber);
+                    log.logError("Client: " + portNumber + " has successfully been disconnected");
+                    client.Get(closeRequest);
                 }
-                catch (AddressAlreadyInUseException)
+                catch(AddressAlreadyInUseException)
                 {
                     PortCounter.CurrentPort++;
                     portNumber = PortCounter.CurrentPort;
@@ -122,21 +125,20 @@ namespace Tutorial_6_Client_Application
                                             var result = PyFunc();
                                             PyResult.Content = result;
                                             job.PythonResult = PyResult.Content.ToString();
-                                            JobsCompletedCount++;
-                                            JobsCompleted.Text = JobsCompletedCount.ToString();
-                                            log.logMessage("Python script executed successfully: result is: " + PyResult.Content);
+                                            count++;
+                                            Dispatcher.Invoke(() => { JobsCompleted.Text = count.ToString(); });
                                         }
                                         catch (SyntaxErrorException)
                                         {
                                             MessageBox.Show("Invalid Python script, please ensure python body is valid and proper indentation is used for variables");
                                             log.logError("Invalid Python script - invalid body");
                                         }
-                                        catch(UnboundNameException)
+                                        catch (UnboundNameException)
                                         {
                                             MessageBox.Show("Invalid variables found in python body, please try again");
                                             log.logError("Invalid variables in python script");
                                         }
-                                        catch(NullReferenceException)
+                                        catch (NullReferenceException)
                                         {
                                             MessageBox.Show("No return type found in python script, please return something");
                                             log.logError("no return found");
@@ -153,22 +155,26 @@ namespace Tutorial_6_Client_Application
                                         log.logMessage("Python result: " + job.PythonResult + " was successfully uploaded");
                                     });
                                 }
-
                             }
-                            
                         }
                     }
                     catch (EndpointNotFoundException)
                     {
+                        log.logError("Unable to connect to client");
                         listOfClients = getClientList();
                         i = 0;
-                        log.logError("Error occured - Client closed");
                     }
-                    catch(FaultException)
+                    catch (FaultException)
                     {
                         log.logError("Client successfully closed");
-                        listOfClients = getClientList();
-                        i = 0;
+                    }
+                    catch(TaskCanceledException)
+                    {
+                        log.logError("Retrying to execute task");
+                    }
+                    catch(CommunicationException)
+                    {
+                        log.logError("Something went wrong with the server");
                     }
                 }
             }
@@ -176,7 +182,7 @@ namespace Tutorial_6_Client_Application
 
         private void Upload_Python_File(object sender, RoutedEventArgs e)
         {
-            if(!String.IsNullOrEmpty(PythonScriptText.Text) && PythonScriptText.Text.StartsWith("def main():"))
+            if (!String.IsNullOrEmpty(PythonScriptText.Text) && PythonScriptText.Text.StartsWith("def main():"))
             {
                 SHA256 hash = SHA256.Create();
                 byte[] textBytes = Encoding.UTF8.GetBytes(PythonScriptText.Text);
@@ -195,7 +201,7 @@ namespace Tutorial_6_Client_Application
                 MessageBox.Show("Python string must start with 'def main():' ");
                 log.logError("Invalid python script with no main function");
             }
-        } 
+        }
 
         private List<Client> getClientList()
         {
@@ -204,11 +210,10 @@ namespace Tutorial_6_Client_Application
             List<Client> listOfClients = JsonConvert.DeserializeObject<List<Client>>(clientList.Content);
             return listOfClients;
         }
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+
+        protected override void OnClosed(EventArgs e)
         {
-            RestRequest request = new RestRequest("api/Client/Remove/" + portNumber);
-            log.logError("Client: " + portNumber + " has successfully been disconnected");
-            client.Get(request);
+            base.OnClosed(e);
             IsClosed = true;
         }
     }
