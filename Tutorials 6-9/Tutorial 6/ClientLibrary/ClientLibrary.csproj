@@ -44,7 +44,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
-    <Compile Include="ClientList.cs" />
     <Compile Include="PortCounter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

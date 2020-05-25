@@ -56,6 +56,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorial 7 Miner", "Tutoria
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorial 7 Transaction Generator", "Tutorials 6-9\Tutorial 7\Tutorial 7 Transaction Generator\Tutorial 7 Transaction Generator.csproj", "{FA8B97CA-0F7A-4439-81B7-7EA064A07758}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tutorial 8", "Tutorial 8", "{13D55E75-F561-4310-8632-DE40E7149BC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorial 8 Web Server", "Tutorials 6-9\Tutorial 8\Tutorial 8 Web Server\Tutorial 8 Web Server.csproj", "{A4E336F5-0621-423D-B123-2D02743D7F20}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -134,6 +138,10 @@ Global
 		{FA8B97CA-0F7A-4439-81B7-7EA064A07758}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA8B97CA-0F7A-4439-81B7-7EA064A07758}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA8B97CA-0F7A-4439-81B7-7EA064A07758}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4E336F5-0621-423D-B123-2D02743D7F20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4E336F5-0621-423D-B123-2D02743D7F20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4E336F5-0621-423D-B123-2D02743D7F20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4E336F5-0621-423D-B123-2D02743D7F20}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -158,6 +166,8 @@ Global
 		{F219E75A-4F56-4F7A-B875-C4D48846DA19} = {A96579AD-60B3-4FD8-A240-A4B78AED8A82}
 		{4380E0EC-6A68-49F3-9068-A53A8ECFC198} = {A96579AD-60B3-4FD8-A240-A4B78AED8A82}
 		{FA8B97CA-0F7A-4439-81B7-7EA064A07758} = {A96579AD-60B3-4FD8-A240-A4B78AED8A82}
+		{13D55E75-F561-4310-8632-DE40E7149BC4} = {4001073B-1A87-4120-BAD4-BBBEF1F3008C}
+		{A4E336F5-0621-423D-B123-2D02743D7F20} = {13D55E75-F561-4310-8632-DE40E7149BC4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8812666C-8BF6-445D-B09D-9F3BE3A668CB}

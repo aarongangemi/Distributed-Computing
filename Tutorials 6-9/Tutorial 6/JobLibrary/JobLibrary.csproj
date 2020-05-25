@@ -44,7 +44,6 @@
   <ItemGroup>
     <Compile Include="IClient.cs" />
     <Compile Include="Job.cs" />
-    <Compile Include="JobCounter.cs" />
     <Compile Include="JobHost.cs" />
     <Compile Include="JobList.cs" />
     <Compile Include="Log.cs" />
