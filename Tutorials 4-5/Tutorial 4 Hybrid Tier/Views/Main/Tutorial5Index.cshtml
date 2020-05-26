@@ -8,8 +8,11 @@
         <title>Gangemi's Bank - Tutorial 5</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
+<!--The div to store each function.
+    When the appropriate button is clicked, load the form using below function-->
     <body>
         <div id="Accounts">
+            <!--Display 3 buttons, each loads form-->
             <button id="button" onclick="LoadAccounts()"><strong>Load Accounts</strong></button>
             <button id="button" onclick="LoadUsers()"><strong>Load Users</strong></button>
             <button id="button" onclick="LoadTransactions()"><strong>Load Transactions</strong></button>
@@ -19,42 +22,50 @@
         <div id="Content">
         </div>
         <script>
+            // Use get request to load account form
             function LoadAccounts() {
                 $.ajax({
                     url: 'https://localhost:44347/Main/Accounts',
                     type: 'get',
                     processData: false,
                     success: function (data, t, j) {
+                        // load accounts form into div
                         $('#Content').html(data);
                     },
                     error: function (j, t, e) {
+                        // log an error
                         console.log("Error occured: Unable to load Accounts");
                     }
                 });
             }
-
+            // Use get request to load user form here
             function LoadUsers() {
                 $.ajax({
                     url: 'https://localhost:44347/Main/Users',
                     type: 'get',
                     processData: false,
                     success: function (data, t, j) {
+                        // load user form into div
                         $('#Content').html(data);
                     },
                     error: function (j, t, e) {
+                        // log an error
                         console.log("Error occured: Unable to load Users");
                     }
                 });
             }
+            // Use get request to load transaction form
             function LoadTransactions() {
                 $.ajax({
                     url: 'https://localhost:44347/Main/Transactions',
                     type: 'get',
                     processData: false,
                     success: function (data, t, j) {
+                        // load transaction form into div
                         $('#Content').html(data);
                     },
                     error: function (j, t, e) {
+                        // log error
                         console.log("Error occured: Unable to load Users");
                     }
                 });
