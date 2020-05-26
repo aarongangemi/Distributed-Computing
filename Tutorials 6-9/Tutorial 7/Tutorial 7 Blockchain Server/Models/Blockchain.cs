@@ -1,5 +1,7 @@
 ﻿using BlockchainLibrary;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -19,15 +21,17 @@ namespace Tutorial_7_Blockchain_Server.Models
         {
             SHA256 sha256 = SHA256.Create();
             int val = 0;
-            string blockString = val.ToString() + val.ToString() + int.MaxValue.ToString() + 0 + "";
-            byte[] blockBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(blockString));
-            StringBuilder builder = new StringBuilder();
-            for (int i = 0; i < blockBytes.Length; i++)
+            string hashedString ="";
+            while (!hashedString.StartsWith("12345"))
             {
-                builder.Append(blockBytes[i].ToString("x2"));
+                IncrementOffset();
+                string blockString = val.ToString() + val.ToString() + val.ToString() + hashOffset + "";
+                byte[] textBytes = Encoding.UTF8.GetBytes(blockString);
+                byte[] hashedData = sha256.ComputeHash(textBytes);
+                hashedString = BitConverter.ToUInt64(hashedData, 0).ToString();
             }
-            IncrementOffset();
-            BlockChain.Add(new Block(0, 0, float.MaxValue, hashOffset, "", "12345" + builder.ToString() + "54321"));
+            Debug.WriteLine(hashedString + "////////////////////////");
+            BlockChain.Add(new Block(0, 0, 0, hashOffset, "", hashedString));
         }
     }
 }

@@ -49,15 +49,22 @@ namespace Tutorial_7_Blockchain_Server.Controllers
         public float GetAccountBalance(uint acntID)
         {
             float balance = 0;
-            foreach(Block block in Blockchain.BlockChain)
+            if(acntID == 0)
             {
-                if(block.walletIdFrom == acntID && acntID > 0)
+                balance = float.MaxValue;
+            }
+            else
+            {
+                foreach (Block block in Blockchain.BlockChain)
                 {
-                    balance -= block.amount;
-                }
-                if(block.walletIdTo == acntID)
-                {
-                    balance += block.amount;
+                    if (block.walletIdFrom == acntID)
+                    {
+                        balance -= block.amount;
+                    }
+                    if (block.walletIdTo == acntID)
+                    {
+                        balance += block.amount;
+                    }
                 }
             }
             return balance;
@@ -69,26 +76,18 @@ namespace Tutorial_7_Blockchain_Server.Controllers
         {
             SHA256 sha256 = SHA256.Create();
             string blockString = block.walletIdFrom.ToString() + block.walletIdTo.ToString() + block.amount.ToString() + block.blockOffset + block.prevBlockHash;
-            byte[] blockBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(blockString));
-            StringBuilder builder = new StringBuilder();
-            for(int i = 0; i < blockBytes.Length; i++)
+            byte[] hash = sha256.ComputeHash(Encoding.UTF8.GetBytes(blockString));
+            string hashedString = BitConverter.ToUInt64(hash, 0).ToString();
+            Debug.WriteLine(Blockchain.BlockChain.Last().blockHash + ".........");
+            Debug.WriteLine(block.prevBlockHash + "...................");
+            if(block.prevBlockHash != Blockchain.BlockChain.Last().blockHash)
             {
-                builder.Append(blockBytes[i].ToString("x2"));
+                Debug.WriteLine("THIS IS FALSE - should not be false");
             }
-            string hashString = "12345" + builder.ToString() + "54321";
-            foreach (Block b in Blockchain.BlockChain)
-            {
-                if(b.blockID > block.blockID)
-                {
-                    return false;
-                }
-            }
-
-            if((GetAccountBalance(block.walletIdFrom) < block.amount) || (block.amount <= 0) || (block.blockOffset % 5 != 0)
+            if ((GetAccountBalance(block.walletIdFrom) < block.amount) || (block.amount <= 0) || (block.blockOffset % 5 != 0)
                 || (block.prevBlockHash != Blockchain.BlockChain.Last().blockHash)
-                || (!block.blockHash.StartsWith("12345")) || (!block.blockHash.EndsWith("54321"))
-                || (block.amount < 0) || (block.walletIdFrom < 0) || (block.walletIdTo < 0) || (GetAccountBalance(block.walletIdFrom) < 0)
-                || (block.blockHash != hashString))
+                || (!block.blockHash.StartsWith("12345")) || (block.amount < 0) || (block.walletIdFrom < 0) || 
+                (block.walletIdTo < 0) || (GetAccountBalance(block.walletIdFrom) < 0)|| (block.blockHash != hashedString))
             {
                 return false;
             }

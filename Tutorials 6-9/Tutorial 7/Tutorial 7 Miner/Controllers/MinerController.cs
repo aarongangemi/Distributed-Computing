@@ -9,72 +9,111 @@ using System.Net;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace Tutorial_7_Miner.Controllers
 {
+    public delegate void TransactionProcessing();
     public class MinerController : ApiController
     {
-        [Route("api/Blockchain/AddTransaction/{walletIdFrom}/{walletIdTo}/{amount}")]
-        [HttpPost]
-        public async Task<bool> AddTransaction(uint walletIdFrom, uint walletIdTo, float amount)
-        {
-            bool isValidBlock = false;
-            RestClient client = new RestClient("https://localhost:44353/");
-            RestRequest BalanceRequest = new RestRequest("api/Server/GetBalance/" + walletIdFrom.ToString());
-            IRestResponse BalanceResponse = await client.ExecuteGetAsync(BalanceRequest);
-            float balance = JsonConvert.DeserializeObject<float>(BalanceResponse.Content);
-            if (amount > 0 && walletIdFrom >= 0 && walletIdTo >= 0 && amount <= balance)
-            {
-                LogBlockchain log = new LogBlockchain();
-                log.logData("Adding new block to blockchain");
-                log.logData("Wallet ID from = " + walletIdFrom);
-                log.logData("Wallet ID to = " + walletIdTo);
-                log.logData("Transaction amount = " + amount);
-                string prevBlockHash;
-                RestRequest BlockchainRequest = new RestRequest("api/Server/GetBlockchain");
-                IRestResponse BlockchainResponse = await client.ExecuteGetAsync(BlockchainRequest);
-                List<Block> blockchain = JsonConvert.DeserializeObject<List<Block>>(BlockchainResponse.Content);
-                RestRequest IncrementRequest = new RestRequest("api/Server/Increment");
-                client.Put(IncrementRequest);
-                RestRequest OffsetRequest = new RestRequest("api/Server/GetOffset");
-                IRestResponse OffsetResponse = await client.ExecuteGetAsync(OffsetRequest);
-                uint offset = JsonConvert.DeserializeObject<uint>(OffsetResponse.Content);
-                log.logData("Offset = " + offset);
-                prevBlockHash = blockchain.Last().blockHash;
-                log.logData("Previous block hash = " + prevBlockHash);
-                SHA256 sha256 = SHA256.Create();
-                string blockString = walletIdFrom.ToString() + walletIdTo.ToString() + amount.ToString() + offset + prevBlockHash;
-                byte[] blockBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(blockString));
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < blockBytes.Length; i++)
-                {
-                    builder.Append(blockBytes[i].ToString("x2"));
-                }
-                string hashString = "12345" + builder.ToString() + "54321";
-                log.logData("Block hash = " + hashString);
-                Block block = new Block(walletIdFrom, walletIdTo, amount, offset, prevBlockHash, hashString);
-                RestRequest ValidationRequest = new RestRequest("api/Server/ValidateBlock/");
-                ValidationRequest.AddJsonBody(block);
-                IRestResponse ValidationResponse = await client.ExecutePostAsync(ValidationRequest);
-                isValidBlock = JsonConvert.DeserializeObject<bool>(ValidationResponse.Content);
-                if (isValidBlock)
-                {
+        public static Queue<Transaction> TransactionQueue = new Queue<Transaction>();
+        private static bool ThreadStarted = false;
 
-                    RestRequest AddBlockRequest = new RestRequest("api/Server/AddBlock/");
-                    AddBlockRequest.AddJsonBody(block);
-                    await client.ExecutePostAsync(AddBlockRequest);
-                    log.logData("Block successfully added to Blockchain");
-                    log.logData("Transaction successful");
-                }
-                else
-                {
-                    log.logData("Validation for block failed, Unable to add block");
-                }
-                log.logData(".................................................................");
+        [Route("api/Miner/AddTransaction/{Amount}/{IdFrom}/{IdTo}")]
+        [HttpPost]
+        public void AddTransaction(float Amount, uint IdFrom, uint IdTo)
+        {
+            if(!ThreadStarted)
+            {
+                TransactionProcessing TransactionDelegate = ProcessTransaction;
+                TransactionDelegate.BeginInvoke(null, null);
+                ThreadStarted = true;
             }
-            return isValidBlock;
+            Transaction transaction = new Transaction();
+            transaction.amount = Amount;
+            transaction.walletIdFrom = IdFrom;
+            transaction.walletIdTo = IdTo;
+            transaction.isProcessed = false;
+            TransactionQueue.Enqueue(transaction);
+        }
+
+        public void ProcessTransaction()
+        {
+            
+                while (true)
+                {
+                    try
+                    {
+                    if (TransactionQueue.Count > 0)
+                    {
+                        Transaction transaction = TransactionQueue.Dequeue();
+                        if (transaction.isProcessed == false)
+                        {
+                            string hashString = "";
+                            bool isValidBlock = false;
+                            RestClient client = new RestClient("https://localhost:44353/");
+                            RestRequest BalanceRequest = new RestRequest("api/Server/GetBalance/" + transaction.walletIdFrom.ToString());
+                            IRestResponse BalanceResponse = client.Get(BalanceRequest);
+                            float balance = JsonConvert.DeserializeObject<float>(BalanceResponse.Content);
+                            if (transaction.amount > 0 && transaction.walletIdFrom >= 0 && transaction.walletIdTo >= 0 && transaction.amount <= balance)
+                            {
+                                Debug.WriteLine("Adding new block to blockchain");
+                                Debug.WriteLine("Wallet ID from = " + transaction.walletIdFrom);
+                                Debug.WriteLine("Wallet ID to = " + transaction.walletIdTo);
+                                Debug.WriteLine("Transaction amount = " + transaction.amount);
+                                string prevBlockHash;
+                                RestRequest BlockchainRequest = new RestRequest("api/Server/GetBlockchain");
+                                IRestResponse BlockchainResponse = client.Get(BlockchainRequest);
+                                List<Block> blockchain = JsonConvert.DeserializeObject<List<Block>>(BlockchainResponse.Content);
+                                RestRequest OffsetRequest = new RestRequest("api/Server/GetOffset");
+                                IRestResponse OffsetResponse = client.Get(OffsetRequest);
+                                uint offset = JsonConvert.DeserializeObject<uint>(OffsetResponse.Content);
+                                Debug.WriteLine("Offset = " + offset);
+                                prevBlockHash = blockchain.Last().blockHash;
+                                Debug.WriteLine("Previous block hash = " + prevBlockHash);
+                                SHA256 sha256 = SHA256.Create();
+                                while (!hashString.StartsWith("12345"))
+                                {
+                                    offset += 5;
+                                    string blockString = transaction.walletIdFrom.ToString() + transaction.walletIdTo.ToString() + transaction.amount.ToString() + offset + prevBlockHash;
+                                    byte[] textBytes = Encoding.UTF8.GetBytes(blockString);
+                                    byte[] hashedData = sha256.ComputeHash(textBytes);
+                                    hashString = BitConverter.ToUInt64(hashedData, 0).ToString();
+                                }
+                                Debug.WriteLine("Block hash = " + hashString);
+                                Block block = new Block(transaction.walletIdFrom, transaction.walletIdTo, transaction.amount, offset, prevBlockHash, hashString);
+                                RestRequest ValidationRequest = new RestRequest("api/Server/ValidateBlock/");
+                                ValidationRequest.AddJsonBody(block);
+                                IRestResponse ValidationResponse = client.Post(ValidationRequest);
+                                isValidBlock = JsonConvert.DeserializeObject<bool>(ValidationResponse.Content);
+                                if (isValidBlock)
+                                {
+                                    RestRequest AddBlockRequest = new RestRequest("api/Server/AddBlock/");
+                                    AddBlockRequest.AddJsonBody(block);
+                                    client.Post(AddBlockRequest);
+                                    Debug.WriteLine("Block successfully added to Blockchain");
+                                    Debug.WriteLine("Transaction successful");
+                                    Debug.WriteLine(".................................................................");
+
+                                }
+                                else
+                                {
+                                    Debug.WriteLine("Validation for block failed, Trying again");
+                                }
+
+                            }
+                            transaction.isProcessed = true;
+                        }
+                    }
+                }
+                catch (InvalidOperationException)
+                {
+                    Debug.WriteLine("No Transaction in queue");
+                }
+            }
         }
     }
 }
+           

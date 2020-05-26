@@ -1,0 +1,14 @@
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\bin\Debug\ClientApp.exe.config
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\bin\Debug\ClientApp.exe
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\bin\Debug\ClientApp.pdb
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\obj\Debug\ClientApp.csprojAssemblyReference.cache
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\obj\Debug\MainWindow.g.cs
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\obj\Debug\App.g.cs
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\obj\Debug\ClientApp_MarkupCompile.cache
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\obj\Debug\ClientApp_MarkupCompile.lref
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\obj\Debug\MainWindow.baml
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\obj\Debug\ClientApp.g.resources
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\obj\Debug\ClientApp.Properties.Resources.resources
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\obj\Debug\ClientApp.csproj.GenerateResource.cache
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\obj\Debug\ClientApp.exe
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\obj\Debug\ClientApp.pdb

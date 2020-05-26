@@ -436,3 +436,7 @@ Log file function: Retrieve user
 Account: 33158333 has searched for last name: Miller and found a result for: Mark Miller
 Log file function: Search by lastname. 
 Account: 90152263 has searched for last name: Gangemi and found a result for: Anthony Gangemi
+Error Occurred: Invalid Index was entered, please try again
+Error Occurred: Invalid Index was entered, please try again
+Log file function: Starting application
+100000 results are in the database

@@ -12,13 +12,11 @@ namespace Tutorial_8_Web_Server.Models
         public string IpAddress;
         public string port;
         public int jobsCompleted;
-        public bool isActive;
         public Client(string IpAddress, string port)
         {
             this.IpAddress = IpAddress;
             this.port = port;
             this.jobsCompleted = 0;
-            isActive = true;
         }
     }
 }

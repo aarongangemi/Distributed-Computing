@@ -51,16 +51,5 @@ namespace Tutorial_8_Web_Server.Controllers
                 // No clients left
             }
         }
-
-        public void RemoveInactive()
-        {
-            for(int i = 0; i < ClientList.clientList.Count; i++)
-            {
-                if(ClientList.clientList.ElementAt(i).isActive == false)
-                {
-                    ClientList.clientList.RemoveAt(i);
-                }
-            }
-        }
     }
 }
