@@ -11,6 +11,5 @@ namespace BlockchainLibrary
         public uint walletIdFrom;
         public uint walletIdTo;
         public float amount;
-        public bool isProcessed;
     }
 }

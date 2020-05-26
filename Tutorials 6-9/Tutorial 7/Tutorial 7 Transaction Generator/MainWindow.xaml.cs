@@ -1,6 +1,7 @@
 ﻿using BlockchainLibrary;
 using Newtonsoft.Json;
 using RestSharp;
+using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Windows;
@@ -17,7 +18,6 @@ namespace Tutorial_7_Transaction_Generator
         private RestClient MinerClient;
         private string ServerURL;
         private string MinerURL;
-        private static Mutex mutex = new Mutex();
         public MainWindow()
         {
             InitializeComponent();
@@ -38,7 +38,12 @@ namespace Tutorial_7_Transaction_Generator
             {
                 if (!string.IsNullOrEmpty(IdFrom.Text) && !string.IsNullOrEmpty(IdTo.Text) && !string.IsNullOrEmpty(Amount.Text))
                 {
-                    RestRequest TransactionRequest = new RestRequest("api/Miner/AddTransaction/" + Amount.Text + "/" + IdFrom.Text + "/" + IdTo.Text);
+                    Transaction transaction = new Transaction();
+                    transaction.amount = float.Parse(Amount.Text);
+                    transaction.walletIdFrom = uint.Parse(IdFrom.Text);
+                    transaction.walletIdTo = uint.Parse(IdTo.Text);
+                    RestRequest TransactionRequest = new RestRequest("api/Miner/AddTransaction/");
+                    TransactionRequest.AddJsonBody(transaction);
                     MinerClient.Post(TransactionRequest);
                 }
                 else
@@ -54,11 +59,16 @@ namespace Tutorial_7_Transaction_Generator
                 Debug.WriteLine("error: transaction fields contain invalid data");
                 Debug.WriteLine(".................................................................");
             }
+            catch(FormatException)
+            {
+                MessageBox.Show("Unable to parse values. Please ensure amount, sender and receiver are correct data types");
+                Debug.WriteLine("Unable to parse values, format exception caught");
+            }
             NoOfBlocks.Content = GetNoOfBlocks().ToString();
 
         }
 
-        public int GetNoOfBlocks() 
+        public int GetNoOfBlocks()
         {
             RestRequest NoOfBlocksRequest = new RestRequest("api/Server/GetNoOfBlocks");
             IRestResponse NoOfBlocksResponse = ServerClient.Get(NoOfBlocksRequest);
@@ -85,7 +95,7 @@ namespace Tutorial_7_Transaction_Generator
                     Debug.WriteLine(".................................................................");
                 }
             }
-            catch(JsonReaderException)
+            catch (JsonReaderException)
             {
                 MessageBox.Show("Invalid data entered for account ID field, please try again");
                 Debug.WriteLine("Account fields contains invalid data");
