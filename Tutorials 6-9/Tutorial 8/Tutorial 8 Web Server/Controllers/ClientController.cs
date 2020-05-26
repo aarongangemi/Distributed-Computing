@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Tutorial_8_Blockchain_Library;
 using Tutorial_8_Web_Server.Models;
 
 namespace Tutorial_8_Web_Server.Controllers
@@ -33,13 +34,13 @@ namespace Tutorial_8_Web_Server.Controllers
 
         [Route("api/Client/Remove/{clientNo}")]
         [HttpGet]
-        public void RemoveClient(int clientNo)
+        public void RemoveClient(int portNo)
         {
             try
             {
                 for (int i = 0; i < ClientList.clientList.Count; i++)
                 {
-                    if (ClientList.clientList.ElementAt(i).port == clientNo.ToString())
+                    if (ClientList.clientList.ElementAt(i).port == portNo.ToString())
                     {
                         ClientList.clientList.RemoveAt(i);
                         break;

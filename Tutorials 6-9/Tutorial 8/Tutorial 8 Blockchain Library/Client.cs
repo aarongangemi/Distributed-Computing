@@ -5,13 +5,14 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tutorial_8_Web_Server.Models
+namespace Tutorial_8_Blockchain_Library
 {
     public class Client
     {
         public string IpAddress;
         public string port;
         public int jobsCompleted;
+        public List<Block> ClientBlockchain;
         public Client(string IpAddress, string port)
         {
             this.IpAddress = IpAddress;

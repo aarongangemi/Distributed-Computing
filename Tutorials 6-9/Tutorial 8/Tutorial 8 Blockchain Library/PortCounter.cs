@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlockchainLibrary
+namespace Tutorial_8_Blockchain_Library
 {
-    public class BlockchainSemaphore
+    public static class PortCounter
     {
-        public static bool semaphore = false;
+        public static int CurrentPort = 8100;
     }
 }
