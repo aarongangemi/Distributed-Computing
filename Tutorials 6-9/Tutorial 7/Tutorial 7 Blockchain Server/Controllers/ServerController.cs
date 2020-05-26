@@ -78,12 +78,6 @@ namespace Tutorial_7_Blockchain_Server.Controllers
             string blockString = block.walletIdFrom.ToString() + block.walletIdTo.ToString() + block.amount.ToString() + block.blockOffset + block.prevBlockHash;
             byte[] hash = sha256.ComputeHash(Encoding.UTF8.GetBytes(blockString));
             string hashedString = BitConverter.ToUInt64(hash, 0).ToString();
-            Debug.WriteLine(Blockchain.BlockChain.Last().blockHash + ".........");
-            Debug.WriteLine(block.prevBlockHash + "...................");
-            if(block.prevBlockHash != Blockchain.BlockChain.Last().blockHash)
-            {
-                Debug.WriteLine("THIS IS FALSE - should not be false");
-            }
             if ((GetAccountBalance(block.walletIdFrom) < block.amount) || (block.amount <= 0) || (block.blockOffset % 5 != 0)
                 || (block.prevBlockHash != Blockchain.BlockChain.Last().blockHash)
                 || (!block.blockHash.StartsWith("12345")) || (block.amount < 0) || (block.walletIdFrom < 0) || 

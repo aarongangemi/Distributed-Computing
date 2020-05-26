@@ -101,6 +101,10 @@ namespace Tutorial_7_Miner.Controllers
                 {
                     Debug.WriteLine("No Transaction in queue");
                 }
+                catch (NullReferenceException)
+                {
+                    Debug.WriteLine("Something went wrong");
+                }
             }
         }
     }
