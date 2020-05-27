@@ -70,9 +70,6 @@ namespace Tutorial_6_Client_Application
                     while (!IsClosed)
                     { }
                     host.Close();
-                    RestRequest closeRequest = new RestRequest("api/Client/Remove/" + portNumber);
-                    log.logError("Client: " + portNumber + " has successfully been disconnected");
-                    client.Get(closeRequest);
                 }
                 catch (AddressAlreadyInUseException)
                 {
@@ -99,7 +96,7 @@ namespace Tutorial_6_Client_Application
                     try
                     {
                         count += listOfClients.ElementAt(i).jobsCompleted;
-                        if((i == listOfClients.Count - 1) && (!IsClosed))
+                        if ((i == listOfClients.Count - 1) && (!IsClosed))
                         {
                             Dispatcher.Invoke(() => { JobsCompleted.Text = count.ToString(); });
                         }
@@ -135,7 +132,7 @@ namespace Tutorial_6_Client_Application
                                             RestRequest request = new RestRequest("api/Client/UpdateCount/" + i.ToString());
                                             client.Put(request);
                                             log.logMessage("Count updated");
-                                           
+
                                         }
                                         catch (SyntaxErrorException)
                                         {
@@ -153,7 +150,7 @@ namespace Tutorial_6_Client_Application
                                             log.logError("no return found");
                                         }
                                     });
-                                    
+
                                     foob.UploadJobSolution(job.PythonResult, job.jobNumber); //Return the result of the script
                                     Dispatcher.Invoke(() =>
                                     {
@@ -164,25 +161,37 @@ namespace Tutorial_6_Client_Application
                                 }
                             }
                         }
-                       
+
                     }
                     catch (EndpointNotFoundException)
                     {
-                        log.logError("Unable to connect to client");
-                        listOfClients = getClientList();
-                        i = 0;
+                        if (IsClosed)
+                        {
+                            log.logError("Removing client");
+                            RestRequest removeRequest = new RestRequest("api/Client/Remove/" + portNumber.ToString());
+                            client.Get(removeRequest);
+                            listOfClients = getClientList();
+                        }
                     }
                     catch (FaultException)
                     {
-                        log.logError("Client successfully closed");
+                        if (IsClosed)
+                        {
+                            log.logError("Removing client");
+                            RestRequest removeRequest = new RestRequest("api/Client/Remove/" + portNumber.ToString());
+                            client.Get(removeRequest);
+                            listOfClients = getClientList();
+                        }
                     }
-                    catch(TaskCanceledException)
+                    catch (CommunicationException) 
                     {
-                        log.logError("Retrying to execute task");
+                        log.logError("Communication exception - something went wrong, trying again");
+                        listOfClients = getClientList();
                     }
-                    catch(CommunicationException)
+                    catch (TaskCanceledException) 
                     {
-                        log.logError("Something went wrong with the server");
+                        log.logError("Dispatcher had to cancel");
+                        listOfClients = getClientList();
                     }
                 }
                 
@@ -223,6 +232,8 @@ namespace Tutorial_6_Client_Application
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             IsClosed = true;
+            RestRequest removeRequest = new RestRequest("api/Client/Remove/" + portNumber.ToString());
+            client.Get(removeRequest);
         }
     }
 }

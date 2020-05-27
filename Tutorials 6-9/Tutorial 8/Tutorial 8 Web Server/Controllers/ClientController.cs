@@ -32,7 +32,7 @@ namespace Tutorial_8_Web_Server.Controllers
             ClientList.clientList.ElementAt(idx).jobsCompleted++;
         }
 
-        [Route("api/Client/Remove/{clientNo}")]
+        [Route("api/Client/Remove/{portNo}")]
         [HttpGet]
         public void RemoveClient(int portNo)
         {

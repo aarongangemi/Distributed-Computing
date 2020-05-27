@@ -3,6 +3,7 @@ C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tut
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\Tutorial 8 Blockchain Library\bin\Debug\Newtonsoft.Json.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\Tutorial 8 Blockchain Library\bin\Debug\RestSharp.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\Tutorial 8 Blockchain Library\bin\Debug\Newtonsoft.Json.xml
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\Tutorial 8 Blockchain Library\obj\Debug\Tutorial 8 Blockchain Library.csprojAssemblyReference.cache
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\Tutorial 8 Blockchain Library\obj\Debug\Tutorial 8 Blockchain Library.csproj.CopyComplete
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\Tutorial 8 Blockchain Library\obj\Debug\Tutorial 8 Blockchain Library.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\Tutorial 8 Blockchain Library\obj\Debug\Tutorial 8 Blockchain Library.pdb

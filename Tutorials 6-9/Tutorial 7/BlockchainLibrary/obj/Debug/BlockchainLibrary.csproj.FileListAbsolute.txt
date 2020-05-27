@@ -3,7 +3,3 @@ C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tut
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7-8\BlockchainLibrary\obj\Debug\BlockchainLibrary.csprojAssemblyReference.cache
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7-8\BlockchainLibrary\obj\Debug\BlockchainLibrary.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7-8\BlockchainLibrary\obj\Debug\BlockchainLibrary.pdb
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7\BlockchainLibrary\bin\Debug\BlockchainLibrary.dll
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7\BlockchainLibrary\bin\Debug\BlockchainLibrary.pdb
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7\BlockchainLibrary\obj\Debug\BlockchainLibrary.dll
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 7\BlockchainLibrary\obj\Debug\BlockchainLibrary.pdb

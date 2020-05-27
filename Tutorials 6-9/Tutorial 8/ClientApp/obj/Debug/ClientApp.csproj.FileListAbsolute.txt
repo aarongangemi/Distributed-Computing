@@ -1,8 +1,3 @@
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\obj\Debug\ClientApp.csprojAssemblyReference.cache
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\obj\Debug\MainWindow.g.cs
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\obj\Debug\App.g.cs
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\obj\Debug\ClientApp_MarkupCompile.cache
-C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\obj\Debug\ClientApp_MarkupCompile.lref
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\bin\Debug\ClientApp.exe.config
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\bin\Debug\ClientApp.exe
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\bin\Debug\ClientApp.pdb
@@ -32,6 +27,11 @@ C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tut
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\bin\Debug\IKVM.OpenJDK.Charsets.dll
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\bin\Debug\Tutorial 8 Blockchain Library.pdb
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\bin\Debug\Newtonsoft.Json.xml
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\obj\Debug\ClientApp.csprojAssemblyReference.cache
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\obj\Debug\MainWindow.g.cs
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\obj\Debug\App.g.cs
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\obj\Debug\ClientApp_MarkupCompile.cache
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\obj\Debug\ClientApp_MarkupCompile.lref
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\obj\Debug\MainWindow.baml
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\obj\Debug\ClientApp.g.resources
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 8\ClientApp\obj\Debug\ClientApp.Properties.Resources.resources

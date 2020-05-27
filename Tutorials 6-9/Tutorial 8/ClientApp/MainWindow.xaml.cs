@@ -10,6 +10,7 @@ using System.Security.Cryptography;
 using System.ServiceModel;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using Tutorial_8_Blockchain_Library;
 
@@ -41,7 +42,7 @@ namespace ClientApp
             portNumber = PortCounter.CurrentPort;
             ht = new Hashtable();
             Blockchain.generateGenesisBlock();
-            NoOfBlocks.Content = Blockchain.GetChainCount();
+            NoOfBlocks.Content = Blockchain.GetChainCount().ToString();
         }
 
         private void BlockchainThread()
@@ -60,6 +61,7 @@ namespace ClientApp
                     RestRequest request = new RestRequest("api/Client/Register/");
                     request.AddJsonBody(new Client("127.0.0.1", portNumber.ToString()));
                     client.Post(request);
+                    Debug.WriteLine(portNumber.ToString());
                     ServerCreated = true;
                     while (!IsClosed)
                     { }
@@ -107,99 +109,116 @@ namespace ClientApp
             string maxHash = "";
             while (true)
             {
-                Dispatcher.Invoke(() => { NoOfBlocks.Content = Blockchain.GetChainCount(); });
-                if (TransactionStorage.TransactionQueue.Count > 0)
+                try
                 {
-                    uint offset = 0;
-                    string prevBlockHash;
-                    Transaction transaction = TransactionStorage.TransactionQueue.Dequeue();
-                    string hashString = "";
-                    float acntBalance = Blockchain.GetAccountBalance(transaction.walletIdFrom);
-                    if (transaction.amount > 0 && transaction.walletIdFrom >= 0 && transaction.walletIdTo >= 0 && transaction.amount <= acntBalance)
+                    listOfClients = getClientList();
+                    if (TransactionStorage.TransactionQueue.Count > 0)
                     {
-                        Debug.WriteLine("Adding new block to blockchain");
-                        Debug.WriteLine("Wallet ID from = " + transaction.walletIdFrom);
-                        Debug.WriteLine("Wallet ID to = " + transaction.walletIdTo);
-                        Debug.WriteLine("Transaction amount = " + transaction.amount);
-                        SHA256 sha256 = SHA256.Create();
-                        prevBlockHash = Blockchain.BlockChain.Last().blockHash;
-                        while (!hashString.StartsWith("12345"))
+                        uint offset = 0;
+                        string prevBlockHash;
+                        Transaction transaction = TransactionStorage.TransactionQueue.Dequeue();
+                        string hashString = "";
+                        float acntBalance = Blockchain.GetAccountBalance(transaction.walletIdFrom);
+                        if (transaction.amount > 0 && transaction.walletIdFrom >= 0 && transaction.walletIdTo >= 0 && transaction.amount <= acntBalance)
                         {
-                            offset++;
-                            string blockString = transaction.walletIdFrom.ToString() + transaction.walletIdTo.ToString() + transaction.amount.ToString() + offset + prevBlockHash;
-                            byte[] textBytes = Encoding.UTF8.GetBytes(blockString);
-                            byte[] hashedData = sha256.ComputeHash(textBytes);
-                            hashString = BitConverter.ToUInt64(hashedData, 0).ToString();
+                            Debug.WriteLine("Adding new block to blockchain");
+                            Debug.WriteLine("Wallet ID from = " + transaction.walletIdFrom);
+                            Debug.WriteLine("Wallet ID to = " + transaction.walletIdTo);
+                            Debug.WriteLine("Transaction amount = " + transaction.amount);
+                            SHA256 sha256 = SHA256.Create();
+                            prevBlockHash = Blockchain.BlockChain.Last().blockHash;
+                            while (!hashString.StartsWith("12345"))
+                            {
+                                offset++;
+                                string blockString = transaction.walletIdFrom.ToString() + transaction.walletIdTo.ToString() + transaction.amount.ToString() + offset + prevBlockHash;
+                                byte[] textBytes = Encoding.UTF8.GetBytes(blockString);
+                                byte[] hashedData = sha256.ComputeHash(textBytes);
+                                hashString = BitConverter.ToUInt64(hashedData, 0).ToString();
+                            }
+                            Debug.WriteLine("Offset = " + offset);
+                            Debug.WriteLine("Block hash = " + hashString);
+                            Block block = new Block(transaction.walletIdFrom, transaction.walletIdTo, transaction.amount, offset, prevBlockHash, hashString);
+                            if (Blockchain.ValidateBlock(block))
+                            {
+                                Blockchain.AddBlock(block);
+                                Debug.WriteLine("Block successfully added");
+                                Debug.WriteLine("..............................................");
+                                Dispatcher.Invoke(() => { NoOfBlocks.Content = Blockchain.GetChainCount(); });
+                            }
+                            else
+                            {
+                                Debug.WriteLine("Validation for block failed, Trying again");
+                            }
                         }
-                        Debug.WriteLine("Offset = " + offset);
-                        Debug.WriteLine("Block hash = " + hashString);
-                        Block block = new Block(transaction.walletIdFrom, transaction.walletIdTo, transaction.amount, offset, prevBlockHash, hashString);
-                        if (Blockchain.ValidateBlock(block))
+                    }
+                    for (int i = 0; i < listOfClients.Count; i++)
+                    {
+                        NetTcpBinding tcp = new NetTcpBinding();
+                        string clientURL = "net.tcp://" + listOfClients.ElementAt(i).IpAddress.ToString() + ":" + listOfClients.ElementAt(i).port.ToString() + "/BlockchainServerHost";
+                        foobFactory = new ChannelFactory<IBlockchain>(tcp, clientURL);
+                        foob = foobFactory.CreateChannel();
+                        if (ht.ContainsKey(foob.GetCurrentBlock().blockHash))
                         {
-                            Blockchain.AddBlock(block);
-                            Debug.WriteLine("Block successfully added");
-                            Debug.WriteLine("..............................................");
-                            Dispatcher.Invoke(() => { NoOfBlocks.Content = Blockchain.GetChainCount(); });
+                            ht[foob.GetCurrentBlock().blockHash] = (int)ht[foob.GetCurrentBlock().blockHash] + 1;
                         }
                         else
                         {
-                            Debug.WriteLine("Validation for block failed, Trying again");
+                            ht.Add(foob.GetCurrentBlock().blockHash, 1);
                         }
                     }
-                }
-                for (int i = 0; i < listOfClients.Count; i++)
-                {
-                    NetTcpBinding tcp = new NetTcpBinding();
-                    string clientURL = "net.tcp://" + listOfClients.ElementAt(i).IpAddress.ToString() + ":" + listOfClients.ElementAt(i).port.ToString() + "/BlockchainServerHost";
-                    foobFactory = new ChannelFactory<IBlockchain>(tcp, clientURL);
-                    foob = foobFactory.CreateChannel();
-                    if (ht.ContainsKey(foob.GetCurrentBlock().blockHash))
-                    {
-                        ht[foob.GetCurrentBlock().blockHash] = (int)ht[foob.GetCurrentBlock().blockHash] + 1;
-                    }
-                    else
-                    {
-                        ht.Add(foob.GetCurrentBlock().blockHash, 1);
-                    }
-                }
-                foreach (DictionaryEntry entry in ht)
-                {
-                    max = (int)entry.Value;
-                    maxHash = (string)entry.Key;
-                    if ((int)entry.Value >= max)
+                    foreach (DictionaryEntry entry in ht)
                     {
                         max = (int)entry.Value;
                         maxHash = (string)entry.Key;
-                    }
-                }
-                if(ht.Count > 0)
-                {
-                    if (maxHash != Blockchain.BlockChain.Last().blockHash)
-                    {
-                        bool chainChange = false;
-                        for (int i = 0; i < listOfClients.Count; i++)
+                        if ((int)entry.Value > max)
                         {
-                            NetTcpBinding tcp = new NetTcpBinding();
-                            string clientURL = "net.tcp://" + listOfClients.ElementAt(i).IpAddress.ToString() + ":" + listOfClients.ElementAt(i).port.ToString() + "/BlockchainServerHost";
-                            foobFactory = new ChannelFactory<IBlockchain>(tcp, clientURL);
-                            foob = foobFactory.CreateChannel();
-                            foreach (Block block in foob.GetCurrentBlockchain())
+                            max = (int)entry.Value;
+                            maxHash = (string)entry.Key;
+                        }
+                    }
+                    if (ht.Count > 0)
+                    {
+                        if (maxHash != Blockchain.BlockChain.Last().blockHash)
+                        {
+                            bool chainChange = false;
+                            for (int i = 0; i < listOfClients.Count; i++)
                             {
-                                if ((block.blockHash == maxHash) && (foob.GetCurrentBlockchain().Count != Blockchain.BlockChain.Count))
+                                NetTcpBinding tcp = new NetTcpBinding();
+                                string clientURL = "net.tcp://" + listOfClients.ElementAt(i).IpAddress.ToString() + ":" + listOfClients.ElementAt(i).port.ToString() + "/BlockchainServerHost";
+                                foobFactory = new ChannelFactory<IBlockchain>(tcp, clientURL);
+                                foob = foobFactory.CreateChannel();
+                                foreach (Block block in foob.GetCurrentBlockchain())
                                 {
-                                    chainChange = true;
-                                    Debug.WriteLine("CHAIN HAS SUCCESSFULLY BEEN CHANGED - ALL IS GUCCI");
-                                    Blockchain.BlockChain = foob.GetCurrentBlockchain();
+                                    if ((block.blockHash == maxHash) && (foob.GetCurrentBlockchain().Count != Blockchain.BlockChain.Count))
+                                    {
+                                        Debug.WriteLine("Chain changed successfully");
+                                        chainChange = true;
+                                        Blockchain.BlockChain = foob.GetCurrentBlockchain();
+                                        Dispatcher.Invoke(() => { NoOfBlocks.Content = Blockchain.GetChainCount().ToString(); });
+                                        break;
+                                    }
+                                }
+                                if (chainChange)
+                                {
                                     break;
                                 }
-                            }
-                            if (chainChange)
-                            {
-                                break;
                             }
                         }
                     }
                 }
+                catch (EndpointNotFoundException)
+                {
+                    if (IsClosed)
+                    {
+                        Debug.WriteLine(portNumber.ToString());
+                        RestRequest removeRequest = new RestRequest("api/Client/Remove/" + portNumber.ToString());
+                        client.Get(removeRequest);
+                        listOfClients = getClientList();
+                    }
+                }
+                catch (TaskCanceledException) { }
+                catch (CommunicationException) { }
+                
             }
         }
 
