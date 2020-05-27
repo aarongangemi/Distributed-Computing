@@ -30,7 +30,7 @@ namespace Tutorial_6_Client_Application
         private int portNumber;
         private List<Client> listOfClients;
         private Log log;
-        private static int count = 0;
+        private int count = 0;
         public bool IsClosed { get; private set; }
         public MainWindow()
         {
@@ -52,7 +52,7 @@ namespace Tutorial_6_Client_Application
             bool ServerCreated = false;
             ServiceHost host;
             listOfClients = getClientList();
-            while(!ServerCreated)
+            do
             {
                 try
                 {
@@ -66,6 +66,7 @@ namespace Tutorial_6_Client_Application
                     ServerCreated = true;
                     log.logMessage("Client with port " + portNumber.ToString() + " was successfully updated");
                     log.logMessage("Server Thread is running on port: " + portNumber.ToString());
+                    IsClosed = false;
                     while (!IsClosed)
                     { }
                     host.Close();
@@ -73,13 +74,13 @@ namespace Tutorial_6_Client_Application
                     log.logError("Client: " + portNumber + " has successfully been disconnected");
                     client.Get(closeRequest);
                 }
-                catch(AddressAlreadyInUseException)
+                catch (AddressAlreadyInUseException)
                 {
                     PortCounter.CurrentPort++;
                     portNumber = PortCounter.CurrentPort;
                     host = new ServiceHost(typeof(JobHost));
                 }
-            }
+            } while (!ServerCreated);
         }
 
         private void NetworkingThreadFunction()
@@ -92,10 +93,16 @@ namespace Tutorial_6_Client_Application
             while (true)
             {
                 listOfClients = getClientList();
+                count = 0;
                 for (int i = 0; i < listOfClients.Count; i++)
                 {
                     try
                     {
+                        count += listOfClients.ElementAt(i).jobsCompleted;
+                        if((i == listOfClients.Count - 1) && (!IsClosed))
+                        {
+                            Dispatcher.Invoke(() => { JobsCompleted.Text = count.ToString(); });
+                        }
                         if (portNumber.ToString() != listOfClients.ElementAt(i).port.ToString())
                         {
                             URL = "net.tcp://" + listOfClients.ElementAt(i).IpAddress.ToString() + ":" + listOfClients.ElementAt(i).port.ToString() + "/JobServer";
@@ -125,8 +132,10 @@ namespace Tutorial_6_Client_Application
                                             var result = PyFunc();
                                             PyResult.Content = result;
                                             job.PythonResult = PyResult.Content.ToString();
-                                            count++;
-                                            Dispatcher.Invoke(() => { JobsCompleted.Text = count.ToString(); });
+                                            RestRequest request = new RestRequest("api/Client/UpdateCount/" + i.ToString());
+                                            client.Put(request);
+                                            log.logMessage("Count updated");
+                                           
                                         }
                                         catch (SyntaxErrorException)
                                         {
@@ -144,9 +153,7 @@ namespace Tutorial_6_Client_Application
                                             log.logError("no return found");
                                         }
                                     });
-                                    RestRequest request = new RestRequest("api/Client/UpdateCount/" + i.ToString());
-                                    client.Put(request);
-                                    log.logMessage("Count updated");
+                                    
                                     foob.UploadJobSolution(job.PythonResult, job.jobNumber); //Return the result of the script
                                     Dispatcher.Invoke(() =>
                                     {
@@ -157,6 +164,7 @@ namespace Tutorial_6_Client_Application
                                 }
                             }
                         }
+                       
                     }
                     catch (EndpointNotFoundException)
                     {
@@ -177,6 +185,7 @@ namespace Tutorial_6_Client_Application
                         log.logError("Something went wrong with the server");
                     }
                 }
+                
             }
         }
 
@@ -211,9 +220,8 @@ namespace Tutorial_6_Client_Application
             return listOfClients;
         }
 
-        protected override void OnClosed(EventArgs e)
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            base.OnClosed(e);
             IsClosed = true;
         }
     }
