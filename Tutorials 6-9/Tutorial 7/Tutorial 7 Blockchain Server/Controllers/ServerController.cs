@@ -30,20 +30,6 @@ namespace Tutorial_7_Blockchain_Server.Controllers
             return Blockchain.BlockChain.Count;
         }
 
-        [Route("api/Server/Increment")]
-        [HttpPut]
-        public void Increment()
-        {
-            Blockchain.IncrementOffset();
-        }
-
-        [Route("api/Server/GetOffset")]
-        [HttpGet]
-        public uint GetOffset()
-        {
-            return Blockchain.hashOffset;
-        }
-
         [Route("api/Server/GetBalance/{acntID}")]
         [HttpGet]
         public float GetAccountBalance(uint acntID)

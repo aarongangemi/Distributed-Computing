@@ -28,6 +28,9 @@ namespace Tutorial_7_Miner.Controllers
         {
             if (!ThreadStarted)
             {
+                RestClient ServerClient = new RestClient("https://localhost:44353/");
+                RestRequest TransactionRequest = new RestRequest("api/Server/GenerateGenesisBlock");
+                ServerClient.Post(TransactionRequest);
                 Thread processingThread = new Thread(new ThreadStart(ProcessTransaction));
                 processingThread.Start();
                 ThreadStarted = true;
@@ -35,7 +38,7 @@ namespace Tutorial_7_Miner.Controllers
             TransactionQueue.Enqueue(transaction);
         }
 
-        public void ProcessTransaction()
+        private void ProcessTransaction()
         {
             while (true)
             {
@@ -43,6 +46,7 @@ namespace Tutorial_7_Miner.Controllers
                 {
                     if (TransactionQueue.Count > 0)
                     {
+                        uint offset = 0;
                         Transaction transaction = TransactionQueue.Dequeue();
                         string hashString = "";
                         bool isValidBlock = false;
@@ -59,9 +63,6 @@ namespace Tutorial_7_Miner.Controllers
                             RestRequest BlockchainRequest = new RestRequest("api/Server/GetBlockchain");
                             IRestResponse BlockchainResponse = client.Get(BlockchainRequest);
                             List<Block> blockchain = JsonConvert.DeserializeObject<List<Block>>(BlockchainResponse.Content);
-                            RestRequest OffsetRequest = new RestRequest("api/Server/GetOffset");
-                            IRestResponse OffsetResponse = client.Get(OffsetRequest);
-                            uint offset = JsonConvert.DeserializeObject<uint>(OffsetResponse.Content);
                             string prevBlockHash = blockchain.Last().blockHash;
                             Debug.WriteLine("Previous block hash = " + prevBlockHash);
                             SHA256 sha256 = SHA256.Create();
@@ -95,7 +96,6 @@ namespace Tutorial_7_Miner.Controllers
                             }
                         }
                     }
-                    
                 }
                 catch (InvalidOperationException)
                 {

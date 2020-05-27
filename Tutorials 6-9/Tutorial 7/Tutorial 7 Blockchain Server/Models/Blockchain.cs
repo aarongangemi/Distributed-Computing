@@ -10,21 +10,15 @@ namespace Tutorial_7_Blockchain_Server.Models
     public static class Blockchain
     {
         public static List<Block> BlockChain = new List<Block>();
-        public static uint hashOffset = 0;
-
-        public static void IncrementOffset()
-        {
-            hashOffset += 1;
-        }
-
         public static void generateGenesisBlock()
         {
             SHA256 sha256 = SHA256.Create();
             int val = 0;
             string hashedString ="";
+            uint hashOffset = 0;
             while (!hashedString.StartsWith("12345"))
             {
-                IncrementOffset();
+                hashOffset += 1;
                 string blockString = val.ToString() + val.ToString() + val.ToString() + hashOffset + "";
                 byte[] textBytes = Encoding.UTF8.GetBytes(blockString);
                 byte[] hashedData = sha256.ComputeHash(textBytes);

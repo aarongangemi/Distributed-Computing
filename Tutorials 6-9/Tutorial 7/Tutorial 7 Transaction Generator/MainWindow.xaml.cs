@@ -25,9 +25,7 @@ namespace Tutorial_7_Transaction_Generator
             MinerURL = "https://localhost:44317/";
             ServerClient = new RestClient(ServerURL);
             MinerClient = new RestClient(MinerURL);
-            RestRequest TransactionRequest = new RestRequest("api/Server/GenerateGenesisBlock");
-            ServerClient.Post(TransactionRequest);
-            NoOfBlocks.Content = "1";
+            NoOfBlocks.Content = GetNoOfBlocks().ToString();
             Debug.WriteLine("Genesis block created");
             Debug.WriteLine(".................................................................");
         }

@@ -13,19 +13,22 @@ namespace Tutorial_8_Blockchain_Library
 
         public static void generateGenesisBlock()
         {
-            SHA256 sha256 = SHA256.Create();
-            int val = 0;
-            uint hashOffset = 0;
-            string hashedString ="";
-            while (!hashedString.StartsWith("12345"))
+            if(GetChainCount() == 0)
             {
-                hashOffset++;
-                string blockString = val.ToString() + val.ToString() + val.ToString() + hashOffset + "";
-                byte[] textBytes = Encoding.UTF8.GetBytes(blockString);
-                byte[] hashedData = sha256.ComputeHash(textBytes);
-                hashedString = BitConverter.ToUInt64(hashedData, 0).ToString();
+                SHA256 sha256 = SHA256.Create();
+                int val = 0;
+                uint hashOffset = 0;
+                string hashedString = "";
+                while (!hashedString.StartsWith("12345"))
+                {
+                    hashOffset++;
+                    string blockString = val.ToString() + val.ToString() + val.ToString() + hashOffset + "";
+                    byte[] textBytes = Encoding.UTF8.GetBytes(blockString);
+                    byte[] hashedData = sha256.ComputeHash(textBytes);
+                    hashedString = BitConverter.ToUInt64(hashedData, 0).ToString();
+                }
+                BlockChain.Add(new Block(0, 0, 0, hashOffset, "", hashedString));
             }
-            BlockChain.Add(new Block(0, 0, 0, hashOffset, "", hashedString));
         }
 
         public static void AddBlock(Block block)
