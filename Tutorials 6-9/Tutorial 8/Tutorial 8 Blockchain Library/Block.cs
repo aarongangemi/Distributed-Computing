@@ -18,9 +18,7 @@ namespace Tutorial_8_Blockchain_Library
         public string blockHash;
 
         public Block()
-        {
-
-        }
+        {}
         public Block(uint walletIdFrom, uint walletIdTo, float amount, uint blockOffset, string prevBlockHash, string blockHash)
         {
             blockCounter++;

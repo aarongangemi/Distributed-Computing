@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,20 +10,25 @@ namespace Tutorial_8_Blockchain_Library
 {
     public class BlockchainHost : IBlockchain
     {
-        private List<Block> Blockchain = new List<Block>();
         public Block GetCurrentBlock()
         {
-            return Blockchain.Last();
+            return Blockchain.BlockChain.Last();
         }
 
         public List<Block> GetCurrentBlockchain()
         {
-            return Blockchain;
+            return Blockchain.BlockChain;
         }
 
-        public void RecieveNewTransaction()
+
+        public void RecieveNewTransaction(Transaction transaction)
         {
-            throw new NotImplementedException();
+            TransactionStorage.TransactionQueue.Enqueue(transaction);
+        }
+
+        public static void AddBlock(Block block)
+        {
+            Blockchain.BlockChain.Add(block);
         }
     }
 }

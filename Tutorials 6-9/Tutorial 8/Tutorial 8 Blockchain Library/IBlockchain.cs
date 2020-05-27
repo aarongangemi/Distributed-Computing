@@ -17,6 +17,6 @@ namespace Tutorial_8_Blockchain_Library
         Block GetCurrentBlock();
 
         [OperationContract]
-        void RecieveNewTransaction();
+        void RecieveNewTransaction(Transaction transaction);
     }
 }

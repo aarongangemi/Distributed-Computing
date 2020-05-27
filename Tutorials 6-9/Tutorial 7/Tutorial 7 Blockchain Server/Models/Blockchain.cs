@@ -30,7 +30,6 @@ namespace Tutorial_7_Blockchain_Server.Models
                 byte[] hashedData = sha256.ComputeHash(textBytes);
                 hashedString = BitConverter.ToUInt64(hashedData, 0).ToString();
             }
-            Debug.WriteLine(hashedString + "////////////////////////");
             BlockChain.Add(new Block(0, 0, 0, hashOffset, "", hashedString));
         }
     }

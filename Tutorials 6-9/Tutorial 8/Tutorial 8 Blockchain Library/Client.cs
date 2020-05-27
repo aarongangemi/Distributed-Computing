@@ -12,12 +12,11 @@ namespace Tutorial_8_Blockchain_Library
         public string IpAddress;
         public string port;
         public int jobsCompleted;
-        public List<Block> ClientBlockchain;
         public Client(string IpAddress, string port)
         {
             this.IpAddress = IpAddress;
             this.port = port;
-            this.jobsCompleted = 0;
+            jobsCompleted = 0;
         }
     }
 }
