@@ -64,6 +64,10 @@ namespace Tutorial_7_Transaction_Generator
                 MessageBox.Show("Unable to parse values. Please ensure amount, sender and receiver are correct data types");
                 Debug.WriteLine("Unable to parse values, format exception caught");
             }
+            catch (OverflowException)
+            {
+                Debug.WriteLine("Negative value entered, try again");
+            }
             NoOfBlocks.Content = GetNoOfBlocks().ToString();
 
         }
@@ -100,6 +104,10 @@ namespace Tutorial_7_Transaction_Generator
                 MessageBox.Show("Invalid data entered for account ID field, please try again");
                 Debug.WriteLine("Account fields contains invalid data");
                 Debug.WriteLine(".................................................................");
+            }
+            catch (OverflowException)
+            {
+                Debug.WriteLine("Negative value entered, try again");
             }
         }
     }

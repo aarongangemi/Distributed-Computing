@@ -1,5 +1,4 @@
-﻿using com.sun.source.tree;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Collections;
@@ -78,27 +77,68 @@ namespace ClientApp
 
         private void Submit_Transaction(object sender, RoutedEventArgs e)
         {
-            NetTcpBinding tcp = new NetTcpBinding();
-            string URL;
-            ChannelFactory<IBlockchain> foobFactory;
-            IBlockchain foob;
-            listOfClients = getClientList();
-            for(int i = 0; i < listOfClients.Count; i++)
+            try
             {
-                URL = "net.tcp://" + listOfClients.ElementAt(i).IpAddress.ToString() + ":" + listOfClients.ElementAt(i).port.ToString() + "/BlockchainServerHost";
-                foobFactory = new ChannelFactory<IBlockchain>(tcp, URL);
-                foob = foobFactory.CreateChannel();
-                Transaction transaction = new Transaction();
-                transaction.amount = float.Parse(Amount.Text);
-                transaction.walletIdFrom = uint.Parse(IdFrom.Text);
-                transaction.walletIdTo = uint.Parse(IdTo.Text);
-                foob.RecieveNewTransaction(transaction);
+                float amount = float.Parse(Amount.Text);
+                uint senderId = uint.Parse(IdFrom.Text);
+                uint recieverId = uint.Parse(IdTo.Text);
+                if(Blockchain.GetAccountBalance(uint.Parse(IdFrom.Text)) < amount)
+                {
+                    MessageBox.Show("Insufficient funds, please try again");
+                    Debug.WriteLine("Insufficient funds entered");
+                }
+                else if(amount < 0 || senderId < 0 || recieverId < 0)
+                {
+                    MessageBox.Show("Invalid data was entered, please try again");
+                    Debug.WriteLine("Invalid data was entered");
+                }
+                else
+                {
+                    NetTcpBinding tcp = new NetTcpBinding();
+                    string URL;
+                    ChannelFactory<IBlockchain> foobFactory;
+                    IBlockchain foob;
+                    listOfClients = getClientList();
+                    for (int i = 0; i < listOfClients.Count; i++)
+                    {
+                        URL = "net.tcp://" + listOfClients.ElementAt(i).IpAddress.ToString() + ":" + listOfClients.ElementAt(i).port.ToString() + "/BlockchainServerHost";
+                        foobFactory = new ChannelFactory<IBlockchain>(tcp, URL);
+                        foob = foobFactory.CreateChannel();
+                        Transaction transaction = new Transaction();
+                        transaction.amount = float.Parse(Amount.Text);
+                        transaction.walletIdFrom = uint.Parse(IdFrom.Text);
+                        transaction.walletIdTo = uint.Parse(IdTo.Text);
+                        foob.RecieveNewTransaction(transaction);
+                    }
+                }
+ 
+            }
+            catch(FormatException)
+            {
+                MessageBox.Show("Unable to parse data, please try again");
+                Debug.WriteLine("Unable to parse data, please try again");
+            }
+            catch(OverflowException)
+            {
+                MessageBox.Show("Negative value entered, try again");
+                Debug.WriteLine("Negative value entered, try again");
             }
         }
 
         private void Get_Account_Balance(object sender, RoutedEventArgs e)
         {
-            AcntBalance.Content = Blockchain.GetAccountBalance(uint.Parse(AcntNo.Text)).ToString();
+            try
+            {
+                AcntBalance.Content = Blockchain.GetAccountBalance(uint.Parse(AcntNo.Text)).ToString();
+            }
+            catch(FormatException)
+            {
+                Debug.WriteLine("Unable to parse data, please try again");
+            }
+            catch (OverflowException)
+            {
+                Debug.WriteLine("Negative value entered, try again");
+            }
         }
 
         private void MiningThread()
@@ -216,8 +256,14 @@ namespace ClientApp
                         listOfClients = getClientList();
                     }
                 }
-                catch (TaskCanceledException) { }
-                catch (CommunicationException) { }
+                catch (TaskCanceledException) 
+                {
+                    Debug.WriteLine("Dispatcher had to cancel, trying again");
+                }
+                catch (CommunicationException) 
+                {
+                    Debug.WriteLine("Re-establishing communication, one sec");
+                }
                 
             }
         }
