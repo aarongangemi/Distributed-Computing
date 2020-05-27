@@ -14,7 +14,7 @@ namespace Tutorial_7_Blockchain_Server.Models
 
         public static void IncrementOffset()
         {
-            hashOffset += 5;
+            hashOffset += 1;
         }
 
         public static void generateGenesisBlock()

@@ -62,18 +62,18 @@ namespace Tutorial_7_Miner.Controllers
                             RestRequest OffsetRequest = new RestRequest("api/Server/GetOffset");
                             IRestResponse OffsetResponse = client.Get(OffsetRequest);
                             uint offset = JsonConvert.DeserializeObject<uint>(OffsetResponse.Content);
-                            Debug.WriteLine("Offset = " + offset);
                             string prevBlockHash = blockchain.Last().blockHash;
                             Debug.WriteLine("Previous block hash = " + prevBlockHash);
                             SHA256 sha256 = SHA256.Create();
                             while (!hashString.StartsWith("12345"))
                             {
-                                offset += 5;
+                                offset += 1;
                                 string blockString = transaction.walletIdFrom.ToString() + transaction.walletIdTo.ToString() + transaction.amount.ToString() + offset + prevBlockHash;
                                 byte[] textBytes = Encoding.UTF8.GetBytes(blockString);
                                 byte[] hashedData = sha256.ComputeHash(textBytes);
                                 hashString = BitConverter.ToUInt64(hashedData, 0).ToString();
                             }
+                            Debug.WriteLine("Offset = " + offset);
                             Debug.WriteLine("Block hash = " + hashString);
                             Block block = new Block(transaction.walletIdFrom, transaction.walletIdTo, transaction.amount, offset, prevBlockHash, hashString);
                             RestRequest ValidationRequest = new RestRequest("api/Server/ValidateBlock/");
