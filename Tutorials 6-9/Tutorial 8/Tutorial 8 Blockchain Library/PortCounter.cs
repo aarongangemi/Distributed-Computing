@@ -9,5 +9,6 @@ namespace Tutorial_8_Blockchain_Library
     public static class PortCounter
     {
         public static int CurrentPort = 8100;
+        public static int ClientCounter = -1;
     }
 }

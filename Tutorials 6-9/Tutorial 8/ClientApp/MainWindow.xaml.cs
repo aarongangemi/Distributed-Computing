@@ -27,6 +27,7 @@ namespace ClientApp
         private int portNumber;
         private List<Client> listOfClients;
         public static Hashtable ht;
+        private int clientId;
         public bool IsClosed { get; private set; }
         public MainWindow()
         {
@@ -58,7 +59,10 @@ namespace ClientApp
                     host.AddServiceEndpoint(typeof(IBlockchain), tcp, "net.tcp://127.0.0.1:" + portNumber + "/BlockchainServerHost");
                     host.Open();
                     RestRequest request = new RestRequest("api/Client/Register/");
-                    request.AddJsonBody(new Client("127.0.0.1", portNumber.ToString()));
+                    PortCounter.ClientCounter++;
+                    clientId = PortCounter.ClientCounter;
+                    Dispatcher.Invoke(() => { ClientID.Content = clientId.ToString(); });
+                    request.AddJsonBody(new Client("127.0.0.1", portNumber.ToString(),clientId));
                     client.Post(request);
                     Debug.WriteLine(portNumber.ToString());
                     ServerCreated = true;
@@ -70,6 +74,8 @@ namespace ClientApp
                 {
                     PortCounter.CurrentPort++;
                     portNumber = PortCounter.CurrentPort;
+                    PortCounter.ClientCounter++;
+                    clientId = PortCounter.ClientCounter;
                     host = new ServiceHost(typeof(BlockchainHost));
                 }
             }
@@ -91,6 +97,11 @@ namespace ClientApp
                 {
                     MessageBox.Show("Invalid data was entered, please try again");
                     Debug.WriteLine("Invalid data was entered");
+                }
+                else if(clientId != senderId)
+                {
+                    MessageBox.Show("Cannot send funds, not your wallet. Enter your wallet ID");
+                    Debug.WriteLine("Invalid ID entered");
                 }
                 else
                 {
