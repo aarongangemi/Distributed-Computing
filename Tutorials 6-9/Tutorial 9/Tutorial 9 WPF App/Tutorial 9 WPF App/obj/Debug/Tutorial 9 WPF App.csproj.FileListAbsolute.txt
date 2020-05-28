@@ -1,0 +1,20 @@
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 9\Tutorial 9 WPF App\Tutorial 9 WPF App\bin\Debug\Tutorial 9 WPF App.exe.config
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 9\Tutorial 9 WPF App\Tutorial 9 WPF App\bin\Debug\Tutorial 9 WPF App.exe
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 9\Tutorial 9 WPF App\Tutorial 9 WPF App\bin\Debug\Tutorial 9 WPF App.pdb
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 9\Tutorial 9 WPF App\Tutorial 9 WPF App\bin\Debug\Newtonsoft.Json.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 9\Tutorial 9 WPF App\Tutorial 9 WPF App\bin\Debug\RestSharp.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 9\Tutorial 9 WPF App\Tutorial 9 WPF App\bin\Debug\Tutorial 9 Blockchain Library.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 9\Tutorial 9 WPF App\Tutorial 9 WPF App\bin\Debug\Tutorial 9 Blockchain Library.pdb
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 9\Tutorial 9 WPF App\Tutorial 9 WPF App\bin\Debug\Newtonsoft.Json.xml
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 9\Tutorial 9 WPF App\Tutorial 9 WPF App\obj\Debug\Tutorial 9 WPF App.csprojAssemblyReference.cache
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 9\Tutorial 9 WPF App\Tutorial 9 WPF App\obj\Debug\MainWindow.g.cs
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 9\Tutorial 9 WPF App\Tutorial 9 WPF App\obj\Debug\App.g.cs
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 9\Tutorial 9 WPF App\Tutorial 9 WPF App\obj\Debug\Tutorial 9 WPF App_MarkupCompile.cache
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 9\Tutorial 9 WPF App\Tutorial 9 WPF App\obj\Debug\Tutorial 9 WPF App_MarkupCompile.lref
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 9\Tutorial 9 WPF App\Tutorial 9 WPF App\obj\Debug\MainWindow.baml
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 9\Tutorial 9 WPF App\Tutorial 9 WPF App\obj\Debug\Tutorial 9 WPF App.g.resources
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 9\Tutorial 9 WPF App\Tutorial 9 WPF App\obj\Debug\Tutorial_9_WPF_App.Properties.Resources.resources
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 9\Tutorial 9 WPF App\Tutorial 9 WPF App\obj\Debug\Tutorial 9 WPF App.csproj.GenerateResource.cache
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 9\Tutorial 9 WPF App\Tutorial 9 WPF App\obj\Debug\Tutorial 9 WPF App.csproj.CopyComplete
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 9\Tutorial 9 WPF App\Tutorial 9 WPF App\obj\Debug\Tutorial 9 WPF App.exe
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 9\Tutorial 9 WPF App\Tutorial 9 WPF App\obj\Debug\Tutorial 9 WPF App.pdb
