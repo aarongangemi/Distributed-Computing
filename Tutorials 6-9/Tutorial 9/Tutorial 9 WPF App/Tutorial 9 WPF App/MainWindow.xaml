@@ -7,26 +7,16 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Label Content="No of blocks in Blockchain:" HorizontalAlignment="Left" Margin="24,35,0,0" VerticalAlignment="Top" Width="158"/>
-        <TextBlock HorizontalAlignment="Left" Margin="187,40,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="21"/>
-        <Label Name="NoOfBlocks" Content="" HorizontalAlignment="Left" Margin="182,35,0,0" VerticalAlignment="Top" Width="59"/>
-        <Label Content="Current Balances:" HorizontalAlignment="Left" Margin="90,96,0,0" VerticalAlignment="Top" Width="111"/>
-        <Label Content="Create new Transaction:" HorizontalAlignment="Left" Margin="392,35,0,0" VerticalAlignment="Top" Width="158"/>
-        <GridSplitter HorizontalAlignment="Left" Height="419" Margin="335,0,0,0" VerticalAlignment="Top" Width="5"/>
-        <Label Content="Wallet ID From:" HorizontalAlignment="Left" Margin="368,91,0,0" VerticalAlignment="Top" Width="96"/>
-        <Label Content="Wallet ID To:" HorizontalAlignment="Left" Margin="368,136,0,0" VerticalAlignment="Top" Width="76"/>
-        <Label Content="Amount:" HorizontalAlignment="Left" Margin="368,177,0,0" VerticalAlignment="Top" Width="60"/>
-        <TextBox Name="IdFrom" HorizontalAlignment="Left" Height="23" Margin="480,91,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBox Name="Amount" HorizontalAlignment="Left" Height="23" Margin="445,180,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.526,0.286"/>
-        <TextBox Name="IdTo" HorizontalAlignment="Left" Height="23" Margin="464,140,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <Button Content="Submit Transaction" HorizontalAlignment="Left" Margin="464,231,0,0" VerticalAlignment="Top" Width="136" Height="27" Click="Submit_Transaction"/>
-        <Label Content="Enter Account ID:" HorizontalAlignment="Left" Margin="10,149,0,0" VerticalAlignment="Top" Width="101"/>
-        <TextBox Name="AcntNo" HorizontalAlignment="Left" Height="23" Margin="118,152,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="53"/>
-        <Label Content="Account Balance:" HorizontalAlignment="Left" Margin="10,203,0,0" VerticalAlignment="Top" Width="103"/>
-        <Label Name="AcntBalance" Content="" HorizontalAlignment="Left" Margin="113,203,0,0" VerticalAlignment="Top" Width="88"/>
-        <Button Content="Get Account Balance" HorizontalAlignment="Left" Margin="206,174,0,0" VerticalAlignment="Top" Width="124" Click="Get_Account_Balance" Height="29"/>
-        <Label Content="Client ID: " HorizontalAlignment="Left" Margin="583,35,0,0" VerticalAlignment="Top" Width="63"/>
-        <Label Name="ClientID" Content="" HorizontalAlignment="Left" Margin="651,35,0,0" VerticalAlignment="Top" Width="59"/>
-
+        <Button Content="Upload Python file" HorizontalAlignment="Left" Margin="60,278,0,0" VerticalAlignment="Top" Width="149" Height="34" Click="Upload_Python_File"/>
+        <TextBox Name ="PythonScriptText" HorizontalAlignment="Left" Height="156" Margin="30,56,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="237"/>
+        <Label Content="Enter Python Script:" HorizontalAlignment="Left" Margin="81,18,0,0" VerticalAlignment="Top" Width="128"/>
+        <Label Content="Total Jobs Completed:" HorizontalAlignment="Left" Margin="297,168,0,0" VerticalAlignment="Top" Width="141"/>
+        <TextBox Name="JobsCompleted" HorizontalAlignment="Left" Height="26" Margin="449,168,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="93" IsReadOnly="True"/>
+        <Label Content="Python Script Result:" HorizontalAlignment="Left" Margin="322,18,0,0" VerticalAlignment="Top" Width="141"/>
+        <Label Name="PyResult" Content="" HorizontalAlignment="Left" Margin="297,56,0,0" VerticalAlignment="Top" Width="245" Height="85"/>
+        <Label Content="Job Status:" HorizontalAlignment="Left" Margin="30,233,0,0" VerticalAlignment="Top" Width="71" RenderTransformOrigin="-0.57,0.596"/>
+        <Label Name="JobStatusLabel" Content="" HorizontalAlignment="Left" Margin="106,233,0,0" VerticalAlignment="Top" Width="202"/>
+        <Label Content="Python script must start with &quot;def() main:&quot; and contain a return value.&#xA;Python script must also use proper indentation. &#xA;" HorizontalAlignment="Left" Margin="30,363,0,0" VerticalAlignment="Top" Width="390" Height="46"/>
+        <ListBox Name="JobListBox" HorizontalAlignment="Left" Height="370" Margin="568,18,0,0" VerticalAlignment="Top" Width="200"/>
     </Grid>
 </Window>

@@ -18,3 +18,7 @@ C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tut
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 9\Tutorial 9 WPF App\Tutorial 9 WPF App\obj\Debug\Tutorial 9 WPF App.csproj.CopyComplete
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 9\Tutorial 9 WPF App\Tutorial 9 WPF App\obj\Debug\Tutorial 9 WPF App.exe
 C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 9\Tutorial 9 WPF App\Tutorial 9 WPF App\obj\Debug\Tutorial 9 WPF App.pdb
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 9\Tutorial 9 WPF App\Tutorial 9 WPF App\bin\Debug\IronPython.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 9\Tutorial 9 WPF App\Tutorial 9 WPF App\bin\Debug\Microsoft.Scripting.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 9\Tutorial 9 WPF App\Tutorial 9 WPF App\bin\Debug\Microsoft.Dynamic.dll
+C:\Users\61459\source\repos\aarongangemi\Distributed-Computing\Tutorials 6-9\Tutorial 9\Tutorial 9 WPF App\Tutorial 9 WPF App\bin\Debug\Microsoft.Scripting.Metadata.dll

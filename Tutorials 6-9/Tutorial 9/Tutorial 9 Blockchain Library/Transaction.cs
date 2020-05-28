@@ -8,8 +8,16 @@ namespace Tutorial_9_Blockchain_Library
 {
     public class Transaction
     {
-        public uint walletIdFrom;
-        public uint walletIdTo;
-        public float amount;
+        public string PythonSrc;
+        public string PythonResult;
+        public int TransactionId;
+
+        public Transaction() { }
+        public Transaction(string PythonSrc, string PythonResult, int TransactionId)
+        {
+            this.PythonSrc = PythonSrc;
+            this.PythonResult = PythonResult;
+            this.TransactionId = TransactionId;
+        }
     }
 }

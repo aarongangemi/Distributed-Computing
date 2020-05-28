@@ -13,22 +13,20 @@ namespace Tutorial_9_Blockchain_Library
 
         public static void generateGenesisBlock()
         {
-            if(GetChainCount() == 0)
+            SHA256 sha256 = SHA256.Create();
+            string hashedString = "";
+            Block b = new Block(0, "", hashedString);
+            while (!hashedString.StartsWith("12345"))
             {
-                SHA256 sha256 = SHA256.Create();
-                int val = 0;
-                uint hashOffset = 0;
-                string hashedString = "";
-                while (!hashedString.StartsWith("12345"))
-                {
-                    hashOffset++;
-                    string blockString = val.ToString() + val.ToString() + val.ToString() + hashOffset + "";
-                    byte[] textBytes = Encoding.UTF8.GetBytes(blockString);
-                    byte[] hashedData = sha256.ComputeHash(textBytes);
-                    hashedString = BitConverter.ToUInt64(hashedData, 0).ToString();
-                }
-                BlockChain.Add(new Block(0, 0, 0, hashOffset, "", hashedString));
+                b.blockOffset++;
+                string blockString = b.blockID + b.TransactionDetailsList + b.blockOffset + b.prevBlockHash;
+                byte[] textBytes = Encoding.UTF8.GetBytes(blockString);
+                byte[] hashedData = sha256.ComputeHash(textBytes);
+                hashedString = BitConverter.ToUInt64(hashedData, 0).ToString();
             }
+            b.blockHash = hashedString;
+            BlockChain.Add(b);
+            Debug.WriteLine("Geneis Block successfully added");
         }
 
         public static void AddBlock(Block block)
@@ -40,40 +38,14 @@ namespace Tutorial_9_Blockchain_Library
             return BlockChain.Count;
         }
 
-        public static float GetAccountBalance(uint acntID)
-        {
-            float balance = 0;
-            if (acntID == 0)
-            {
-                balance = float.MaxValue;
-            }
-            else
-            {
-                foreach (Block block in Blockchain.BlockChain)
-                {
-                    if (block.walletIdFrom == acntID)
-                    {
-                        balance -= block.amount;
-                    }
-                    if (block.walletIdTo == acntID)
-                    {
-                        balance += block.amount;
-                    }
-                }
-            }
-            return balance;
-        }
-
         public static bool ValidateBlock(Block block)
         {
             SHA256 sha256 = SHA256.Create();
-            string blockString = block.walletIdFrom.ToString() + block.walletIdTo.ToString() + block.amount.ToString() + block.blockOffset + block.prevBlockHash;
+            string blockString = block.blockID + block.TransactionDetailsList + block.blockOffset + block.prevBlockHash;
             byte[] hash = sha256.ComputeHash(Encoding.UTF8.GetBytes(blockString));
             string hashedString = BitConverter.ToUInt64(hash, 0).ToString();
-            if ((GetAccountBalance(block.walletIdFrom) < block.amount) || (block.amount <= 0)
-                || (block.prevBlockHash != BlockChain.Last().blockHash)
-                || (!block.blockHash.StartsWith("12345")) || (block.amount < 0) || (block.walletIdFrom < 0) ||
-                (block.walletIdTo < 0) || (GetAccountBalance(block.walletIdFrom) < 0) || (block.blockHash != hashedString))
+            if ((block.prevBlockHash != BlockChain.Last().blockHash)
+                || (!block.blockHash.StartsWith("12345")) || (block.blockHash != hashedString))
             {
                 return false;
             }

@@ -9,5 +9,6 @@ namespace Tutorial_9_Blockchain_Library
     public class TransactionStorage
     {
         public static Queue<Transaction> TransactionQueue = new Queue<Transaction>();
+        public static List<Transaction> CompletedTransactions = new List<Transaction>();
     }
 }
