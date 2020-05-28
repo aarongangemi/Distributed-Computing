@@ -28,6 +28,7 @@ namespace ClientApp
         private List<Client> listOfClients;
         public static Hashtable ht;
         private int clientId;
+        public static Mutex mutex = new Mutex();
         public bool IsClosed { get; private set; }
         public MainWindow()
         {
@@ -83,6 +84,7 @@ namespace ClientApp
 
         private void Submit_Transaction(object sender, RoutedEventArgs e)
         {
+            mutex.WaitOne();
             try
             {
                 float amount = float.Parse(Amount.Text);
@@ -97,6 +99,11 @@ namespace ClientApp
                 {
                     MessageBox.Show("Invalid data was entered, please try again");
                     Debug.WriteLine("Invalid data was entered");
+                }
+                else if(senderId == recieverId)
+                {
+                    MessageBox.Show("Sender ID and reciever ID cannot be the same");
+                    Debug.WriteLine("Sender ID and reciever ID cannot be the same");
                 }
                 else if(clientId != senderId)
                 {
@@ -122,7 +129,6 @@ namespace ClientApp
                         foob.RecieveNewTransaction(transaction);
                     }
                 }
- 
             }
             catch(FormatException)
             {
@@ -134,6 +140,7 @@ namespace ClientApp
                 MessageBox.Show("Negative value entered, try again");
                 Debug.WriteLine("Negative value entered, try again");
             }
+            mutex.ReleaseMutex();
         }
 
         private void Get_Account_Balance(object sender, RoutedEventArgs e)

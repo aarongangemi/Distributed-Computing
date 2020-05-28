@@ -18,6 +18,7 @@ namespace Tutorial_7_Transaction_Generator
         private RestClient MinerClient;
         private string ServerURL;
         private string MinerURL;
+        public static Mutex mutex = new Mutex();
         public MainWindow()
         {
             InitializeComponent();
@@ -32,17 +33,26 @@ namespace Tutorial_7_Transaction_Generator
 
         private void Submit_Transaction(object sender, RoutedEventArgs e)
         {
+            mutex.WaitOne();
             try
             {
                 if (!string.IsNullOrEmpty(IdFrom.Text) && !string.IsNullOrEmpty(IdTo.Text) && !string.IsNullOrEmpty(Amount.Text))
                 {
-                    Transaction transaction = new Transaction();
-                    transaction.amount = float.Parse(Amount.Text);
-                    transaction.walletIdFrom = uint.Parse(IdFrom.Text);
-                    transaction.walletIdTo = uint.Parse(IdTo.Text);
-                    RestRequest TransactionRequest = new RestRequest("api/Miner/AddTransaction/");
-                    TransactionRequest.AddJsonBody(transaction);
-                    MinerClient.Post(TransactionRequest);
+                    if(IdFrom.Text == IdTo.Text)
+                    {
+                        MessageBox.Show("You cannot send money to yourself");
+                        Debug.WriteLine("User tried to send money to self");
+                    }
+                    else
+                    {
+                        Transaction transaction = new Transaction();
+                        transaction.amount = float.Parse(Amount.Text);
+                        transaction.walletIdFrom = uint.Parse(IdFrom.Text);
+                        transaction.walletIdTo = uint.Parse(IdTo.Text);
+                        RestRequest TransactionRequest = new RestRequest("api/Miner/AddTransaction/");
+                        TransactionRequest.AddJsonBody(transaction);
+                        MinerClient.Post(TransactionRequest);
+                    }
                 }
                 else
                 {
@@ -67,6 +77,7 @@ namespace Tutorial_7_Transaction_Generator
                 Debug.WriteLine("Negative value entered, try again");
             }
             NoOfBlocks.Content = GetNoOfBlocks().ToString();
+            mutex.ReleaseMutex();
 
         }
 
