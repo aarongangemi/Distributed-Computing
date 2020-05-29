@@ -1,6 +1,6 @@
-﻿@{
-    ViewBag.Title = "Tally Page";
-}
+﻿<!--Purpose: Used to display the client tally and the number of jobs that a client has completed
+    Author: Aaron Gangemi
+    Date Modified: 29/05/2020-->
 <body onload="LoadClients()">
     <br/>
     <br/>
@@ -10,6 +10,7 @@
     </div>
 </body>
 <script>
+    //Purpose: To load the tally data for each client and display the tally in the web browser
     function LoadClients() {
         $.ajax({
             url: "api/Client/GetClientList",
@@ -17,12 +18,15 @@
             processData: false,
             success: function (data, t, j) {
                 for (var i in data) {
+                    // loop through clients
                     $('#Content').append("Port Number: " + data[i].port + " = " + "Number of Jobs Completed: " + data[i].jobsCompleted + "<br/><br/>");
+                    // display data and use line to separate data
                     $('#Content').append("-------------------------------------------------------------------------------" + "<br/><br/>");
                 }
             },
             error: function (j, t, e) {
                 console.log("Error occured: Unable to load clients");
+                // log if an error occurs
             }
         });
     }
