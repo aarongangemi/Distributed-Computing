@@ -10,16 +10,25 @@
         <Button Content="Upload Python file" HorizontalAlignment="Left" Margin="60,278,0,0" VerticalAlignment="Top" Width="149" Height="34" Click="Upload_Python_File"/>
         <TextBox Name ="PythonScriptText" HorizontalAlignment="Left" Height="156" Margin="30,56,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="237"/>
         <Label Content="Enter Python Script:" HorizontalAlignment="Left" Margin="81,18,0,0" VerticalAlignment="Top" Width="128"/>
-        <Label Content="Total Jobs Completed:" HorizontalAlignment="Left" Margin="279,168,0,0" VerticalAlignment="Top" Width="141"/>
-        <TextBox Name="JobsCompleted" HorizontalAlignment="Left" Height="26" Margin="425,168,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="57" IsReadOnly="True"/>
+        <Label Content="Total Jobs Completed:" HorizontalAlignment="Left" Margin="289,273,0,0" VerticalAlignment="Top" Width="141"/>
+        <TextBox Name="JobsCompleted" HorizontalAlignment="Left" Height="26" Margin="435,273,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="57" IsReadOnly="True"/>
         <Label Content="Last Python Script Result:" HorizontalAlignment="Left" Margin="322,18,0,0" VerticalAlignment="Top" Width="148"/>
-        <Label Name="PyResult" Content="" HorizontalAlignment="Left" Margin="297,56,0,0" VerticalAlignment="Top" Width="245" Height="85"/>
-        <Label Content="Job Status:" HorizontalAlignment="Left" Margin="30,233,0,0" VerticalAlignment="Top" Width="71" RenderTransformOrigin="-0.57,0.596"/>
-        <Label Name="JobStatusLabel" Content="" HorizontalAlignment="Left" Margin="106,233,0,0" VerticalAlignment="Top" Width="202"/>
+        <Label Name="PyResult" Content="" HorizontalAlignment="Left" Margin="297,56,0,0" VerticalAlignment="Top" Width="188" Height="140" RenderTransformOrigin="0.5,0.5">
+            <Label.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleX="-0.701"/>
+                    <RotateTransform/>
+                    <TranslateTransform X="-0.654"/>
+                </TransformGroup>
+            </Label.RenderTransform>
+        </Label>
+        <Label Content="Job Status:" HorizontalAlignment="Left" Margin="10,233,0,0" VerticalAlignment="Top" Width="71" RenderTransformOrigin="-0.57,0.596"/>
+        <Label Name="JobStatusLabel" Content="" HorizontalAlignment="Left" Margin="81,233,0,0" VerticalAlignment="Top" Width="202"/>
         <Label Content="Python script must start with &quot;def() main:&quot; and contain a return value.&#xA;Python script must also use proper indentation. &#xA;" HorizontalAlignment="Left" Margin="30,363,0,0" VerticalAlignment="Top" Width="390" Height="46"/>
         <ListBox Name="JobListBox" HorizontalAlignment="Left" Height="332" Margin="503,56,0,0" VerticalAlignment="Top" Width="270"/>
         <Label Content="Python jobs submitted (Refreshed every 10 seconds)" HorizontalAlignment="Left" Margin="494,18,0,0" VerticalAlignment="Top" Width="288"/>
-        <Label Content="No of Blocks in Blockchain" HorizontalAlignment="Left" Margin="272,207,0,0" VerticalAlignment="Top" Width="156"/>
-        <TextBox Name="NoOfBlocks" HorizontalAlignment="Left" Height="26" Margin="428,207,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="57" IsReadOnly="True" RenderTransformOrigin="0.175,0.538"/>
+        <Label Content="No of Blocks in Blockchain" HorizontalAlignment="Left" Margin="285,233,0,0" VerticalAlignment="Top" Width="156"/>
+        <TextBox Name="NoOfBlocks" HorizontalAlignment="Left" Height="26" Margin="441,233,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="57" IsReadOnly="True" RenderTransformOrigin="0.175,0.538"/>
     </Grid>
 </Window>

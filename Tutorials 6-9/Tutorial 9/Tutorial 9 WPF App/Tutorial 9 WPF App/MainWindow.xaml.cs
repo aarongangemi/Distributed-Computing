@@ -250,7 +250,8 @@ namespace Tutorial_9_WPF_App
                                         chainChange = true;
                                         Blockchain.BlockChain = foob.GetCurrentBlockchain();
                                         Dispatcher.Invoke(() => { JobsCompleted.Text = PortCounter.JobCounter.ToString();
-                                        NoOfBlocks.Text = Blockchain.BlockChain.Count.ToString();});
+                                            NoOfBlocks.Text = foob.GetCurrentBlockchain().Count.ToString();
+                                        });
                                         break;
                                     }
                                 }
@@ -282,27 +283,38 @@ namespace Tutorial_9_WPF_App
         {
             while(true)
             {
-                Thread.Sleep(10000);
-                Dispatcher.Invoke(() =>
+                try
                 {
-                    JobListBox.Items.Clear();
-                    foreach (Block block in Blockchain.BlockChain)
+                    Thread.Sleep(10000);
+                    Dispatcher.Invoke(() =>
                     {
-                        foreach (string[] jsonTransaction in JsonConvert.DeserializeObject<List<string[]>>(block.TransactionDetailsList))
+                        JobListBox.Items.Clear();
+                        foreach (Block block in Blockchain.BlockChain)
                         {
-                            foreach (Transaction transaction in TransactionStorage.CompletedTransactions)
+                            foreach (string[] jsonTransaction in JsonConvert.DeserializeObject<List<string[]>>(block.TransactionDetailsList))
                             {
-                                if (Encoding.UTF8.GetString(Convert.FromBase64String(transaction.PythonSrc)) == jsonTransaction[0])
+                                foreach (Transaction transaction in TransactionStorage.CompletedTransactions)
                                 {
-                                    JobListBox.Items.Add("Client "+ transaction.TransactionId + " submitted script with result: " + jsonTransaction[1]);
+                                    if (Encoding.UTF8.GetString(Convert.FromBase64String(transaction.PythonSrc)) == jsonTransaction[0])
+                                    {
+                                        JobListBox.Items.Add("Client " + transaction.TransactionId + " submitted script with result: " + jsonTransaction[1]);
+                                    }
                                 }
                             }
                         }
-                    }
-                    JobsCompleted.Text = PortCounter.JobCounter.ToString();
-                });
+                    });
+                    
+                }
+                catch (TaskCanceledException)
+                {
+                    RestRequest removeRequest = new RestRequest("api/Client/Remove/" + portNumber.ToString());
+                    client.Get(removeRequest);
+                    listOfClients = getClientList();
+                    Console.WriteLine("Dispatcher had to reload due to losing client connection");
+                }
             }
         }
+        
 
         private List<Client> getClientList()
         {
@@ -313,6 +325,9 @@ namespace Tutorial_9_WPF_App
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            RestRequest removeRequest = new RestRequest("api/Client/Remove/" + portNumber.ToString());
+            client.Get(removeRequest);
+            listOfClients = getClientList();
             IsClosed = true;
         }
     }
