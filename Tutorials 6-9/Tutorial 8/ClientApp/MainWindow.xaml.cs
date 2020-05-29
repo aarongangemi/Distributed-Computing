@@ -161,10 +161,6 @@ namespace ClientApp
 
         private void MiningThread()
         {
-            ChannelFactory<IBlockchain> foobFactory;
-            IBlockchain foob;
-            int max;
-            string maxHash = "";
             while (true)
             {
                 try
@@ -209,58 +205,13 @@ namespace ClientApp
                             }
                         }
                     }
-                    for (int i = 0; i < listOfClients.Count; i++)
-                    {
-                        NetTcpBinding tcp = new NetTcpBinding();
-                        string clientURL = "net.tcp://" + listOfClients.ElementAt(i).IpAddress.ToString() + ":" + listOfClients.ElementAt(i).port.ToString() + "/BlockchainServerHost";
-                        foobFactory = new ChannelFactory<IBlockchain>(tcp, clientURL);
-                        foob = foobFactory.CreateChannel();
-                        if (ht.ContainsKey(foob.GetCurrentBlock().blockHash))
-                        {
-                            ht[foob.GetCurrentBlock().blockHash] = (int)ht[foob.GetCurrentBlock().blockHash] + 1;
-                        }
-                        else
-                        {
-                            ht.Add(foob.GetCurrentBlock().blockHash, 1);
-                        }
-                    }
-                    foreach (DictionaryEntry entry in ht)
-                    {
-                        max = (int)entry.Value;
-                        maxHash = (string)entry.Key;
-                        if ((int)entry.Value > max)
-                        {
-                            max = (int)entry.Value;
-                            maxHash = (string)entry.Key;
-                        }
-                    }
+                    UpdateHashTable();
+                    string maxHash = GetMaxHash();
                     if (ht.Count > 0)
                     {
                         if (maxHash != Blockchain.BlockChain.Last().blockHash)
                         {
-                            bool chainChange = false;
-                            for (int i = 0; i < listOfClients.Count; i++)
-                            {
-                                NetTcpBinding tcp = new NetTcpBinding();
-                                string clientURL = "net.tcp://" + listOfClients.ElementAt(i).IpAddress.ToString() + ":" + listOfClients.ElementAt(i).port.ToString() + "/BlockchainServerHost";
-                                foobFactory = new ChannelFactory<IBlockchain>(tcp, clientURL);
-                                foob = foobFactory.CreateChannel();
-                                foreach (Block block in foob.GetCurrentBlockchain())
-                                {
-                                    if ((block.blockHash == maxHash) && (foob.GetCurrentBlockchain().Count != Blockchain.BlockChain.Count))
-                                    {
-                                        Debug.WriteLine("Chain changed successfully");
-                                        chainChange = true;
-                                        Blockchain.BlockChain = foob.GetCurrentBlockchain();
-                                        Dispatcher.Invoke(() => { NoOfBlocks.Content = Blockchain.GetChainCount().ToString(); });
-                                        break;
-                                    }
-                                }
-                                if (chainChange)
-                                {
-                                    break;
-                                }
-                            }
+                            UpdateChain(maxHash);
                         }
                     }
                 }
@@ -286,6 +237,70 @@ namespace ClientApp
             }
         }
 
+        private void UpdateHashTable()
+        {
+            ChannelFactory<IBlockchain> foobFactory;
+            IBlockchain foob;
+            for (int i = 0; i < listOfClients.Count; i++)
+            {
+                NetTcpBinding tcp = new NetTcpBinding();
+                string clientURL = "net.tcp://" + listOfClients.ElementAt(i).IpAddress.ToString() + ":" + listOfClients.ElementAt(i).port.ToString() + "/BlockchainServerHost";
+                foobFactory = new ChannelFactory<IBlockchain>(tcp, clientURL);
+                foob = foobFactory.CreateChannel();
+                if (ht.ContainsKey(foob.GetCurrentBlock().blockHash))
+                {
+                    ht[foob.GetCurrentBlock().blockHash] = (int)ht[foob.GetCurrentBlock().blockHash] + 1;
+                }
+                else
+                {
+                    ht.Add(foob.GetCurrentBlock().blockHash, 1);
+                }
+            }
+        }
+        private void UpdateChain(string maxHash)
+        {
+            ChannelFactory<IBlockchain> foobFactory;
+            IBlockchain foob;
+            bool chainChange = false;
+            for (int i = 0; i < listOfClients.Count; i++)
+            {
+                NetTcpBinding tcp = new NetTcpBinding();
+                string clientURL = "net.tcp://" + listOfClients.ElementAt(i).IpAddress.ToString() + ":" + listOfClients.ElementAt(i).port.ToString() + "/BlockchainServerHost";
+                foobFactory = new ChannelFactory<IBlockchain>(tcp, clientURL);
+                foob = foobFactory.CreateChannel();
+                foreach (Block block in foob.GetCurrentBlockchain())
+                {
+                    if ((block.blockHash == maxHash) && (foob.GetCurrentBlockchain().Count != Blockchain.BlockChain.Count))
+                    {
+                        Debug.WriteLine("Chain changed successfully");
+                        chainChange = true;
+                        Blockchain.BlockChain = foob.GetCurrentBlockchain();
+                        Dispatcher.Invoke(() => { NoOfBlocks.Content = Blockchain.GetChainCount().ToString(); });
+                        break;
+                    }
+                }
+                if (chainChange)
+                {
+                    break;
+                }
+            }
+        }
+        private string GetMaxHash()
+        {
+            int max;
+            string maxHash = "";
+            foreach (DictionaryEntry entry in ht)
+            {
+                max = (int)entry.Value;
+                maxHash = (string)entry.Key;
+                if ((int)entry.Value > max)
+                {
+                    max = (int)entry.Value;
+                    maxHash = (string)entry.Key;
+                }
+            }
+            return maxHash;
+        }
         private List<Client> getClientList()
         {
             RestRequest request = new RestRequest("api/Client/GetClientList");
