@@ -146,6 +146,7 @@ namespace Tutorial_9_WPF_App
                                 for (int j = 0; j < 5; j++)
                                 {
                                     Transaction t = TransactionStorage.TransactionQueue.Dequeue();
+                                    t = transactionsList.ElementAt(j);
                                     if (!String.IsNullOrEmpty(t.PythonSrc))
                                     {
                                         byte[] decodedBytes = Convert.FromBase64String(t.PythonSrc);

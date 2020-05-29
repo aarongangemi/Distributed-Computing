@@ -6,22 +6,33 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace Tutorial_7_Miner.Controllers
 {
+    /// <summary>
+    /// Purpose: The miner controller is responsible for mining blocks and processing them into the blockchain.
+    /// It communicates with the server to gather add the transaction to the block.
+    /// Author: Aaron Gangemi
+    /// Date Modified: 29/05/2020
+    /// </summary>
     public delegate void TransactionProcessing();
     public class MinerController : ApiController
     {
+        // Queue to store transactions
         public static Queue<Transaction> TransactionQueue = new Queue<Transaction>();
+        // bool to check if thread has started
         private static bool ThreadStarted = false;
 
+        /// <summary>
+        /// Purpose: To check if the thread has already been started and if not, then enqueue the given transaction
+        /// Author: Aaron Gangemi
+        /// Date Modified: 29/05/2020
+        /// </summary>
+        /// <param name="transaction"></param>
         [Route("api/Miner/AddTransaction/")]
         [HttpPost]
         public void AddTransaction([FromBody]Transaction transaction)
@@ -30,24 +41,33 @@ namespace Tutorial_7_Miner.Controllers
             {
                 RestClient ServerClient = new RestClient("https://localhost:44353/");
                 RestRequest TransactionRequest = new RestRequest("api/Server/GenerateGenesisBlock");
+                // Generate the genesis block
                 ServerClient.Post(TransactionRequest);
                 Thread processingThread = new Thread(new ThreadStart(ProcessTransaction));
+                // start the thread to process the transaction
                 processingThread.Start();
+                // thread has been started
                 ThreadStarted = true;
             }
+            // add transaction to queue
             TransactionQueue.Enqueue(transaction);
         }
 
+        /// <summary>
+        /// Purpose: To process any transactions in the queue and mine blocks from transactions
+        /// </summary>
         private void ProcessTransaction()
         {
             while (true)
             {
                 try
                 {
+                    // check if transaction are in the queue
                     if (TransactionQueue.Count > 0)
                     {
                         uint offset = 0;
                         Transaction transaction = TransactionQueue.Dequeue();
+                        // get transaction from queue
                         string hashString = "";
                         bool isValidBlock = false;
                         RestClient client = new RestClient("https://localhost:44353/");

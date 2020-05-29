@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace BlockchainLibrary
 {
+    /// <summary>
+    /// Purpose: Used to create a transaction object for tutorial 7 and contains fields required to complete transaction
+    /// Author: Aaron Gangemi
+    /// Date Modified: 29/05/2020
+    /// </summary>
     public class Transaction
     {
         public uint walletIdFrom;
