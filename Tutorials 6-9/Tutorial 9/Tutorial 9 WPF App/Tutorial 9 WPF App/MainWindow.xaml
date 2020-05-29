@@ -12,11 +12,14 @@
         <Label Content="Enter Python Script:" HorizontalAlignment="Left" Margin="81,18,0,0" VerticalAlignment="Top" Width="128"/>
         <Label Content="Total Jobs Completed:" HorizontalAlignment="Left" Margin="297,168,0,0" VerticalAlignment="Top" Width="141"/>
         <TextBox Name="JobsCompleted" HorizontalAlignment="Left" Height="26" Margin="449,168,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="93" IsReadOnly="True"/>
-        <Label Content="Python Script Result:" HorizontalAlignment="Left" Margin="322,18,0,0" VerticalAlignment="Top" Width="141"/>
+        <Label Content="Last Python Script Result:" HorizontalAlignment="Left" Margin="322,18,0,0" VerticalAlignment="Top" Width="148"/>
         <Label Name="PyResult" Content="" HorizontalAlignment="Left" Margin="297,56,0,0" VerticalAlignment="Top" Width="245" Height="85"/>
         <Label Content="Job Status:" HorizontalAlignment="Left" Margin="30,233,0,0" VerticalAlignment="Top" Width="71" RenderTransformOrigin="-0.57,0.596"/>
         <Label Name="JobStatusLabel" Content="" HorizontalAlignment="Left" Margin="106,233,0,0" VerticalAlignment="Top" Width="202"/>
         <Label Content="Python script must start with &quot;def() main:&quot; and contain a return value.&#xA;Python script must also use proper indentation. &#xA;" HorizontalAlignment="Left" Margin="30,363,0,0" VerticalAlignment="Top" Width="390" Height="46"/>
-        <ListBox Name="JobListBox" HorizontalAlignment="Left" Height="370" Margin="568,18,0,0" VerticalAlignment="Top" Width="200"/>
+        <ListBox Name="JobListBox" HorizontalAlignment="Left" Height="332" Margin="568,56,0,0" VerticalAlignment="Top" Width="200"/>
+        <Label Content="Python jobs submitted" HorizontalAlignment="Left" Margin="588,18,0,0" VerticalAlignment="Top" Width="148"/>
+        <Label Content="No of Blocks in Blockchain" HorizontalAlignment="Left" Margin="282,207,0,0" VerticalAlignment="Top" Width="156"/>
+        <TextBox Name="NoOfBlocks" HorizontalAlignment="Left" Height="26" Margin="449,207,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="93" IsReadOnly="True"/>
     </Grid>
 </Window>

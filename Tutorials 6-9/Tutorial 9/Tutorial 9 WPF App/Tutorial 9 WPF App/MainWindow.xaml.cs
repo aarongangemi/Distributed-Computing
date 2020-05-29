@@ -45,6 +45,8 @@ namespace Tutorial_9_WPF_App
             ServerThread.Start();
             Thread NetworkingThread = new Thread(new ThreadStart(MiningThread));
             NetworkingThread.Start();
+            JobsCompleted.Text = PortCounter.JobCounter.ToString();
+            NoOfBlocks.Text = Blockchain.BlockChain.Count.ToString();
         }
         private void BlockchainThread()
         {
@@ -81,6 +83,7 @@ namespace Tutorial_9_WPF_App
             }
         }
 
+
         private void Upload_Python_File(object sender, RoutedEventArgs e)
         {
             mutex.WaitOne();
@@ -92,6 +95,7 @@ namespace Tutorial_9_WPF_App
                 ChannelFactory<IBlockchain> foobFactory;
                 IBlockchain foob;
                 listOfClients = getClientList();
+                Transaction transaction = null;
                 for (int i = 0; i < listOfClients.Count; i++)
                 {
                     URL = "net.tcp://" + listOfClients.ElementAt(i).IpAddress.ToString() + ":" + listOfClients.ElementAt(i).port.ToString() + "/BlockchainServerHost";
@@ -99,9 +103,10 @@ namespace Tutorial_9_WPF_App
                     foob = foobFactory.CreateChannel();
                     byte[] textBytes = Encoding.UTF8.GetBytes(PythonScriptText.Text);
                     string base64String = Convert.ToBase64String(textBytes);
-                    Transaction transaction = new Transaction(base64String,"", int.Parse(listOfClients.ElementAt(i).port));
+                    transaction = new Transaction(base64String,"", int.Parse(listOfClients.ElementAt(i).port));
                     foob.RecieveNewTransaction(transaction);
                 }
+                TransactionStorage.CompletedTransactions.Add(transaction);
             }
             else
             {
@@ -124,41 +129,43 @@ namespace Tutorial_9_WPF_App
                     if (TransactionStorage.TransactionQueue.Count == 5)
                     {
                         List<Transaction> transactionsList = TransactionStorage.TransactionQueue.OrderBy(key => key.PythonSrc).ToList();
-                        for (int i = 0; i < transactionsList.Count; i++)
-                        {
-                            Transaction t = transactionsList.ElementAt(i);
-                            TransactionStorage.TransactionQueue.Dequeue();
-                            uint offset = 0;
+                        uint offset = 0;
                             string prevBlockHash;
                             string hashString = "";
                             SHA256 sha256 = SHA256.Create();
                             prevBlockHash = Blockchain.BlockChain.Last().blockHash;
-                            foreach (Client c in listOfClients)
-                            {
-                                if (c.port != portNumber.ToString())
-                                {
-                                    if (!String.IsNullOrEmpty(t.PythonSrc))
+                        Block block = new Block(offset, prevBlockHash, hashString);
+                                    
                                     {
-                                        byte[] decodedBytes = Convert.FromBase64String(t.PythonSrc);
-                                        t.PythonSrc = Encoding.UTF8.GetString(decodedBytes);
                                         Dispatcher.Invoke(() =>
                                         {
                                             try
                                             {
-                                                JobStatusLabel.Content = "Running Python Job";
-                                                ScriptEngine engine = Python.CreateEngine();
-                                                ScriptScope scope = engine.CreateScope();
-                                                engine.Execute(t.PythonSrc, scope);
-                                                dynamic PyFunc = scope.GetVariable("main");
-                                                var result = PyFunc();
-                                                PyResult.Content = result;
-                                                t.PythonResult = PyResult.Content.ToString();
-                                                Debug.WriteLine("Python Script executed successfully - Result = " + t.PythonResult);
-                                                TransactionStorage.CompletedTransactions.Add(t);
-                                                byte[] resultBytes = Encoding.UTF8.GetBytes(t.PythonResult);
-                                                string base64String = Convert.ToBase64String(resultBytes);
-                                                Block block = new Block(offset, prevBlockHash, hashString);
-                                                block.AddPythonTransaction(t.PythonSrc, base64String);
+                                               
+                                                for(int j = 0; j < 5; j++)
+                                                {
+                                                    Transaction t = TransactionStorage.TransactionQueue.Dequeue();
+                                                    if (!String.IsNullOrEmpty(t.PythonSrc))
+                                                    {
+                                                        byte[] decodedBytes = Convert.FromBase64String(t.PythonSrc);
+                                                        t.PythonSrc = Encoding.UTF8.GetString(decodedBytes);
+                                                        JobStatusLabel.Content = "Running Python Job";
+                                                        ScriptEngine engine = Python.CreateEngine();
+                                                        ScriptScope scope = engine.CreateScope();
+                                                        engine.Execute(t.PythonSrc, scope);
+                                                        dynamic PyFunc = scope.GetVariable("main");
+                                                        var result = PyFunc();
+                                                        PyResult.Content = result;
+                                                        t.PythonResult = PyResult.Content.ToString();
+                                                        Debug.WriteLine("Python Script executed successfully - Result = " + t.PythonResult);
+                                                        byte[] resultBytes = Encoding.UTF8.GetBytes(t.PythonResult);
+                                                        string base64String = Convert.ToBase64String(resultBytes);
+                                                        block.AddPythonTransaction(t.PythonSrc, t.PythonResult);
+                                                        JobStatusLabel.Content = "Python Job Complete";
+                                                        PortCounter.JobCounter++;
+                                                        JobsCompleted.Text = PortCounter.JobCounter.ToString();
+                                                    }
+                                                }
                                                 while (!hashString.StartsWith("12345"))
                                                 {
                                                     offset++;
@@ -176,7 +183,8 @@ namespace Tutorial_9_WPF_App
                                                     Debug.WriteLine("Block offset = " + offset);
                                                     Debug.WriteLine("Block hash = " + block.blockHash);
                                                     Debug.WriteLine("Block previous hash = " + prevBlockHash);
-                                                    Debug.WriteLine("..............................................");
+                                                    Debug.WriteLine(Blockchain.BlockChain.Count +  "..............................................");
+                                                    Dispatcher.Invoke(() => { NoOfBlocks.Text = (Blockchain.BlockChain.Count).ToString(); });
                                                 }
                                                 else
                                                 {
@@ -198,9 +206,6 @@ namespace Tutorial_9_WPF_App
                                         });
                                     }
                                 }
-                            }
-                        }
-                    }
 
                     for (int i = 0; i < listOfClients.Count; i++)
                     {
@@ -245,6 +250,8 @@ namespace Tutorial_9_WPF_App
                                         Debug.WriteLine("Chain changed successfully");
                                         chainChange = true;
                                         Blockchain.BlockChain = foob.GetCurrentBlockchain();
+                                        Dispatcher.Invoke(() => { JobsCompleted.Text = PortCounter.JobCounter.ToString();
+                                        NoOfBlocks.Text = Blockchain.BlockChain.Count.ToString();});
                                         break;
                                     }
                                 }
@@ -270,22 +277,25 @@ namespace Tutorial_9_WPF_App
                 {
                     Debug.WriteLine("Dispatcher had to cancel, trying again");
                 }
-                if (Blockchain.BlockChain.Count != JobListBox.Items.Count && Blockchain.BlockChain.Count > 1)
+
+                Dispatcher.Invoke(() =>
                 {
-                    Dispatcher.Invoke(() =>
+                    JobListBox.Items.Clear();
+                    foreach(Block block in Blockchain.BlockChain)
                     {
-                        Debug.WriteLine(Blockchain.BlockChain.Count);
-                        JobListBox.Items.Clear();
-                        for (int i = 0; i < TransactionStorage.CompletedTransactions.Count; i++)
+                        foreach (string[] jsonTransaction in JsonConvert.DeserializeObject<List<string[]>>(block.TransactionDetailsList))
                         {
-                            if(portNumber.ToString() == TransactionStorage.CompletedTransactions.ElementAt(i).TransactionId.ToString())
+                            foreach (Transaction transaction in TransactionStorage.CompletedTransactions)
                             {
-                                JobListBox.Items.Add("Client " + TransactionStorage.CompletedTransactions.ElementAt(i).TransactionId + 
-                                    " executed: " + TransactionStorage.CompletedTransactions.ElementAt(i).PythonResult);
+                                if (Encoding.UTF8.GetString(Convert.FromBase64String(transaction.PythonSrc)) == jsonTransaction[0])
+                                {
+                                    JobListBox.Items.Add(jsonTransaction[1]);
+                                }
                             }
                         }
-                    });
-                }
+                    }
+                    JobsCompleted.Text = PortCounter.JobCounter.ToString();
+                });
             }
         }
 

@@ -10,5 +10,6 @@ namespace Tutorial_9_Blockchain_Library
     {
         public static int CurrentPort = 8100;
         public static int ClientCounter = -1;
+        public static int JobCounter = 0;
     }
 }
