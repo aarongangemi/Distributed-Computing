@@ -1,20 +1,26 @@
 ﻿@{
     ViewBag.Title = "Create Profile";
 }
-
 <html>
 <body>
+    <!--Purpose: This page is used to allow the user to create a profile by entering a profile name.
+        If the user enters malicious code, a DOM XSS attack will be demonstrated
+        Author: Aaron Gangemi
+        Date Modified: 30/05/2020-->
     <br/>
         <strong><label>Enter profile name: </label></strong>
         <br /><input type="text" id="profileName" onkeyup="DisplayName()" /><br /><br />
+    <!--DisplayName() function is displayed on output-->
     <div>
         <p id="ProfileText"></p>
     </div>
-
     <script>
+        //Purpose: To display the user name as they're typing
         function DisplayName() {
             var profileValue = document.getElementById("profileName").value;
+            // display profile name as they're typing
             document.getElementById("ProfileText").innerHTML = "<strong>" + "Your profile name is: " + "</strong>" + "<br/><br/>" + profileValue;
+            // use inner HTML
         }
     </script>
 </body>

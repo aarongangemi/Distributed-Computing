@@ -1,29 +1,39 @@
 ﻿@{
         ViewBag.Title = "Tell admin page";
 }
+<!--Purpose: To depict a persistent XSS attack. The user fills out the form which is then posted to the server.
+    Author: Aaron Gangemi
+    Date Modified: 30/05/2020-->
     <body>
         <div>
             <br />
+            <!--Form used to ask user to enter subject and message-->
             <form>
                 <strong><label>Enter Subject of text*: </label></strong><br /> <input type="text" id="subject" name="subject" required/><br /><br />
                 <strong><label>Enter text to admin*: </label></strong><br /> <textarea id="message" name="message" rows="8" cols="50" required></textarea><br /><br />
             </form>
+            <!--Upon submission, data is sent to server-->
             <button onclick="SendToAdmin()">Send to Admin</button>
             <script>
+                // Purpose: To upload the message content and subject as an object to the web server.
+                // This is then added to a list
                 function SendToAdmin() {
                     var messageToSend = {
                         subject: $("#subject").val(),
                         message: $("#message").val()
                     }
                     $.ajax({
+                        // post content to server and add to list
                         url: "/api/Web/StoreMessage/",
                         type: 'post',
                         contentType: "application/json",
                         processData: false,
                         data: JSON.stringify(messageToSend),
+                        // data is json string
                         processData: false,
                         success: function (data, textStatus, jQxhr) {
-                                alert("Your message was sent");
+                            alert("Your message was sent");
+                            // message sent alert displayed
                         },
                         error: function (jqXhr, textStatus, errorThrown) {
                             alert(jqXhr.responseText);

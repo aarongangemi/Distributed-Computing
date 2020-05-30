@@ -6,6 +6,11 @@ using System.Web.Mvc;
 
 namespace XSS.Controllers
 {
+    /// <summary>
+    /// Purpose: To return the CSHTML view for each page
+    /// Author: Aaron Gangemi
+    /// Date Modified: 30/05/2020
+    /// </summary>
     public class HomeController : Controller
     {
         public ActionResult CreateProfile()

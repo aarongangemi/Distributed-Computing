@@ -44,6 +44,8 @@ namespace Tutorial_9_WPF_App
             InitializeComponent();
             URL = "https://localhost:44326/";
             // connect to web server using URL
+            PythonScriptText.AcceptsTab = true;
+            PythonScriptText.AcceptsReturn = true;
             client = new RestClient(URL);
             // get list of clients
             listOfClients = getClientList();
@@ -64,6 +66,7 @@ namespace Tutorial_9_WPF_App
             // set no of blocks in GUI
             Thread JobListThread = new Thread(new ThreadStart(UpdateList));
             JobListThread.Start();
+
             // start thread to consistently update list
         }
 
@@ -128,7 +131,7 @@ namespace Tutorial_9_WPF_App
         {
             // use the mutex to only allow one file at a time
             mutex.WaitOne();
-            if (!String.IsNullOrEmpty(PythonScriptText.Text) && PythonScriptText.Text.StartsWith("def main():"))
+            if (!String.IsNullOrEmpty(PythonScriptText.Text) && PythonScriptText.Text.StartsWith("def main():") && PythonScriptText.Text.Contains("return"))
             {
                 // must check if string field is not null, empty and starts with main()
                 NetTcpBinding tcp = new NetTcpBinding();
@@ -158,9 +161,9 @@ namespace Tutorial_9_WPF_App
             else
             {
                 // if the script is null or the start does not def main();
-                MessageBox.Show("Python string must start with 'def main():' ");
+                MessageBox.Show("Python string must start with 'def main():' and have a return ");
                 // log error
-                Debug.WriteLine("Python string must start with 'def main():' ");
+                Debug.WriteLine("Python string must start with 'def main():' and have a return");
             }
             // release the mutex for another client to use
             mutex.ReleaseMutex();
@@ -248,7 +251,7 @@ namespace Tutorial_9_WPF_App
                                     Debug.WriteLine("Block offset = " + offset);
                                     Debug.WriteLine("Block hash = " + block.blockHash);
                                     Debug.WriteLine("Block previous hash = " + prevBlockHash);
-                                    Debug.WriteLine(Blockchain.BlockChain.Count + "..............................................");
+                                    Debug.WriteLine("..............................................");
                                     // use dispatcher to invoke GUI thread and update blockchain count for each client
                                     Dispatcher.Invoke(() => { NoOfBlocks.Text = Blockchain.BlockChain.Count.ToString(); });
                                 }
@@ -257,6 +260,12 @@ namespace Tutorial_9_WPF_App
                                     // Validation failed, so log error
                                     Debug.WriteLine("Validation for block failed, Trying again");
                                 }
+                            }
+                            catch(FormatException)
+                            {
+                                TransactionStorage.TransactionQueue.Clear();
+                                Debug.WriteLine("Transaction queue cleared due to invalid transaction");
+                                JobStatusLabel.Content = "Python Job Complete";
                             }
                             catch (SyntaxErrorException)
                             {
@@ -466,7 +475,7 @@ namespace Tutorial_9_WPF_App
                                     if (Encoding.UTF8.GetString(Convert.FromBase64String(transaction.PythonSrc)) == jsonTransaction[0])
                                     {
                                         // display transaction in job list with client who submitted transaction
-                                        JobListBox.Items.Add("Client " + transaction.TransactionId + " submitted script with result: " + jsonTransaction[1]);
+                                        JobListBox.Items.Add("Submitted script with result: " + jsonTransaction[1]);
                                     }
                                 }
                             }

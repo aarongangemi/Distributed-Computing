@@ -1,20 +1,26 @@
 ﻿@{
     ViewBag.Title = "Feedback Page";
 }
-
+<!--Purpose: The feedback form depicts a reflective XSS attack by displaying the typed in feedback to the user
+    Author: Aaron Gangemi
+    Date Modified: 30/05/2020-->
 <head>
     <title>Feedback form</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
+    <!--form asking user to add feedback-->
     <h1>Feedback form</h1>
     <br /><br />
     <div id="Content">
         <p>Please enter your feedback</p>
         <input type="text" id="FeedbackForm" name="FeedbackForm">
         <button onclick="SendComment()">Send</button>
+        <!--On button click, SendComment() function is run-->
     </div>
     <script>
+        // Send comment displays text in the div displayed.
+        // Can be malicious code
         function SendComment() {
             $("#Content").html("Your feedback states: " + "<br/><br/>" + $("#FeedbackForm").val());
         }

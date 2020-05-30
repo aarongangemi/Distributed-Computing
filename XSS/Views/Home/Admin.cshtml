@@ -1,29 +1,42 @@
 ﻿<!DOCTYPE html>
 <html>
+<!--Purpose: Used to demonstrate a persisent XSS attack. The user will be required to select a subject 
+    entered and the malicious message is displayed in the text field.
+    Author: Aaron Gangemi
+    Date Modified: 30/05/2020-->
 <body onload="LoadList()">
+    <!--Load list function called on page load-->
     <br/><br/>
+    <!--User selects a subject out of drop down list-->
     <strong><label>Select a subject: </label></strong>
     <select name="subjects" id="subjects" onclick="LoadMessage()">
+        <!--Load message function run on click of list-->
         <option selected="selected" disabled>Choose a subject</option>
+        <!--Disable drop down list title option-->
     </select> 
     <div id="MessageContent">
-
+        <!--Message displayed here-->
     </div>
     <script>
+        // Used to display all subject that have been submitted in javascript. Sets value of dropdown list as option
         function LoadList() {
             $.ajax({
                 url: "/api/Web/GetMessages",
                 type: 'get',
+                // get messages list from web server
                 contentType: 'application/json',
                 processData: false,
                 success: function (data, textStatus, jQxhr)
                 {
+                    // get the dropdown list
                     var dropdownList = document.getElementById("subjects");
                     for (var i in data) {
+                        // for each item in the messages list, create an option and set the value to the message to be displayed
                         console.log(data[i]);
                         var option = document.createElement("option");
                         option.text = data[i].subject;
                         option.value = data[i].message;
+                        // add to dropdown list
                         dropdownList.options.add(option);
                     }
                 },
@@ -33,8 +46,10 @@
             })
         }
 
+        // Display the message in the div
         function LoadMessage() {
             var dropdownList = document.getElementById("subjects");
+            // display selected index
             $("#MessageContent").html("The content of the message reads: " + "<br/><br/>" + dropdownList.options[dropdownList.selectedIndex].value);
         }
     </script>
