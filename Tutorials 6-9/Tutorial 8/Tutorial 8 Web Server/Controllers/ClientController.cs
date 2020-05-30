@@ -11,6 +11,11 @@ namespace Tutorial_8_Web_Server.Controllers
 {
     public class ClientController : ApiController
     {
+        
+        /// <summary>
+        /// Purpose: To retrieve the client list using a get request
+        /// </summary>
+        /// <returns></returns>
         [Route("api/Client/GetClientList")]
         [HttpGet]
         public List<Client> GetClientList()
@@ -18,6 +23,10 @@ namespace Tutorial_8_Web_Server.Controllers
             return ClientList.clientList;
         }
 
+        /// <summary>
+        /// Purpose: To register a new client with the web server
+        /// </summary>
+        /// <param name="client"></param>
         [Route("api/Client/Register/")]
         [HttpPost]
         public void RegisterClient([FromBody] Client client)
@@ -25,6 +34,10 @@ namespace Tutorial_8_Web_Server.Controllers
             ClientList.clientList.Add(client);
         }
 
+        /// <summary>
+        /// To update the count for the number of jobs a client has completed
+        /// </summary>
+        /// <param name="idx"></param>
         [Route("api/Client/UpdateCount/{idx}")]
         [HttpPut]
         public void UpdateCount(int idx)
@@ -32,6 +45,10 @@ namespace Tutorial_8_Web_Server.Controllers
             ClientList.clientList.ElementAt(idx).jobsCompleted++;
         }
 
+        /// <summary>
+        /// To remove a client based on the given port number
+        /// </summary>
+        /// <param name="portNo"></param>
         [Route("api/Client/Remove/{portNo}")]
         [HttpGet]
         public void RemoveClient(int portNo)
@@ -40,6 +57,7 @@ namespace Tutorial_8_Web_Server.Controllers
             {
                 for (int i = 0; i < ClientList.clientList.Count; i++)
                 {
+                    // loop through clients, find port and remove
                     if (ClientList.clientList.ElementAt(i).port == portNo.ToString())
                     {
                         ClientList.clientList.RemoveAt(i);
