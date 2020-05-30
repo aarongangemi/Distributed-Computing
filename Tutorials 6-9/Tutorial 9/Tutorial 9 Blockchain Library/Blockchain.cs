@@ -78,6 +78,7 @@ namespace Tutorial_9_Blockchain_Library
                 || (!block.blockHash.StartsWith("12345")) || (block.blockHash != hashedString))
             {
                 // if one or more fields is true, then return false indicating do not add to chain
+                Debug.WriteLine("Block validagtion failed");
                 return false;
             }
             // if all fields are validated, then allow chain to be valid
