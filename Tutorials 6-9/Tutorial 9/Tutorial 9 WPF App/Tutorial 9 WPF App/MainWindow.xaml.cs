@@ -14,7 +14,6 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Timers;
 using System.Windows;
 using Tutorial_9_Blockchain_Library;
 
@@ -40,13 +39,13 @@ namespace Tutorial_9_WPF_App
             client = new RestClient(URL);
             listOfClients = getClientList();
             ht = new Hashtable();
-            portNumber = PortCounter.CurrentPort;
+            portNumber = Counter.CurrentPort;
             Blockchain.generateGenesisBlock();
             Thread ServerThread = new Thread(new ThreadStart(BlockchainThread));
             ServerThread.Start();
             Thread NetworkingThread = new Thread(new ThreadStart(MiningThread));
             NetworkingThread.Start();
-            JobsCompleted.Text = PortCounter.JobCounter.ToString();
+            JobsCompleted.Text = Counter.JobCounter.ToString();
             NoOfBlocks.Text = Blockchain.BlockChain.Count.ToString();
             Thread JobListThread = new Thread(new ThreadStart(UpdateList));
             JobListThread.Start();
@@ -65,8 +64,8 @@ namespace Tutorial_9_WPF_App
                     host.AddServiceEndpoint(typeof(IBlockchain), tcp, "net.tcp://127.0.0.1:" + portNumber + "/BlockchainServerHost");
                     host.Open();
                     RestRequest request = new RestRequest("api/Client/Register/");
-                    PortCounter.ClientCounter++;
-                    clientId = PortCounter.ClientCounter;
+                    Counter.ClientCounter++;
+                    clientId = Counter.ClientCounter;
                     request.AddJsonBody(new Client("127.0.0.1", portNumber.ToString(), clientId));
                     client.Post(request);
                     Debug.WriteLine(portNumber.ToString());
@@ -77,10 +76,10 @@ namespace Tutorial_9_WPF_App
                 }
                 catch (AddressAlreadyInUseException)
                 {
-                    PortCounter.CurrentPort++;
-                    portNumber = PortCounter.CurrentPort;
-                    PortCounter.ClientCounter++;
-                    clientId = PortCounter.ClientCounter;
+                    Counter.CurrentPort++;
+                    portNumber = Counter.CurrentPort;
+                    Counter.ClientCounter++;
+                    clientId = Counter.ClientCounter;
                     host = new ServiceHost(typeof(BlockchainHost));
                 }
             }
@@ -120,9 +119,6 @@ namespace Tutorial_9_WPF_App
 
         private void MiningThread()
         {
-            ChannelFactory<IBlockchain> foobFactory;
-            IBlockchain foob;
-            int max;
             string maxHash = "";
             while (true)
             {
@@ -135,7 +131,6 @@ namespace Tutorial_9_WPF_App
                         uint offset = 0;
                         string prevBlockHash;
                         string hashString = "";
-                        SHA256 sha256 = SHA256.Create();
                         prevBlockHash = Blockchain.BlockChain.Last().blockHash;
                         Block block = new Block(offset, prevBlockHash, hashString);
                         Dispatcher.Invoke(() =>
@@ -164,19 +159,11 @@ namespace Tutorial_9_WPF_App
                                         string base64String = Convert.ToBase64String(resultBytes);
                                         block.AddPythonTransaction(t.PythonSrc, t.PythonResult);
                                         JobStatusLabel.Content = "Python Job Complete";
-                                        PortCounter.JobCounter++;
-                                        JobsCompleted.Text = PortCounter.JobCounter.ToString();
+                                        Counter.JobCounter++;
+                                        JobsCompleted.Text = Counter.JobCounter.ToString();
                                     }
                                 }
-                                while (!hashString.StartsWith("12345"))
-                                {
-                                    offset++;
-                                    string blockString = block.blockID + block.TransactionDetailsList + offset + prevBlockHash;
-                                    byte[] textBytes = Encoding.UTF8.GetBytes(blockString);
-                                    byte[] hashedData = sha256.ComputeHash(textBytes);
-                                    hashString = BitConverter.ToUInt64(hashedData, 0).ToString();
-                                }
-                                block.blockHash = hashString;
+                                block.blockHash = BruteForceHash(out offset, block, prevBlockHash);
                                 block.blockOffset = offset;
                                 if (Blockchain.ValidateBlock(block))
                                 {
@@ -186,7 +173,7 @@ namespace Tutorial_9_WPF_App
                                     Debug.WriteLine("Block hash = " + block.blockHash);
                                     Debug.WriteLine("Block previous hash = " + prevBlockHash);
                                     Debug.WriteLine(Blockchain.BlockChain.Count + "..............................................");
-                                    Dispatcher.Invoke(() => { NoOfBlocks.Text = (Blockchain.BlockChain.Count).ToString(); });
+                                    Dispatcher.Invoke(() => { NoOfBlocks.Text = Blockchain.BlockChain.Count.ToString(); });
                                 }
                                 else
                                 {
@@ -207,62 +194,9 @@ namespace Tutorial_9_WPF_App
                             }
                         });
                     }
-                    for (int i = 0; i < listOfClients.Count; i++)
-                    {
-                        NetTcpBinding tcp = new NetTcpBinding();
-                        string clientURL = "net.tcp://" + listOfClients.ElementAt(i).IpAddress.ToString() + ":" + listOfClients.ElementAt(i).port.ToString() + "/BlockchainServerHost";
-                        foobFactory = new ChannelFactory<IBlockchain>(tcp, clientURL);
-                        foob = foobFactory.CreateChannel();
-                        if (ht.ContainsKey(foob.GetCurrentBlock().blockHash))
-                        {
-                            ht[foob.GetCurrentBlock().blockHash] = (int)ht[foob.GetCurrentBlock().blockHash] + 1;
-                        }
-                        else
-                        {
-                            ht.Add(foob.GetCurrentBlock().blockHash, 1);
-                        }
-                    }
-                    foreach (DictionaryEntry entry in ht)
-                    {
-                        max = (int)entry.Value;
-                        maxHash = (string)entry.Key;
-                        if ((int)entry.Value > max)
-                        {
-                            max = (int)entry.Value;
-                            maxHash = (string)entry.Key;
-                        }
-                    }
-                    if (ht.Count > 0)
-                    {
-                        if (maxHash != Blockchain.BlockChain.Last().blockHash)
-                        {
-                            bool chainChange = false;
-                            for (int i = 0; i < listOfClients.Count; i++)
-                            {
-                                NetTcpBinding tcp = new NetTcpBinding();
-                                string clientURL = "net.tcp://" + listOfClients.ElementAt(i).IpAddress.ToString() + ":" + listOfClients.ElementAt(i).port.ToString() + "/BlockchainServerHost";
-                                foobFactory = new ChannelFactory<IBlockchain>(tcp, clientURL);
-                                foob = foobFactory.CreateChannel();
-                                foreach (Block block in foob.GetCurrentBlockchain())
-                                {
-                                    if ((block.blockHash == maxHash) && (foob.GetCurrentBlockchain().Count != Blockchain.BlockChain.Count))
-                                    {
-                                        Debug.WriteLine("Chain changed successfully");
-                                        chainChange = true;
-                                        Blockchain.BlockChain = foob.GetCurrentBlockchain();
-                                        Dispatcher.Invoke(() => { JobsCompleted.Text = PortCounter.JobCounter.ToString();
-                                            NoOfBlocks.Text = foob.GetCurrentBlockchain().Count.ToString();
-                                        });
-                                        break;
-                                    }
-                                }
-                                if (chainChange)
-                                {
-                                    break;
-                                }
-                            }
-                        }
-                    }
+                    UpdateHashTable();
+                    maxHash = GenerateMaxHash();
+                    UpdateBlockchain(maxHash);
                 }
                 catch (EndpointNotFoundException)
                 {
@@ -277,6 +211,98 @@ namespace Tutorial_9_WPF_App
                 catch (TaskCanceledException)
                 {
                     Debug.WriteLine("Dispatcher had to cancel, trying again");
+                }
+            }
+        }
+
+        private string BruteForceHash(out uint offset, Block block, string prevBlockHash)
+        {
+            string hashString = "";
+            SHA256 sha256 = SHA256.Create();
+            uint val = 0;
+            while (!hashString.StartsWith("12345"))
+            {
+                val++;
+                string blockString = block.blockID + block.TransactionDetailsList + val + prevBlockHash;
+                byte[] textBytes = Encoding.UTF8.GetBytes(blockString);
+                byte[] hashedData = sha256.ComputeHash(textBytes);
+                hashString = BitConverter.ToUInt64(hashedData, 0).ToString();
+            }
+            offset = val;
+            return hashString;
+        }
+        private string GenerateMaxHash()
+        {
+            int max;
+            string maxHash = "";
+            foreach (DictionaryEntry entry in ht)
+            {
+                max = (int)entry.Value;
+                maxHash = (string)entry.Key;
+                if ((int)entry.Value > max)
+                {
+                    max = (int)entry.Value;
+                    maxHash = (string)entry.Key;
+                }
+            }
+            return maxHash;
+        }
+
+        private void UpdateHashTable()
+        {
+            ChannelFactory<IBlockchain> foobFactory;
+            IBlockchain foob;
+            for (int i = 0; i < listOfClients.Count; i++)
+            {
+                NetTcpBinding tcp = new NetTcpBinding();
+                string clientURL = "net.tcp://" + listOfClients.ElementAt(i).IpAddress.ToString() + ":" + listOfClients.ElementAt(i).port.ToString() + "/BlockchainServerHost";
+                foobFactory = new ChannelFactory<IBlockchain>(tcp, clientURL);
+                foob = foobFactory.CreateChannel();
+                if (ht.ContainsKey(foob.GetCurrentBlock().blockHash))
+                {
+                    ht[foob.GetCurrentBlock().blockHash] = (int)ht[foob.GetCurrentBlock().blockHash] + 1;
+                }
+                else
+                {
+                    ht.Add(foob.GetCurrentBlock().blockHash, 1);
+                }
+            }
+        }
+
+        private void UpdateBlockchain(string maxHash)
+        {
+            ChannelFactory<IBlockchain> foobFactory;
+            IBlockchain foob;
+            if (ht.Count > 0)
+            {
+                if (maxHash != Blockchain.BlockChain.Last().blockHash)
+                {
+                    bool chainChange = false;
+                    for (int i = 0; i < listOfClients.Count; i++)
+                    {
+                        NetTcpBinding tcp = new NetTcpBinding();
+                        string clientURL = "net.tcp://" + listOfClients.ElementAt(i).IpAddress.ToString() + ":" + listOfClients.ElementAt(i).port.ToString() + "/BlockchainServerHost";
+                        foobFactory = new ChannelFactory<IBlockchain>(tcp, clientURL);
+                        foob = foobFactory.CreateChannel();
+                        foreach (Block block in foob.GetCurrentBlockchain())
+                        {
+                            if ((block.blockHash == maxHash) && (foob.GetCurrentBlockchain().Count != Blockchain.BlockChain.Count))
+                            {
+                                Debug.WriteLine("Chain changed successfully");
+                                chainChange = true;
+                                Blockchain.BlockChain = foob.GetCurrentBlockchain();
+                                Dispatcher.Invoke(() => {
+                                    JobsCompleted.Text = Counter.JobCounter.ToString();
+                                    NoOfBlocks.Text = foob.GetCurrentBlockchain().Count.ToString();
+                                });
+                                break;
+                            }
+                        }
+                        if (chainChange)
+                        {
+                            break;
+                        }
+                    }
                 }
             }
         }

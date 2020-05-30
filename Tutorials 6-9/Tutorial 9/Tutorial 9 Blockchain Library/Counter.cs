@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace Tutorial_9_Blockchain_Library
 {
-    public static class PortCounter
+    /// <summary>
+    /// Purpose: To store fields which keep track of the client number, current port and job counter.
+    /// Author: Aaron Gangemi
+    /// Date Modified: 30/05/2020
+    /// </summary>
+    public static class Counter
     {
         public static int CurrentPort = 8100;
         public static int ClientCounter = -1;
