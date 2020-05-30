@@ -1,38 +1,54 @@
 ﻿<!DOCTYPE html>
 <html>
+<!--Purpose: To allow the admin to display the corresponding message for the selected subject. 
+    Is used to demonstrate the prevention of a persistent XSS attack. The server completes all validation so 
+    it is not possible to display any malicious code in this page
+    Author: Aaron Gangemi
+    Date Modified: 30/05/2020-->
 <body onload="LoadList()">
+    <!--Load the list of subjects on page load-->
     <br/><br/>
     <strong><label>Select a subject: </label></strong>
     <select name="subjects" id="subjects" onclick="LoadMessage()">
+        <!--Drop down list to let admin select a message-->
         <option selected="selected" disabled>Choose a subject</option>
+        <!--Disable first option-->
     </select> 
     <div id="MessageContent">
-
+        <!--Div for message to be displayed to admin-->
     </div>
     <script>
+        //Purpose: To load the list on page load. List displays the subjects, and when the subject is clicked, the message will be displayed
         function LoadList() {
             $.ajax({
+                //ajax get request to access list of messages from web server
                 url: "/api/Web/GetMessages",
                 type: 'get',
                 contentType: 'application/json',
                 processData: false,
                 success: function (data, textStatus, jQxhr)
                 {
+                    // get the drop down list
                     var dropdownList = document.getElementById("subjects");
                     for (var i in data) {
+                        // for each item in the message list, create an option for the subject.
                         console.log(data[i]);
                         var option = document.createElement("option");
                         option.text = data[i].subject;
+                        // set the message as the value which will be displayed if subject is clciked
                         option.value = data[i].message;
+                        // add to list
                         dropdownList.options.add(option);
                     }
                 },
                 error: function (jqXhr, textStatus, errorThrown) {
                     alert("unable to send message");
+                    //display error if anything goes wrong
                 }
             })
         }
 
+        //Purpose: One the subject clicks on a subject, load the message into the div
         function LoadMessage() {
             var dropdownList = document.getElementById("subjects");
             $("#MessageContent").html("The content of the message reads: " + "<br/><br/>" + dropdownList.options[dropdownList.selectedIndex].value);

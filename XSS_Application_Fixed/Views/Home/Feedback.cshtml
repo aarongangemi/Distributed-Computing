@@ -1,7 +1,10 @@
 ﻿@{
     ViewBag.Title = "Feedback Page";
 }
-
+<!--Purpose: A feedback form which is used to demonstrate the prevention of a reflective XSS attack.
+    It contains a form, that if invalid data is submitted, the program will execute with characters escaped out
+    Author: Aaron Gangemi
+    Date Modified: 30/05/2020-->
 <head>
     <title>Feedback form</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -10,19 +13,28 @@
     <h1>Feedback form</h1>
     <br /><br />
     <div id="Content">
+        <!--Form containing fields for feedback-->
         <p>Please enter your feedback</p>
         <input type="text" id="FeedbackForm" name="FeedbackForm">
         <button onclick="SendComment()">Send</button>
+        <!--SendComment() run on click of button-->
     </div>
     <script>
+        // Purpose: The send comment function is execute on button click of the form. If the user submits feedback containing special
+        // characters, the form will be submitted and will executed as normal, however to prevent the attack, any special characters entered
+        // will be escaped out using the encodeURIComponent() function. This data is then displayed in the div
         function SendComment() {
             if (/[_\W]/.test($("#FeedbackForm").val()))
             {
+                // check if special characters exist using regex
                 alert("Feedback form contains invalid characters, executing with encoded characters instead");
+                // alert user that characters are encoded
                 $("#Content").html("Your feedback states: " + "<br/><br/>" + encodeURIComponent($("#FeedbackForm").val()));
+                // display encoded data
             }
             else {
                 $("#Content").html("Your feedback states: " + "<br/><br/>" + $("#FeedbackForm").val());
+                // display normal data because no special characters were typed
             }
             
         }

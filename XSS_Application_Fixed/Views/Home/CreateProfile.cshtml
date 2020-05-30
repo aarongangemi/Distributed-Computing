@@ -1,27 +1,37 @@
 ﻿@{
     ViewBag.Title = "Create Profile";
 }
-
+<!--Purpose: A form that mocks creating a profile for the user. 
+    The user will be required to enter a profile name, and it will be displayed back as they are typing.
+    If the user enters special characters, to prevent a DOM XSS, the field will be cleared
+    Author: Aaron Gangemi
+    Date Modified: 30/05/2020-->
 <html>
 <body>
     <br/>
         <strong><label>Enter profile name: </label></strong>
         <br /><input type="text" id="profileName" onkeyup="DisplayName()" /><br /><br />
+        <!--On key up used to display text back to user-->
     <div>
         <p id="ProfileText"></p>
     </div>
 
     <script>
+        // Purpose: Displays the text back to the user. If the text contains special characters,
+        // the user will be alerted and the text field will be cleared so a DOM XSS can not be executed.
         function DisplayName() {
             var profileValue = document.getElementById("profileName").value;
-
             if (/[_\W]/.test(profileValue))
             {
+                // check if special characters are used
                 alert("Profile name contains special characters, clearing text field");
+                // alert user that special characters are not allowed.
                 document.getElementById("profileName").value = "";
+                // clear text field
             }
             else {
                 document.getElementById("ProfileText").innerHTML = "<strong>" + "Your profile name is: " + "</strong>" + "<br/><br/>" + profileValue;
+                // display the text as the user is typing if no special characters are found
             }
         }
     </script>

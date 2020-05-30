@@ -1,21 +1,29 @@
 ﻿@{
         ViewBag.Title = "Tell admin page";
 }
+<!--Purpose: The Tell admin page is used to let the user send the admin a message.
+    They are provided a form which will require them to send a message and subject to admin
+    Author: Aaron Gangemi
+    Date Modified: 30/05/2020-->
     <body>
         <div>
             <br />
             <form>
+                <!--User fills out subject and message forms-->
                 <strong><label>Enter Subject of text*: </label></strong><br /> <input type="text" id="subject" name="subject" required/><br /><br />
                 <strong><label>Enter text to admin*: </label></strong><br /> <textarea id="message" name="message" rows="8" cols="50" required></textarea><br /><br />
             </form>
             <button onclick="SendToAdmin()">Send to Admin</button>
+            <!--Send to admin() function run on button click-->
             <script>
                 function SendToAdmin() {
+                    // create object for JSON request to send message and subject to web server
                     var messageToSend = {
                         subject: $("#subject").val(),
                         message: $("#message").val()
                     }
                     $.ajax({
+                        // post to web server and store in message list
                         url: "/api/Web/StoreMessage/",
                         type: 'post',
                         contentType: "application/json",
@@ -23,9 +31,11 @@
                         data: JSON.stringify(messageToSend),
                         processData: false,
                         success: function (data, textStatus, jQxhr) {
+                            // alert user if successful
                                 alert("Your message was sent");
                         },
                         error: function (jqXhr, textStatus, errorThrown) {
+                            // alert if anything goes wrong
                             alert(jqXhr.responseText);
                         }
                     })
