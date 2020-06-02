@@ -1,0 +1,100 @@
+﻿@{
+    ViewBag.Title = "Transaction Page";
+}
+
+<!--Transaction form to create a transaction.
+    Requires the amount, sender and reciever ID-->
+<form>
+    <label>Create Transaction</label><br />
+    <input type="text" id="amount" name="amount" placeholder="Amount" /><br /><br />
+    <input type="text" id="senderID" name="senderID" placeholder="Sender ID" /><br /><br />
+    <input type="text" id="receiverID" name="receiverID" placeholder="Receiver ID" /><br /><br />
+</form>
+<button id="submitBtn" onclick="CompleteTransaction()">Complete Transaction</button>
+<!--Submit btn performs CompleteTransaction()-->
+<br />
+<script>
+    // Purpose: Contains the ajax request to create and process a transaction back to the business tier
+    function CompleteTransaction() {
+        console.log("Create Transaction");
+        alert("Processing transactions: You have 30 seconds to retrieve transaction before processed." + 
+            "Transaction ID found in visual studio console");
+
+        $.ajax({
+            url: "api/BankApi/CreateTransaction/" + $("#amount").val() + "/" + $("#senderID").val() + "/" + $("#receiverID").val(),
+            type: 'post',
+            contentType: 'application/json',
+            processData: false,
+            success: function (data, textStatus, jQxhr) {
+                if (data == false) {
+                    // Checks if business tier returns false
+                    // If biz tier returns false, then transaction was not processed
+                    // alert the user
+                    alert("Unable to process transaction. Please check account also has sufficient funds");
+                    console.log("Unable to create transaction, invalid data entered");
+                }
+                else {
+                    // data was true so transaction was successfully processed
+                    alert("Processed transaction from: " + $("#senderID").val() + " to " + $("#receiverID").val());
+                }
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                // error function if anything goes wrong
+                alert("Invalid data entered for transaction, please try again");
+                $("#amount").val("Amount");
+                $("#senderID").val("Sender ID");
+                $("#receiverID").val("Receiver ID");
+
+            }
+        })
+    }
+</script>
+
+<!--Form used to retrieve the transaction-->
+<form>
+    <label>Get Transaction</label><br />
+    <!--User fills in the transaction ID and transaction details appear-->
+    <input type="text" id="transactionID" name="transactionID" placeholder="Transaction ID" />
+    <input type="text" id="transactionGetAmount" name="transactionGetAmount" placeholder="Amount" readonly /><br /><br />
+    <input type="text" id="transactionGetSender" name="transactionGetSender" placeholder="Sender ID" readonly /><br /><br />
+    <input type="text" id="transactionGetReceiver" name="transactionGetReceiver" placeholder="Receiver ID" readonly /><br /><br />
+</form>
+<!--On button click, submit form-->
+<button id="submitBtn" onclick="GetTransaction()">Get Transaction</button>
+<br />
+
+<script>
+
+    // Purpose: Get transaction method is used to retrieve the transaction.
+    // Contains the ajax request to retrieve a transaction from business tier
+    function GetTransaction() {
+        console.log("Retrieve Transaction");
+        $.ajax({
+            url: "api/BankApi/GetTransaction/" + $("#transactionID").val(),
+            type: 'get',
+            contentType: 'application/json',
+            processData: false,
+            success: function (data, textStatus, jQxhr) {
+                if (data == null) {
+                    alert("Transaction doesn't exist");
+                    // if business tier returns null, then business tier
+                    // has identified that transaction does not exist
+                }
+                else {
+                    $("#transactionGetAmount").val(data.amount);
+                    $("#transactionGetSender").val(data.senderId);
+                    $("#transactionGetReceiver").val(data.receiverId);
+                    // transaction does exist so display details of transaction
+                }
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log(errorThrown)
+                alert("Invalid data entered for transaction, please try again");
+                // if anything goes wrong, reset the fields to initial labels
+
+            }
+        })
+    }
+</script>
+
+

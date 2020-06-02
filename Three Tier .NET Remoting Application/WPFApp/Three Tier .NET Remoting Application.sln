@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFApp", "WPFApp.csproj", "{7DE5E92F-4713-4C04-83EC-EFD128890F8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remoting Server", "..\Remoting Server\Remoting Server.csproj", "{ACFDC249-8F81-4ED1-A58C-F366E6737F7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorial 1", "..\Tutorial 1\Tutorial 1.csproj", "{3D0B0467-B12F-4BF7-9D20-3E90C1CFADAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorial 2", "..\Tutorial 2\Tutorial 2.csproj", "{1DF552D0-0D6D-481F-AF29-757920D7CEAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bis-GUI", "..\Bis-GUI\Bis-GUI.csproj", "{EC4D7C2D-06DD-4BF7-92AF-1A72B276470A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorial 3 Web Service", "..\Tutorial 3 Web Service\Tutorial 3 Web Service.csproj", "{07CEEC24-8265-4F0E-99BB-B22510F9339F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7DE5E92F-4713-4C04-83EC-EFD128890F8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DE5E92F-4713-4C04-83EC-EFD128890F8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DE5E92F-4713-4C04-83EC-EFD128890F8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DE5E92F-4713-4C04-83EC-EFD128890F8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACFDC249-8F81-4ED1-A58C-F366E6737F7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACFDC249-8F81-4ED1-A58C-F366E6737F7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACFDC249-8F81-4ED1-A58C-F366E6737F7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACFDC249-8F81-4ED1-A58C-F366E6737F7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D0B0467-B12F-4BF7-9D20-3E90C1CFADAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D0B0467-B12F-4BF7-9D20-3E90C1CFADAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D0B0467-B12F-4BF7-9D20-3E90C1CFADAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D0B0467-B12F-4BF7-9D20-3E90C1CFADAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DF552D0-0D6D-481F-AF29-757920D7CEAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DF552D0-0D6D-481F-AF29-757920D7CEAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DF552D0-0D6D-481F-AF29-757920D7CEAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DF552D0-0D6D-481F-AF29-757920D7CEAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC4D7C2D-06DD-4BF7-92AF-1A72B276470A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC4D7C2D-06DD-4BF7-92AF-1A72B276470A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC4D7C2D-06DD-4BF7-92AF-1A72B276470A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC4D7C2D-06DD-4BF7-92AF-1A72B276470A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07CEEC24-8265-4F0E-99BB-B22510F9339F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07CEEC24-8265-4F0E-99BB-B22510F9339F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07CEEC24-8265-4F0E-99BB-B22510F9339F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07CEEC24-8265-4F0E-99BB-B22510F9339F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C0583BE7-7F16-4341-846F-8396FA52B4A2}
+	EndGlobalSection
+EndGlobal

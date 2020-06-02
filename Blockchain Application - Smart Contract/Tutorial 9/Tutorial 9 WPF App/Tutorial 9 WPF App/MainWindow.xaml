@@ -1,0 +1,25 @@
+﻿<Window x:Class="Tutorial_9_WPF_App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Tutorial_9_WPF_App"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Button Content="Upload Python file" HorizontalAlignment="Left" Margin="60,278,0,0" VerticalAlignment="Top" Width="149" Height="34" Click="Upload_Python_File"/>
+        <TextBox Name ="PythonScriptText" HorizontalAlignment="Left" Height="156" Margin="30,56,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="237"/>
+        <Label Content="Enter Python Script:" HorizontalAlignment="Left" Margin="81,18,0,0" VerticalAlignment="Top" Width="128"/>
+        <Label Content="Total Jobs Completed:" HorizontalAlignment="Left" Margin="289,273,0,0" VerticalAlignment="Top" Width="141"/>
+        <TextBox Name="JobsCompleted" HorizontalAlignment="Left" Height="26" Margin="435,273,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="57" IsReadOnly="True"/>
+        <Label Content="Python Script Results executed:" HorizontalAlignment="Left" Margin="322,18,0,0" VerticalAlignment="Top" Width="176"/>
+        <Label Content="Job Status:" HorizontalAlignment="Left" Margin="10,233,0,0" VerticalAlignment="Top" Width="71" RenderTransformOrigin="-0.57,0.596"/>
+        <Label Name="JobStatusLabel" Content="" HorizontalAlignment="Left" Margin="81,233,0,0" VerticalAlignment="Top" Width="202"/>
+        <Label Content="Python script must start with &quot;def() main:&quot; and contain a return value.&#xA;Python script must also use proper indentation. &#xA;" HorizontalAlignment="Left" Margin="30,363,0,0" VerticalAlignment="Top" Width="390" Height="46"/>
+        <ListBox Name="JobListBox" HorizontalAlignment="Left" Height="156" Margin="569,56,0,0" VerticalAlignment="Top" Width="204"/>
+        <Label Content="Python jobs submitted by client " HorizontalAlignment="Left" Margin="569,18,0,0" VerticalAlignment="Top" Width="213"/>
+        <Label Content="No of Blocks in Blockchain" HorizontalAlignment="Left" Margin="285,233,0,0" VerticalAlignment="Top" Width="156"/>
+        <TextBox Name="NoOfBlocks" HorizontalAlignment="Left" Height="26" Margin="441,233,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="57" IsReadOnly="True" RenderTransformOrigin="0.175,0.538"/>
+        <ListBox Name="ExecutedList" HorizontalAlignment="Left" Height="156" Margin="307,56,0,0" VerticalAlignment="Top" Width="221"/>
+    </Grid>
+</Window>
