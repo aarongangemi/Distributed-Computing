@@ -1,0 +1,99 @@
+﻿@{
+    ViewBag.Title = "Comments";
+}
+<html>
+<body>
+    <br />
+    <form>
+        <!--Used to submit a comment-->
+        <label>Submit new Comment</label><br />
+        <input type="text" id="username" name="username" placeholder="Username" /><br /><br />
+        <input type="text" id="comment" name="comment" placeholder="Comment" /><br /><br />
+    </form>
+    <button id="AddComment" onclick="SubmitComment()">Submit Comment</button><br /><br />
+
+    <!--Used to retrieve a comment-->
+    <form>
+        <label>Request Comment by username</label><br />
+        <input type="text" id="RequestUsername" name="RequestUsername" placeholder="Username" /><br /><br />
+    </form>
+    <button id="AddComment" onclick="RequestComment()">Request Comment</button><br /><br />
+    <!--Used to display all comments-->
+    <div id="AllComments">
+        <button id="ViewAllBtn" onclick="ViewAllComments()">View all Comments</button>
+    </div>
+    <div id="ViewComments"></div>
+    <script>
+        // ajax request to submit comment
+        // connects to web api back end
+        function SubmitComment() {
+            console.log("Submit new Comment");
+            $.ajax({
+                url: "https://localhost:44359/api/WebApi/SubmitComment/" + $("#comment").val() + "/" + $("#username").val(),
+                type: 'post',
+                contentType: 'application/json',
+                processData: false,
+                success: function (data, textStatus, jQxhr) {
+                    alert("Comment successfully submitted");
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    alert(jqXhr.responseText);
+                    console.log(errorThrown);
+                }
+            });
+        }
+
+        // Uses ajax request to request a comment based on username
+        function RequestComment() {
+            console.log("Request new Comment");
+            $.ajax({
+                url: "https://localhost:44359/api/WebApi/RequestComment/" + $("#RequestUsername").val(),
+                type: 'get',
+                contentType: 'application/json',
+                processData: false,
+                success: function (data, textStatus, jQxhr) {
+                    if (data.length > 0) {
+                        // check data has elements
+                        document.getElementById("ViewComments").innerHTML = "";
+                        // clear div from previous search
+                        for (var i = 0; i < data.length; i++) {
+                            $('#ViewComments').append(data[i] + "<br/><br/>");
+                            // append to div
+                        }
+                    }
+                    else {
+                        alert("Unable to find comments");
+                        // if no elements, then alert user
+                    }
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+        }
+
+        // Used to display all comments
+        function ViewAllComments() {
+            console.log("View all Comments");
+            $.ajax({
+                url: "https://localhost:44359/api/WebApi/RetrieveComments",
+                type: 'get',
+                contentType: 'application/json',
+                processData: false,
+                success: function (data, textStatus, jQxhr) {
+                    // for each loop to loop through the list and display the comments
+                    document.getElementById("ViewComments").innerHTML = "";
+                    // clear the div
+                    data.forEach(function (data) {
+                        $('#ViewComments').append(data[1] + "<br/><br/>");
+                        // display comments
+                    })
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

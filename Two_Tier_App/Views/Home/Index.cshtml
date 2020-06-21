@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<html>
+<head>
+    <title>DC Exam - 19447337</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+    <br /><br />
+    <div id="ButtonSection">
+        <button id="button" onclick="LoadUsers()"><strong>Load Users</strong></button><br /><br />
+        <button id="button" onclick="LoadComments()"><strong>Load Comments</strong></button><br/><br/>
+    </div>
+    <div id="MainContent">
+    </div>
+    <script>
+        function LoadUsers() {
+            $.ajax({
+                url: 'https://localhost:44359/Home/Users',
+                type: 'get',
+                processData: false,
+                success: function (data, t, j) {
+                    // load transaction form into div
+                    $('#MainContent').html(data);
+                },
+                error: function (j, t, e) {
+                    // log error
+                    console.log("Error occured: Unable to load Users");
+                }
+            });
+        }
+
+        function LoadComments() {
+            $.ajax({
+                url: 'https://localhost:44359/Home/Comments',
+                type: 'get',
+                processData: false,
+                success: function (data, t, j) {
+                    // load transaction form into div
+                    $('#MainContent').html(data);
+                },
+                error: function (j, t, e) {
+                    // log error
+                    console.log("Error occured: Unable to load Users");
+                }
+            });
+        }
+    </script>
+</body>
+</html>

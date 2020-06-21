@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "Users Page";
+}
+<html>
+<body>
+    <br />
+    <form>
+        <!--Form used to retrieve account balance-->
+        <label>Create Profile</label><br />
+        <!--Contains account ID field and non-editable balance field-->
+        <input type="text" id="username" name="username" placeholder="Username" /><br /><br />
+        <input type="text" id="password" name="password" placeholder="Password" /><br /><br />
+    </form>
+    <button id="ProfileAddBtn" onclick="CreateProfile()">Create Profile</button><br /><br />
+    <form>
+        <!--Form used to retrieve account balance-->
+        <label>Login</label><br />
+        <!--Contains account ID field and non-editable balance field-->
+        <input type="text" id="loginUsername" name="loginUsername" placeholder="Username" /><br /><br />
+        <input type="text" id="loginPassword" name="loginPassword" placeholder="Password" /><br /><br />
+    </form>
+    <button id="LoginBtn" onclick="LoginUser()">Login</button><br /><br />
+
+    <script>
+        function CreateProfile() {
+            console.log("Creating Profile");
+            $.ajax({
+                url: "https://localhost:44359/api/WebApi/CreateProfile/" + $("#username").val() + "/" + $("#password").val(),
+                type: 'post',
+                contentType: 'application/json',
+                processData: false,
+                success: function (data, textStatus, jQxhr) {
+                    alert("Account for username: " + $("#username").val() + " was successfully created");
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    alert("error occured: Unable to create account");
+                    console.log(errorThrown);
+                }
+            });
+        }
+
+        function LoginUser() {
+            console.log("Login user");
+            $.ajax({
+                url: "https://localhost:44359/api/WebApi/LoginUser/" + $("#loginUsername").val() + "/" + $("#loginPassword").val(),
+                type: 'post',
+                contentType: 'application/json',
+                processData: false,
+                success: function (data, textStatus, jQxhr) {
+                    if (data == false) {
+                        alert("Unable to create user - account may not exist");
+                    }
+                    else {
+                        alert("Account for " + $("#loginUsername").val() + " was successfully logged in");
+                    }
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    alert(jqXhr.responseText);
+                    console.log(errorThrown);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
